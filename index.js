@@ -30,5 +30,5 @@ mongoose.connection.on('connected', () => {
 app.use(express.json()); // Para poder recibir JSON en el body
 
 // Importar rutas
-const userRoutes = require('./routes/userRoutes');
+const userRoutes = require('./Backend/routes/userRoutes');
 app.use('/api/users', userRoutes);
