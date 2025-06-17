@@ -33,7 +33,7 @@ app.use(express.json()); // Para poder recibir JSON en el body
 const userRoutes = require('./Backend/routes/userRoutes');
 app.use('/api/users', userRoutes);
 
-app.use('/clientes', ClientesRoutes);
+app.use('/clientes', clientesRoutes);
 
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
