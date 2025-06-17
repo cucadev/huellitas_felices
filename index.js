@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
 
+const clientesRoutes = require('./Backend/routes/ClienteRoutes');
+
 const PORT = 3000;
 
 app.get('/', (req, res) => {
@@ -11,9 +13,7 @@ app.get('/', (req, res) => {
   `);
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
-});
+
 
 mongoose.connect('mongodb+srv://mayraferrazin:cucamongo30@cluster0.ez8baym.mongodb.net/petshop', {
   useNewUrlParser: true,
@@ -32,3 +32,9 @@ app.use(express.json()); // Para poder recibir JSON en el body
 // Importar rutas
 const userRoutes = require('./Backend/routes/userRoutes');
 app.use('/api/users', userRoutes);
+
+app.use('/clientes', ClientesRoutes);
+
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+});
