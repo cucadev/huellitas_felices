@@ -23,16 +23,6 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Crear cliente nuevo
-router.post('/', async (req, res) => {
-  const nuevoCliente = new Cliente(req.body);
-  try {
-    const clienteGuardado = await nuevoCliente.save();
-    res.status(201).json(clienteGuardado);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-});
 
 // Actualizar cliente
 router.put('/:id', async (req, res) => {
@@ -53,6 +43,27 @@ router.delete('/:id', async (req, res) => {
     res.json({ message: 'Cliente eliminado correctamente' });
   } catch (err) {
     res.status(500).json({ message: err.message });
+  }
+});
+
+//Crear nuevo cliente
+router.post('/', async (req, res) => {
+  const cliente = new Cliente({
+    nombre: req.body.nombre,
+    apellido: req.body.apellido,
+    email: req.body.email,
+    telefono: req.body.telefono,
+    direccion: req.body.direccion
+  });
+
+  try {
+    const nuevoCliente = await cliente.save();
+    res.status(201).json({
+  mensaje: 'Cliente creado con éxito',
+  cliente: nuevoCliente
+});
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 });
 
