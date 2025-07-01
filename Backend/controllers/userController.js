@@ -80,4 +80,26 @@ exports.obtenerUsuarioPorId = async (req, res) => {
     res.status(500).json({ mensaje: 'Error en el servidor', error: error.message });
   }
 };
+// PUT /api/users/:id → Actualizar un usuario
+exports.actualizarUsuario = async (req, res) => {
+  try {
+    const datos = { ...req.body };
+
+    // Si viene password, la volvemos a encriptar
+    if (datos.password) {
+      const salt = await bcrypt.genSalt(10);
+      datos.password = await bcrypt.hash(datos.password, salt);
+    }
+
+    const usuarioActualizado = await User.findByIdAndUpdate(req.params.id, datos, { new: true }).select('-password');
+
+    if (!usuarioActualizado) {
+      return res.status(404).json({ mensaje: 'Usuario no encontrado' });
+    }
+
+    res.json(usuarioActualizado);
+  } catch (error) {
+    res.status(400).json({ mensaje: 'Error al actualizar usuario', error: error.message });
+  }
+};
 
