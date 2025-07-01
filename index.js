@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 
 const clientesRoutes = require('./Backend/routes/ClienteRoutes');
+const productRoutes = require('./Backend/routes/productRoutes');
 
 const PORT = 3000;
 
@@ -34,6 +35,8 @@ const userRoutes = require('./Backend/routes/userRoutes');
 app.use('/api/users', userRoutes);
 
 app.use('/clientes', clientesRoutes);
+
+app.use('/api/products', productRoutes);
 
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
