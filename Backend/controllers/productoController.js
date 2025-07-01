@@ -25,3 +25,12 @@ exports.crearProducto = async (req, res) => {
     res.status(500).json({ mensaje: 'Error en el servidor', error: error.message });
   }
 };
+// GET /api/products  → Listar todos los productos
+exports.obtenerProductos = async (_req, res) => {
+  try {
+    const productos = await Producto.find(); // podés paginar después
+    res.json(productos);
+  } catch (error) {
+    res.status(500).json({ mensaje: 'Error en el servidor', error: error.message });
+  }
+};
