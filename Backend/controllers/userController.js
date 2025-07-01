@@ -68,4 +68,16 @@ exports.obtenerUsuarios = async (_req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+// GET /api/users/:id → Obtener un usuario por ID
+exports.obtenerUsuarioPorId = async (req, res) => {
+  try {
+    const usuario = await User.findById(req.params.id).select('-password');
+    if (!usuario) {
+      return res.status(404).json({ mensaje: 'Usuario no encontrado' });
+    }
+    res.json(usuario);
+  } catch (error) {
+    res.status(500).json({ mensaje: 'Error en el servidor', error: error.message });
+  }
+};
 
