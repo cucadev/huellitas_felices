@@ -58,3 +58,14 @@ exports.login = async (req, res) => {
     res.status(500).json({ mensaje: 'Error al iniciar sesión', error });
   }
 };
+// GET /api/users  → Listar todos los usuarios
+exports.obtenerUsuarios = async (_req, res) => {
+  try {
+    // Trae todo y oculta el campo password
+    const usuarios = await User.find().select('-password');
+    res.json(usuarios);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
