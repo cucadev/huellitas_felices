@@ -34,3 +34,15 @@ exports.obtenerProductos = async (_req, res) => {
     res.status(500).json({ mensaje: 'Error en el servidor', error: error.message });
   }
 };
+// GET /api/products/:id → Obtener un producto por su ID
+exports.obtenerProductoPorId = async (req, res) => {
+  try {
+    const producto = await Producto.findById(req.params.id);
+    if (!producto) {
+      return res.status(404).json({ mensaje: 'Producto no encontrado' });
+    }
+    res.json(producto);
+  } catch (error) {
+    res.status(500).json({ mensaje: 'Error al obtener el producto', error: error.message });
+  }
+};
