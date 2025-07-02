@@ -46,3 +46,23 @@ exports.obtenerProductoPorId = async (req, res) => {
     res.status(500).json({ mensaje: 'Error al obtener el producto', error: error.message });
   }
 };
+// PUT /api/products/:id → Actualizar un producto
+exports.actualizarProducto = async (req, res) => {
+  try {
+    const datos = { ...req.body };
+
+    const productoActualizado = await Producto.findByIdAndUpdate(
+      req.params.id,
+      datos,
+      { new: true, runValidators: true }
+    );
+
+    if (!productoActualizado) {
+      return res.status(404).json({ mensaje: 'Producto no encontrado' });
+    }
+
+    res.json({ mensaje: 'Producto actualizado correctamente', producto: productoActualizado });
+  } catch (error) {
+    res.status(400).json({ mensaje: 'Error al actualizar el producto', error: error.message });
+  }
+};
