@@ -48,10 +48,10 @@ exports.login = async (req, res) => {
 
     // Generar token
     const token = jwt.sign(
-      { id: usuario._id, nombre: usuario.nombre },
-      'secreto_clave', // Podés usar una variable de entorno luego
-      { expiresIn: '1h' }
-    );
+     { id: usuario._id, nombre: usuario.nombre, rol: usuario.rol },
+     'secreto_clave',
+     { expiresIn: '1h' }
+);
 
     res.json({ mensaje: 'Login exitoso', token });
   } catch (error) {
