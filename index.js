@@ -5,6 +5,7 @@ const app = express();
 const clientesRoutes = require('./Backend/routes/ClienteRoutes');
 const productRoutes = require('./Backend/routes/productRoutes');
 const comprasRoutes = require('./Backend/routes/comprasRoutes');
+const ventasRoutes = require('./Backend/routes/ventasRoutes');
 
 const PORT = 3000;
 
@@ -40,6 +41,8 @@ app.use('/clientes', clientesRoutes);
 app.use('/api/products', productRoutes);
 
 app.use('/api/compras', comprasRoutes);
+
+app.use('/api/ventas', ventasRoutes);
 
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
