@@ -6,6 +6,8 @@ const clientesRoutes = require('./Backend/routes/ClienteRoutes');
 const productRoutes = require('./Backend/routes/productRoutes');
 const comprasRoutes = require('./Backend/routes/comprasRoutes');
 const ventasRoutes = require('./Backend/routes/ventasRoutes');
+const cajaRoutes = require('./Backend/routes/cajaRoutes');
+
 
 const PORT = 3000;
 
@@ -43,6 +45,8 @@ app.use('/api/products', productRoutes);
 app.use('/api/compras', comprasRoutes);
 
 app.use('/api/ventas', ventasRoutes);
+
+app.use('/api/caja', cajaRoutes);
 
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
