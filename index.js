@@ -1,6 +1,9 @@
+require('dotenv').config();
+
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
+
 
 const clientesRoutes = require('./Backend/routes/ClienteRoutes');
 const productRoutes = require('./Backend/routes/productRoutes');
@@ -20,12 +23,9 @@ app.get('/', (req, res) => {
 
 
 
-mongoose.connect('mongodb+srv://mayraferrazin:cucamongo30@cluster0.ez8baym.mongodb.net/petshop', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log('✅ Conectado a MongoDB Atlas'))
-.catch(err => console.error('❌ Error:', err));
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('✅ Conectado a MongoDB Atlas'))
+  .catch(err => console.error('❌ Error:', err));
 
 // Esta línea muestra qué base de datos está usando realmente:
 mongoose.connection.on('connected', () => {
