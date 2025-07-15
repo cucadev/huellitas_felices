@@ -12,12 +12,13 @@ const ventasRoutes = require('./Backend/routes/ventasRoutes');
 const cajaRoutes = require('./Backend/routes/cajaRoutes');
 
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
   res.send(`
-    <h1>Probando el proyecto de gestión PetShop Huellitas Felices</h1>
-    <p>Probando servidor Node.js con Express.</p>
+    <h1>Bienvenidos al PetShop Huellitas Felices</h1>
+    <p>PRÓXIMAMENTE</p>
+    <p>... Sitio en construcción ... PRÓXIMAMENTE</p>
   `);
 });
 
@@ -51,5 +52,3 @@ app.use('/api/caja', cajaRoutes);
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
 });
-
-
