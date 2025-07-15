@@ -18,24 +18,26 @@ app.get('/', (req, res) => {
   res.send(`
     <h1>Bienvenidos al PetShop Huellitas Felices</h1>
     <p>PRÓXIMAMENTE</p>
-    <p>... Sitio en construcción ... PRÓXIMAMENTE</p>
+    <p>... Sitio en construcción ...</p>
   `);
-});
-
-
+})
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅ Conectado a MongoDB Atlas'))
   .catch(err => console.error('❌ Error:', err));
 
-// Esta línea muestra qué base de datos está usando realmente:
+// Esta línea muestra qué base de datos está usando:
 mongoose.connection.on('connected', () => {
   console.log('🟢 Base de datos usada:', mongoose.connection.name);
 });
 
+app.set('view engine', 'pug'); 
+
+app.set('views', './views'); // carpeta donde estarán los archivos .pug
+
 app.use(express.json()); // Para poder recibir JSON en el body
 
-// Importar rutas
+// Importacion de rutas
 const userRoutes = require('./Backend/routes/userRoutes');
 app.use('/api/users', userRoutes);
 
