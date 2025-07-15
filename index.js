@@ -10,17 +10,14 @@ const productRoutes = require('./Backend/routes/productRoutes');
 const comprasRoutes = require('./Backend/routes/comprasRoutes');
 const ventasRoutes = require('./Backend/routes/ventasRoutes');
 const cajaRoutes = require('./Backend/routes/cajaRoutes');
+const webRoutes = require('./Backend/routes/webRoutes');
 
 
 const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
-  res.send(`
-    <h1>Bienvenidos al PetShop Huellitas Felices</h1>
-    <p>PRÓXIMAMENTE</p>
-    <p>... Sitio en construcción ...</p>
-  `);
-})
+  res.render('index');  // Renderiza el archivo views/index.pug
+});
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅ Conectado a MongoDB Atlas'))
@@ -50,6 +47,8 @@ app.use('/api/compras', comprasRoutes);
 app.use('/api/ventas', ventasRoutes);
 
 app.use('/api/caja', cajaRoutes);
+
+app.use('/', webRoutes);
 
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
