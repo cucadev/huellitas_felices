@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
 
+const path = require('path');
+
 
 const clientesRoutes = require('./Backend/routes/ClienteRoutes');
 const productRoutes = require('./Backend/routes/productRoutes');
@@ -28,9 +30,10 @@ mongoose.connection.on('connected', () => {
   console.log('🟢 Base de datos usada:', mongoose.connection.name);
 });
 
+
 app.set('view engine', 'pug'); 
 
-app.set('views', './views'); // carpeta donde estarán los archivos .pug
+app.set('views', path.join(__dirname, 'views')); // carpeta donde estarán los archivos .pug
 
 app.use(express.json()); // Para poder recibir JSON en el body
 
