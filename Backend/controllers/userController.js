@@ -47,15 +47,15 @@ exports.login = async (req, res) => {
     }
 
     // Generar token
-const token = jwt.sign(
-  { id: usuario._id, nombre: usuario.nombre, rol: usuario.rol },
-  process.env.JWT_SECRET,
-  { expiresIn: '1h' }
-);
+    const token = jwt.sign(
+      { id: usuario._id, nombre: usuario.nombre, rol: usuario.rol },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
 
     res.json({ mensaje: 'Login exitoso', token });
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al iniciar sesión', error });
+    res.status(500).json({ mensaje: 'Error al iniciar sesión', error: error.message });
   }
 };
 // GET /api/users  → Listar todos los usuarios

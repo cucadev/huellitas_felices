@@ -13,13 +13,14 @@ const comprasRoutes = require('./Backend/routes/comprasRoutes');
 const ventasRoutes = require('./Backend/routes/ventasRoutes');
 const cajaRoutes = require('./Backend/routes/cajaRoutes');
 const webRoutes = require('./Backend/routes/webRoutes');
+const userRoutes = require('./Backend/routes/userRoutes');
 
 
 const PORT = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-  res.render('index');  // Renderiza el archivo views/index.pug
-});
+//app.get('/', (req, res) => {
+//  res.render('index');  // Renderiza el archivo views/index.pug
+//});
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅ Conectado a MongoDB Atlas'))
@@ -35,10 +36,11 @@ app.set('view engine', 'pug');
 
 app.set('views', path.join(__dirname, 'views')); // carpeta donde estarán los archivos .pug
 
-app.use(express.json()); // Para poder recibir JSON en el body
+app.use(express.json()); // Para poder recibir JSON en el body - Desde Thunder Client 
+app.use(express.urlencoded({ extended: true })); // Cuando uso Host
 
 // Importacion de rutas
-const userRoutes = require('./Backend/routes/userRoutes');
+
 app.use('/api/users', userRoutes);
 
 app.use('/clientes', clientesRoutes);
