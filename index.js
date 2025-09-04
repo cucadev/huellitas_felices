@@ -31,6 +31,7 @@ mongoose.connection.on('connected', () => {
   console.log('🟢 Base de datos usada:', mongoose.connection.name);
 });
 
+app.use(express.static('Public')); // Para que las imagenes sean accesibles desde la web
 
 app.set('view engine', 'pug'); 
 

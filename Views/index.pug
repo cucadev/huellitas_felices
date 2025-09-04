@@ -3,47 +3,66 @@ html(lang="es")
   head
     meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    title Huellitas Felices - Pet Shop
+    title Huellitas Felices - Pet Shop Integral
     style.
-      body {
-        font-family: Verdana , sans-serif;
-        background-color: #fff8f0;
-        color: #333;
-        text-align: center;
-        padding: 50px;
-      }
-      header {
-        background-color: #762051;
-        color: white;
-        padding: 20px 0;
-        margin-bottom: 30px;
-      }
-      h1 {
+      html, body {
+        height: 100%;
         margin: 0;
-        font-size: 2.5rem;
+        padding: 0;
+        font-family: Verdana, sans-serif;
+        background-color: #F0EDE7;
+        color: #333;
       }
-      p {
-        font-size: 1.2rem;
-        margin: 10px 0;
+      body {
+        display: flex;
+        flex-direction: column;
+      }
+      main {
+        flex: 1; /* ocupa todo el espacio restante */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+        background-image: url('/images/index-img.png'); /* tu banner */
+        background-size: cover;
+        background-position: center;
+        min-height: 100vh; /* ocupa pantalla completa */
+        color: #F0EDE7;
+        text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+      }
+      main h2 {
+        font-size: 2.5rem;
+        margin: 0;
+      }
+      main p {
+        font-size: 1.5rem;
+        margin: 10px 0 0 0;
       }
       a.button {
         display: inline-block;
         margin-top: 20px;
         padding: 10px 20px;
-        background-color: #762051;
+        background-color: #9A4475;
         color: white;
         text-decoration: none;
         border-radius: 5px;
+        transition: background-color 0.3s ease;
       }
       a.button:hover {
-        background-color: #e65b50;
+        background-color: #762051;
+      }
+      footer {
+        background-color: #762051;
+        color: #F0EDE7;
+        padding: 10px 0; /* menos altura */
+        text-align: center;
       }
   body
-    header
-      h1 Huellitas Felices - Pet Shop
     main
-      p PRÓXIMAMENTE
-      p ... Sitio en construcción ...
-      a.button(href="/login") Ir a Login
+      h2 ¡Bienvenidos a Huellitas Felices!
+      p Tu tienda de confianza para mascotas
+      a.button(href="/login") Iniciar Sesión
+
     footer
-      p &copy; 2025 Huellitas Felices
+      p &copy; 2025 Huellitas Felices - Todos los derechos reservados
