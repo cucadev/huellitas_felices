@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  .container.mt-5
+    h2.text-center.mb-4 Lista de Productos
+    // Botón para agregar nuevo producto
+    .text-end.mb-3
+      a.btn.btn-primary(href="/productos/nuevo") + Nuevo Producto
+
+    // Tabla de productos
+    table.table.table-striped.table-hover
+      thead
+        tr
+          th(scope="col") #
+          th(scope="col") Nombre
+          th(scope="col") Categoría
+          th(scope="col") Precio
+          th(scope="col") Stock
+          th(scope="col") Acciones
+      tbody
+        // Aquí irán los productos dinámicamente
+        tr
+          th(scope="row") 1
+          td Producto de ejemplo
+          td Categoría
+          td $1000
+          td 20
+          td
+            a.btn.btn-sm.btn-warning.me-1(href="/productos/editar/1") Editar
+            a.btn.btn-sm.btn-danger(href="/productos/eliminar/1") Eliminar

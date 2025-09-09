@@ -1,18 +1,19 @@
 const User = require('../models/User');
-const bcrypt = require('bcrypt'); //para encriptar contraseñas
-const jwt = require('jsonwebtoken'); //json web token
+const bcrypt = require('bcrypt'); // para encriptar contraseñas
+const jwt = require('jsonwebtoken'); // json web token
 
+
+// Registro de usuario
 exports.register = async (req, res) => {
   try {
     const { nombre, email, password } = req.body;
 
-    // Verificar si el email ya existe
+    // el email ya existe?
     const userExistente = await User.findOne({ email });
     if (userExistente) {
       return res.status(400).json({ mensaje: 'El email ya está registrado' });
     }
 
-    // Hashear la contraseña
     const salt = await bcrypt.genSalt(10);
     const passwordHash = await bcrypt.hash(password, salt);
 
@@ -30,6 +31,9 @@ exports.register = async (req, res) => {
     res.status(500).json({ mensaje: 'Error en el servidor', error });
   }
 };
+
+
+// Login de usuario
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -53,22 +57,28 @@ exports.login = async (req, res) => {
       { expiresIn: '1h' }
     );
 
-    res.json({ mensaje: 'Login exitoso', token });
+    // Redirigir al dashboard
+    return res.redirect('/dashboard');
+
+
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al iniciar sesión', error: error.message });
+    return res.status(500).json({ mensaje: 'Error en el servidor', error });
   }
 };
-// GET /api/users  → Listar todos los usuarios
+
+
+// Obtener todos los usuarios
 exports.obtenerUsuarios = async (_req, res) => {
   try {
-    // Trae todo y oculta el campo password
-    const usuarios = await User.find().select('-password');
+    const usuarios = await User.find().select('-password'); // oculta password
     res.json(usuarios);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
-// GET /api/users/:id → Obtener un usuario por ID
+
+
+// Obtener usuario por ID
 exports.obtenerUsuarioPorId = async (req, res) => {
   try {
     const usuario = await User.findById(req.params.id).select('-password');
@@ -80,18 +90,23 @@ exports.obtenerUsuarioPorId = async (req, res) => {
     res.status(500).json({ mensaje: 'Error en el servidor', error: error.message });
   }
 };
-// PUT /api/users/:id → Actualizar un usuario
+
+
+// Actualizar usuario
 exports.actualizarUsuario = async (req, res) => {
   try {
     const datos = { ...req.body };
 
-    // Si viene password, la volvemos a encriptar
     if (datos.password) {
       const salt = await bcrypt.genSalt(10);
       datos.password = await bcrypt.hash(datos.password, salt);
     }
 
-    const usuarioActualizado = await User.findByIdAndUpdate(req.params.id, datos, { new: true }).select('-password');
+    const usuarioActualizado = await User.findByIdAndUpdate(
+      req.params.id,
+      datos,
+      { new: true }
+    ).select('-password');
 
     if (!usuarioActualizado) {
       return res.status(404).json({ mensaje: 'Usuario no encontrado' });
@@ -102,7 +117,9 @@ exports.actualizarUsuario = async (req, res) => {
     res.status(400).json({ mensaje: 'Error al actualizar usuario', error: error.message });
   }
 };
-// DELETE /api/users/:id → Eliminar un usuario
+
+
+// Eliminar usuario
 exports.eliminarUsuario = async (req, res) => {
   try {
     const usuarioEliminado = await User.findByIdAndDelete(req.params.id);
