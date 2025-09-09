@@ -4,91 +4,44 @@ html(lang="es")
     meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
     title Login - PetShop Huellitas Felices
-    // Importar fuente Poppins
+
+    // Fuente Poppins
     link(rel="preconnect" href="https://fonts.googleapis.com")
     link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
     link(href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet")
+    
+    // Bootstrap CSS
+    link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet")
+
     style.
-      *, *::before, *::after {
-        box-sizing: border-box; /* evita que padding rompa el ancho */
-      }
       body {
         font-family: 'Poppins', sans-serif;
         background-color: #F0EDE7;
-        color: #333;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        padding: 0 15px; /* para que en pantallas muy pequeñas no se corte */
       }
-      .login-container {
-        background-color: #ffffff;
-        padding: 40px 30px;
-        border-radius: 10px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        width: 100%;
-        max-width: 400px;
-        text-align: center;
-      }
-      h1 {
-        margin-bottom: 30px;
-        color: #762051;
-      }
-      label {
-        display: block;
-        text-align: left;
-        margin-bottom: 5px;
-        font-weight: 600;
-        color: #762051;
-      }
-      input[type="email"],
-      input[type="password"] {
-        width: 100%;
-        padding: 12px 15px;
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 1rem;
-      }
-      button {
-        width: 100%;
-        padding: 12px;
+      .btn-custom {
         background-color: #9A4475;
         color: #fff;
-        border: none;
-        border-radius: 5px;
-        font-size: 1rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
       }
-      button:hover {
+      .btn-custom:hover {
         background-color: #762051;
       }
-      p.register-link {
-        margin-top: 20px;
-        font-size: 0.9rem;
-        color: #762051;
-      }
-      p.register-link a {
-        color: #9A4475;
-        text-decoration: none;
-        font-weight: 600;
-      }
-      p.register-link a:hover {
-        color: #762051;
-      }
+
   body
-    .login-container
-      h1 Iniciar Sesión
-      form(action="/api/users/login" method="POST")
-        label(for="email") Email:
-        input(type="email" name="email" required)
-        label(for="password") Contraseña:
-        input(type="password" name="password" required)
-        button(type="submit") Ingresar
-      p.register-link
-        | ¿No tenés cuenta?
-        a(href="/register")  Registrate
+    .d-flex.justify-content-center.align-items-center.min-vh-100
+      .card.shadow.p-4(style="max-width: 400px; width: 100%;")
+        h2.text-center.mb-4(style="color:#762051") Iniciar Sesión
+        form(action="/api/users/login" method="POST")
+          .mb-3
+            label.form-label(for="email") Email:
+            input.form-control(type="email" name="email" required)
+          .mb-3
+            label.form-label(for="password") Contraseña:
+            input.form-control(type="password" name="password" required)
+          button.btn.btn-custom.w-100(type="submit") Ingresar
+        p.text-center.mt-3
+          | ¿No tenés cuenta? 
+          a(href="/register" class="text-decoration-none fw-bold" style="color:#9A4475") Registrate
+
+    // Bootstrap JS
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js")
+
