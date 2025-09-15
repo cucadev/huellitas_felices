@@ -1,11 +1,11 @@
 const Producto = require('../models/Producto');
 
-// POST /api/products  → Crear nuevo producto
+// Crear nuevo producto
 exports.crearProducto = async (req, res) => {
   try {
     const { nombre, precio, stock, categoria, descripcion } = req.body;
 
-    // Validación mínima (ya pusimos required en el schema, pero agregamos un ejemplo extra)
+    // Validación mínima 
     if (!nombre || precio == null || stock == null || !categoria) {
       return res.status(400).json({ mensaje: 'Campos obligatorios faltantes' });
     }
@@ -25,16 +25,16 @@ exports.crearProducto = async (req, res) => {
     res.status(500).json({ mensaje: 'Error en el servidor', error: error.message });
   }
 };
-// GET /api/products  → Listar todos los productos
+// Listar todos los productos
 exports.obtenerProductos = async (_req, res) => {
   try {
-    const productos = await Producto.find(); // podés paginar después
+    const productos = await Producto.find();
     res.json(productos);
   } catch (error) {
     res.status(500).json({ mensaje: 'Error en el servidor', error: error.message });
   }
 };
-// GET /api/products/:id → Obtener un producto por su ID
+// Obtener un producto por su ID
 exports.obtenerProductoPorId = async (req, res) => {
   try {
     const producto = await Producto.findById(req.params.id);
@@ -46,7 +46,7 @@ exports.obtenerProductoPorId = async (req, res) => {
     res.status(500).json({ mensaje: 'Error al obtener el producto', error: error.message });
   }
 };
-// PUT /api/products/:id → Actualizar un producto
+// Actualizar un producto
 exports.actualizarProducto = async (req, res) => {
   try {
     const datos = { ...req.body };
@@ -66,7 +66,7 @@ exports.actualizarProducto = async (req, res) => {
     res.status(400).json({ mensaje: 'Error al actualizar el producto', error: error.message });
   }
 };
-// DELETE /api/products/:id → Eliminar un producto
+// Eliminar un producto
 exports.eliminarProducto = async (req, res) => {
   try {
     const productoEliminado = await Producto.findByIdAndDelete(req.params.id);
@@ -90,12 +90,12 @@ exports.vistaProductos = async (req, res) => {
   }
 };
 
-// GET /productos/nuevo → Formulario para crear un producto
+// Formulario para crear un producto
 exports.formularioCrearProducto = (req, res) => {
   res.render('productos/nuevo', { titulo: 'Nuevo Producto' });
 };
 
-// GET /productos/editar/:id → Formulario para editar un producto
+// Formulario para editar un producto
 exports.formularioEditarProducto = async (req, res) => {
   try {
     const producto = await Producto.findById(req.params.id);
