@@ -36,8 +36,8 @@ html(lang="es")
       .dashboard-btn {
         width: 350px;
         height: 180px;
-        margin-top: 40px;
-        font-size: 1.2rem;
+        margin-top: 10px;
+        font-size: 1.4rem;
         font-weight: 600;
         color: #fff;
         border-radius: 15px;
@@ -49,8 +49,7 @@ html(lang="es")
         text-decoration: none;
       }
       .dashboard-btn i {
-        font-size: 2.5rem;
-        margin-bottom: 10px;
+        font-size: 3.2rem;
       }
       .dashboard-btn:hover {
         transform: scale(1.1);
@@ -77,6 +76,7 @@ html(lang="es")
       align-items: center;
       justify-content: space-between;
       padding: 0 20px;
+      margin-bottom: 50px; 
       }
       .dashboard-header .logo {
         height: 40px;
@@ -108,7 +108,7 @@ html(lang="es")
       .row.justify-content-center
         .col-md-4.d-flex.justify-content-center
           a.dashboard-btn.btn-clientes(href="/clientes")
-            i.bi.bi-people
+            img(src="/images/icono-clientes.png" alt="Clientes" style="width:70px; margin-bottom:5px;")
             | CLIENTES
         .col-md-4.d-flex.justify-content-center
           a.dashboard-btn.btn-productos(href="/productos")
