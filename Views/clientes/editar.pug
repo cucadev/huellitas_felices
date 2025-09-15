@@ -18,27 +18,15 @@ block content
       input.form-control(type="text" name="telefono" required value=cliente.telefono)
     .mb-3
       label.form-label(for="direccion") Dirección
-      input.form-control(type="text" name="direccion" required value=cliente.direccion)
-    
-    // Botones
-    button.btn.btn-nuevo(type="submit") Guardar Cambios
-    a.btn.btn-acciones.eliminar(href="/clientes") Cancelar
+      input.form-control(type="text" name="direccion" value=cliente.direccion)
+    button.btn.btn-primary.m-1(type="submit") Guardar Cambios
+    a.btn.btn-secondary.m-1(href="/clientes") Cancelar
 
-// Estilos en el layout.pug
-style.
-  .btn-nuevo {
-    background-color: #762051;
-    border-color: #762051;
-    color: #fff;
-    margin-right: 10px;
-  }
-  .btn-acciones.eliminar {
-    background-color: #9A4475;
-    border-color: #9A4475;
-    color: #fff;
-  }
-  .btn-acciones.eliminar:hover,
-  .btn-nuevo:hover {
-    opacity: 0.85;
-  }
+  style.
+    .btn-primary { background-color: #E49AC3; border-color: #E49AC3; color: #fff; }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-secondary { margin-left: 10px; }
+
+
+
 
