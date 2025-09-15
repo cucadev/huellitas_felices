@@ -16,7 +16,8 @@ html(lang="es")
     style.
       body {
         font-family: 'Poppins', sans-serif;
-      }
+      }     
+
       .banner {
         background-image: url('/images/index-img.png'); 
         background-size: cover;
@@ -31,17 +32,26 @@ html(lang="es")
       }
       a.btn-custom:hover {
         background-color: #762051;
+
       }
       footer {
-        background-color: #000;
-        color: #fff;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: #2B031A;
+        color: #FFF;
+        padding: 10px;
+        text-align: center;
+        z-index: 10; /* para que quede arriba de otros elementos */
       }
 
   body
     main
       .banner.d-flex.flex-column.justify-content-center.align-items-center.text-center
-        h1.display-3 ¡BIENVENIDO!
-        p.lead.mb-4 Accedé con tu usuario y contraseña y comenzá la gestión...
+        
+        //h1.display-3 ¡BIENVENIDO!
+        //p.lead.mb-4 Accedé con tu usuario y contraseña y comenzá la gestión...
         a.btn.btn-custom.btn-lg(href="/login") Iniciar Sesión
 
     footer.py-3.mt-auto
