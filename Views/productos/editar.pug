@@ -1,0 +1,23 @@
+extends ../layout.pug
+
+block content
+  h1 #{titulo}
+
+  form(action=`/productos/editar/${producto._id}` method="POST")
+    .mb-3
+      label.form-label(for="nombre") Nombre
+      input.form-control(type="text" name="nombre" required value=producto.nombre)
+    .mb-3
+      label.form-label(for="precio") Precio
+      input.form-control(type="number" name="precio" step="0.01" required value=producto.precio)
+    .mb-3
+      label.form-label(for="stock") Stock
+      input.form-control(type="number" name="stock" required value=producto.stock)
+    .mb-3
+      label.form-label(for="categoria") Categoría
+      input.form-control(type="text" name="categoria" required value=producto.categoria)
+    .mb-3
+      label.form-label(for="descripcion") Descripción
+      textarea.form-control(name="descripcion" rows="3")= producto.descripcion
+    button.btn.btn-primary(type="submit") Guardar Cambios
+    a.btn.btn-secondary(href="/productos") Cancelar

@@ -1,0 +1,23 @@
+extends ../layout.pug
+
+block content
+  h1 #{titulo}
+
+  form(action="/productos/nuevo" method="POST")
+    .mb-3
+      label.form-label(for="nombre") Nombre
+      input.form-control(type="text" name="nombre" required)
+    .mb-3
+      label.form-label(for="precio") Precio
+      input.form-control(type="number" name="precio" step="0.01" required)
+    .mb-3
+      label.form-label(for="stock") Stock
+      input.form-control(type="number" name="stock" required)
+    .mb-3
+      label.form-label(for="categoria") Categoría
+      input.form-control(type="text" name="categoria" required)
+    .mb-3
+      label.form-label(for="descripcion") Descripción
+      textarea.form-control(name="descripcion" rows="3")
+    button.btn.btn-success(type="submit") Crear Producto
+    a.btn.btn-secondary(href="/productos") Cancelar

@@ -1,0 +1,38 @@
+//- productos/dashboard.pug
+extends ../layout
+
+block content
+  .container.mt-4
+    h1.text-center.mb-4= titulo
+
+    .d-flex.justify-content-between.mb-3
+      a.btn.btn-primary(href="/productos/nuevo") 
+        i.bi.bi-plus-circle.me-2
+        | Nuevo Producto
+      span.text-muted Total: #{productos.length} productos
+
+    table.table.table-striped.table-hover
+      thead
+        tr
+          th Nombre
+          th Categoría
+          th Precio
+          th Stock
+          th Descripción
+          th Acciones
+      tbody
+        each producto in productos
+          tr
+            td= producto.nombre
+            td= producto.categoria
+            td $#{producto.precio.toFixed(2)}
+            td= producto.stock
+            td= producto.descripcion
+            td
+              a.btn.btn-sm.btn-warning.me-2(href=`/productos/editar/${producto._id}`)
+                i.bi.bi-pencil-fill
+                | Editar
+              a.btn.btn-sm.btn-danger(href=`/productos/eliminar/${producto._id}`)
+                i.bi.bi-trash-fill
+                | Eliminar
+
