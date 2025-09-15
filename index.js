@@ -16,6 +16,7 @@ const ventasRoutes = require('./Backend/routes/ventasRoutes');
 const cajaRoutes = require('./Backend/routes/cajaRoutes');
 const userRoutes = require('./Backend/routes/userRoutes');
 const webRoutes = require('./Backend/routes/webRoutes');
+const mascotaRoutes = require('./Backend/routes/mascotaRoutes');
 
 // Conexión con Mongo
 mongoose.connect(process.env.MONGO_URI, {
@@ -46,7 +47,8 @@ app.use('/productos', productRoutes);
 app.use('/api/compras', comprasRoutes);
 app.use('/api/ventas', ventasRoutes);
 app.use('/api/caja', cajaRoutes);
-app.use('/', webRoutes); // Rutas web (index, login, dashboard)
+app.use('/', webRoutes); 
+app.use('/mascotas', mascotaRoutes);
 
 
 // Iniciar servidor
