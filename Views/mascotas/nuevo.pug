@@ -8,21 +8,21 @@ block content
       label.form-label(for="nombre") Nombre
       input.form-control(type="text" name="nombre" required)
     .mb-3
-      label.form-label(for="tipo") Tipo de Mascota
-      input.form-control(type="text" name="tipo" required)
+      label.form-label(for="especie") Especie
+      input.form-control(type="text" name="especie" required)
     .mb-3
       label.form-label(for="raza") Raza
-      input.form-control(type="text" name="raza")
+      input.form-control(type="text" name="raza" required)
     .mb-3
       label.form-label(for="edad") Edad
-      input.form-control(type="number" name="edad" min="0")
+      input.form-control(type="number" name="edad" required)
     .mb-3
       label.form-label(for="cliente") Dueño
-      select.form-control(name="cliente" required)
-        option(value="") Seleccione un cliente
+      select.form-select(name="cliente" required)
+        option(value="") -- Seleccione un cliente --
         each cliente in clientes
-          option(value=cliente._id)= cliente.nombre + ' ' + cliente.apellido
-    .d-flex.mt-4
-      button.btn.btn-nuevo(type="submit") Crear Mascota
-      a.btn.btn-secondary.ms-2(href="/mascotas") Cancelar
+          option(value=cliente._id) #{cliente.nombre} #{cliente.apellido}
+    button.btn.btn-nuevo(type="submit") Crear Mascota
+    a.btn.btn-secondary(href="/mascotas") Cancelar
+
 
