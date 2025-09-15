@@ -80,3 +80,28 @@ exports.eliminarProducto = async (req, res) => {
     res.status(500).json({ mensaje: 'Error al eliminar el producto', error: error.message });
   }
 };
+
+exports.vistaProductos = async (req, res) => {
+  try {
+    const productos = await Producto.find();
+    res.render('productos/dashboard', { titulo: 'Listado de Productos', productos });
+  } catch (error) {
+    res.status(500).send('Error al cargar la vista: ' + error.message);
+  }
+};
+
+// GET /productos/nuevo → Formulario para crear un producto
+exports.formularioCrearProducto = (req, res) => {
+  res.render('productos/nuevo', { titulo: 'Nuevo Producto' });
+};
+
+// GET /productos/editar/:id → Formulario para editar un producto
+exports.formularioEditarProducto = async (req, res) => {
+  try {
+    const producto = await Producto.findById(req.params.id);
+    if (!producto) return res.status(404).send('Producto no encontrado');
+    res.render('productos/editar', { titulo: 'Editar Producto', producto });
+  } catch (error) {
+    res.status(500).send('Error al cargar el producto: ' + error.message);
+  }
+};
