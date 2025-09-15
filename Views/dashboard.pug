@@ -32,12 +32,12 @@ html(lang="es")
         flex: 1;
       }
 
-
       .dashboard-btn {
         width: 350px;
         height: 180px;
         margin-top: 10px;
-        font-size: 1.4rem;
+        margin: 10px;
+        font-size: 1.4rem; /* más grande */
         font-weight: 600;
         color: #fff;
         border-radius: 15px;
@@ -48,35 +48,29 @@ html(lang="es")
         transition: transform 0.2s, box-shadow 0.2s;
         text-decoration: none;
       }
-      .dashboard-btn i {
-        font-size: 3.2rem;
+      .dashboard-btn img, .dashboard-btn i {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
       }
       .dashboard-btn:hover {
-        transform: scale(1.1);
+        transform: scale(1.05);
         box-shadow: 0 8px 20px rgba(0,0,0,0.3);
         color: #fff;
       }
 
-      .btn-clientes { background-color: #762051; }
-      .btn-productos { background-color: #9A4475; }
-      .btn-compras { background-color: #E184B9; }
-      .btn-ventas { background-color: #762051; }
-      .btn-caja { background-color: #9A4475; }
-      .btn-usuarios { background-color: #E184B9; }
-      .btn-reportes { background-color: #762051; }
-      .btn-config { background-color: #9A4475; }
-      .btn-ayuda { background-color: #E184B9; }
-
+      .fila1 .dashboard-btn { background-color: #6C204B; }
+      .fila2 .dashboard-btn { background-color: #9A4475; }
+      .fila3 .dashboard-btn { background-color: #E49AC3; }
 
       .dashboard-header {
-      width: 100%;
-      height: 60px;
-      background-color: #762051;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-      margin-bottom: 50px; 
+        width: 100%;
+        height: 60px;
+        background-color: #762051;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        margin-bottom: 80px;
       }
       .dashboard-header .logo {
         height: 40px;
@@ -84,13 +78,17 @@ html(lang="es")
       .dashboard-header .user {
         color: #fff;
         font-weight: 200;
+      }
+
+      .dashboard-row {
         display: flex;
-        align-items: center;
-        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
       }
 
       footer {
-        background-color: #5E0F3C;
+        background-color: #762051;
         color: #fff;
         text-align: center;
         padding: 15px;
@@ -98,53 +96,53 @@ html(lang="es")
 
   body
     header.dashboard-header
-      img.logo(src="/images/logo.png" alt="Logo" height="40")
+      img.logo(src="/images/logo.png" alt="Logo")
       div.user
         i.bi.bi-person-circle
         |  Ferrazin Nervegna Mayra
 
     main.container
 
-      .row.justify-content-center
+      .row.justify-content-center.fila1
         .col-md-4.d-flex.justify-content-center
-          a.dashboard-btn.btn-clientes(href="/clientes")
-            img(src="/images/icono-clientes.png" alt="Clientes" style="width:70px; margin-bottom:5px;")
+          a.dashboard-btn(href="/clientes")
+            img(src="/images/icono-clientes.png" alt="Clientes" style="width:70px; margin-bottom:0px;")
             | CLIENTES
         .col-md-4.d-flex.justify-content-center
-          a.dashboard-btn.btn-productos(href="/productos")
-            i.bi.bi-basket3
+          a.dashboard-btn(href="/mascotas")
+            img(src="/images/icono-mascotas.png" alt="Mascotas" style="width:90px; margin-bottom:0px;")
+            | MASCOTAS
+        .col-md-4.d-flex.justify-content-center
+          a.dashboard-btn(href="/productos")
+            img(src="/images/icono-productos.png" alt="Productos" style="width:90px; margin-bottom:0px;")
             | PRODUCTOS
-        .col-md-4.d-flex.justify-content-center
-          a.dashboard-btn.btn-compras(href="/compras")
-            i.bi.bi-cart-plus
-            | COMPRAS
 
-      .row.justify-content-center
+      .row.justify-content-center.fila2
         .col-md-4.d-flex.justify-content-center
-          a.dashboard-btn.btn-ventas(href="/ventas")
-            i.bi.bi-currency-dollar
+          a.dashboard-btn(href="/ventas")
+            img(src="/images/icono-ventas.png" alt="Ventas" style="width:80px; margin-bottom:0px;")
             | VENTAS
         .col-md-4.d-flex.justify-content-center
-          a.dashboard-btn.btn-caja(href="/caja")
-            i.bi.bi-wallet2
+          a.dashboard-btn(href="/compras")
+            img(src="/images/icono-compras.png" alt="Compras" style="width:80px; margin-bottom:0px;")
+            | COMPRAS
+        .col-md-4.d-flex.justify-content-center
+          a.dashboard-btn(href="/caja")
+            img(src="/images/icono-caja.png" alt="Caja" style="width:80px; margin-bottom:0px;")
             | CAJA
-        .col-md-4.d-flex.justify-content-center
-          a.dashboard-btn.btn-usuarios(href="/usuarios")
-            i.bi.bi-person-badge
-            | USUARIOS
 
-      .row.justify-content-center
+      .row.justify-content-center.fila3
         .col-md-4.d-flex.justify-content-center
-          a.dashboard-btn.btn-reportes(href="/reportes")
-            i.bi.bi-bar-chart
-            | REPORTES
+          a.dashboard-btn(href="/agenda")
+            img(src="/images/icono-agenda.png" alt="Agenda" style="width:80px; margin-bottom:0px;")
+            | AGENDA
         .col-md-4.d-flex.justify-content-center
-          a.dashboard-btn.btn-config(href="/config")
-            i.bi.bi-gear
+          a.dashboard-btn(href="/config")
+            img(src="/images/icono-config.png" alt="Configuración" style="width:80px; margin-bottom:0px;")
             | CONFIGURACIÓN
         .col-md-4.d-flex.justify-content-center
-          a.dashboard-btn.btn-ayuda(href="/ayuda")
-            i.bi.bi-question-circle
+          a.dashboard-btn(href="/ayuda")
+            img(src="/images/icono-ayuda.png" alt="Ayuda" style="width:80px; margin-bottom:0px;")
             | AYUDA
 
     footer
