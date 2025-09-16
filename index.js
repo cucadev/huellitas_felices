@@ -18,6 +18,7 @@ const userRoutes = require('./Backend/routes/userRoutes');
 const webRoutes = require('./Backend/routes/webRoutes');
 const mascotaRoutes = require('./Backend/routes/mascotaRoutes');
 
+
 // Conexión con Mongo
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
@@ -44,7 +45,7 @@ app.use(express.urlencoded({ extended: true })); // Para recibir formularios
 app.use('/api/users', userRoutes);
 app.use('/clientes', clientesRoutes);
 app.use('/productos', productRoutes);
-app.use('/api/compras', comprasRoutes);
+app.use('/compras', comprasRoutes);
 app.use('/api/ventas', ventasRoutes);
 app.use('/api/caja', cajaRoutes);
 app.use('/', webRoutes); 
