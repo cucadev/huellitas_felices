@@ -2,10 +2,10 @@ extends ../layout
 
 block content
   .d-flex.justify-content-between.align-items-center.mb-4
-    h2 Compras
+    h2 Listado de Compras
     a.btn.btn-nuevo(href="/compras/nuevo")
       i.bi.bi-plus-lg
-      |  Nueva Compra
+      | Nuevo Compra
 
   if compras.length
     table.table.table-striped.table-bordered
@@ -20,13 +20,16 @@ block content
       tbody
         each compra in compras
           tr
-            td= compra.producto ? compra.producto.nombre : 'Producto eliminado'
+            td= compra.producto.nombre
             td= compra.cantidad
             td $#{compra.precioUnitario.toFixed(2)}
             td= compra.proveedor
-            td= compra.createdAt.toLocaleDateString('es-AR')
+            td= compra.createdAt.toLocaleDateString()
             td
-              a.btn.btn-acciones.eliminar(href=`/compras/eliminar/${compra._id}`)
+              a.btn.btn-acciones.editar(href=`/compras/editar/${compra._id}`)
+                i.bi.bi-pencil-fill
+              a.btn.btn-acciones.eliminar.ms-2(href=`/compras/eliminar/${compra._id}`)
                 i.bi.bi-trash-fill
   else
     p.text-center.mt-4 No hay compras registradas.
+

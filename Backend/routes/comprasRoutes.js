@@ -43,6 +43,29 @@ router.post('/nuevo', async (req, res) => {
   }
 });
 
+// Formulario para editar compra
+router.get('/editar/:id', async (req, res) => {
+  try {
+    const compra = await Compra.findById(req.params.id).populate('producto');
+    if (!compra) return res.status(404).send('Compra no encontrada');
+    const productos = await Producto.find();
+    res.render('compras/editar', { titulo: 'Editar Compra', compra, productos });
+  } catch (error) {
+    res.status(500).send('Error al cargar la compra: ' + error.message);
+  }
+});
+
+// Guardar cambios de la compra
+router.post('/editar/:id', async (req, res) => {
+  try {
+    const { producto, cantidad, precioUnitario, proveedor } = req.body;
+    await Compra.findByIdAndUpdate(req.params.id, { producto, cantidad, precioUnitario, proveedor });
+    res.redirect('/compras');
+  } catch (error) {
+    res.status(400).send('Error al actualizar la compra: ' + error.message);
+  }
+});
+
 // Eliminar compra
 router.get('/eliminar/:id', async (req, res) => {
   try {
@@ -54,3 +77,4 @@ router.get('/eliminar/:id', async (req, res) => {
 });
 
 module.exports = router;
+
