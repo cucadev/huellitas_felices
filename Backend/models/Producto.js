@@ -7,7 +7,7 @@ const productoSchema = new mongoose.Schema(
     stock:      { type: Number, required: true, min: 0 },
     categoria:  { type: String, required: true, trim: true },
     descripcion:{ type: String, trim: true }
-    // imagen: String  // ← lo dejamos para más adelante, si querés subir fotos
+    // imagen: String  //
   },
   { timestamps: true }
 );

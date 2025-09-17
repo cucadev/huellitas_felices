@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const compraSchema = new mongoose.Schema({
   producto: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Producto',  // debe coincidir con el nombre del modelo producto que tengas
+    ref: 'Producto',
     required: true
   },
   cantidad: {

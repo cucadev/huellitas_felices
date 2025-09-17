@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 const MascotaSchema = new mongoose.Schema({
   nombre: { type: String, required: true },
-  especie: { type: String, required: true }, // Perro, Gato, etc.
+  especie: { type: String, required: true },
   raza: { type: String },
   edad: { type: Number },
-  cliente: { type: mongoose.Schema.Types.ObjectId, ref: 'Cliente', required: true }, // Dueño
+  cliente: { type: mongoose.Schema.Types.ObjectId, ref: 'Cliente', required: true },
   observaciones: { type: String }
 });
 
