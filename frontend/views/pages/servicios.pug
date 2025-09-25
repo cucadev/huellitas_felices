@@ -1,0 +1,142 @@
+extends ../layouts/main
+
+block content
+  .container-fluid.py-4
+    .row
+      .col-12
+        .card.shadow-sm
+          .card-header.bg-primary.text-white.d-flex.justify-content-between.align-items-center
+            h4.mb-0
+              i.fas.fa-stethoscope.me-2
+              | Gestión de Servicios Veterinarios
+            button.btn.btn-success.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalCrearServicio")
+              i.fas.fa-plus.me-1
+              | + Nuevo Servicio
+          
+          .card-body
+            .table-responsive
+              table.table.table-hover.table-striped#tablaServicios
+                thead.table-dark
+                  tr
+                    th(scope="col") Nombre del Servicio
+                    th(scope="col") Descripción
+                    th(scope="col") Precio
+                    th(scope="col" style="width: 120px;") Acciones
+                tbody
+                  tr
+                    td Consulta General
+                    td Revisión médica completa para mascotas
+                    td $2500
+                    td
+                      .btn-group(role="group")
+                        button.btn.btn-warning.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalEditarServicio" onclick="editarServicio(1, 'Consulta General', 'Revisión médica completa para mascotas', 25.00)")
+                          i.fas.fa-edit Editar
+                        button.btn.btn-danger.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalEliminarServicio" onclick="eliminarServicio(1, 'Consulta General')")
+                          i.fas.fa-trash Eliminar
+                  tr
+                    td Vacunación
+                    td Aplicación de vacunas preventivas
+                    td $1500
+                    td
+                      .btn-group(role="group")
+                        button.btn.btn-warning.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalEditarServicio" onclick="editarServicio(2, 'Vacunación', 'Aplicación de vacunas preventivas', 15.00)")
+                          i.fas.fa-edit Editar
+                        button.btn.btn-danger.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalEliminarServicio" onclick="eliminarServicio(2, 'Vacunación')")
+                          i.fas.fa-trash Eliminar
+                  tr
+                    td Cirugía Menor
+                    td Procedimientos quirúrgicos ambulatorios
+                    td $7500
+                    td
+                      .btn-group(role="group")
+                        button.btn.btn-warning.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalEditarServicio" onclick="editarServicio(3, 'Cirugía Menor', 'Procedimientos quirúrgicos ambulatorios', 75.00)")
+                          i.fas.fa-edit Editar
+                        button.btn.btn-danger.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalEliminarServicio" onclick="eliminarServicio(3, 'Cirugía Menor')")
+                          i.fas.fa-trash Eliminar
+
+  // Modal Crear Servicio
+  #modalCrearServicio.modal.fade(tabindex="-1")
+    .modal-dialog.modal-lg
+      .modal-content
+        .modal-header.bg-success.text-white
+          h5.modal-title
+            i.fas.fa-plus-circle.me-2
+            | Crear Nuevo Servicio
+          button.btn-close.btn-close-white(type="button" data-bs-dismiss="modal")
+        .modal-body
+          form#formCrearServicio
+            .row
+              .col-md-6
+                .mb-3
+                  label.form-label(for="nombreServicioCrear") Nombre del Servicio *
+                  input.form-control#nombreServicioCrear(type="text" required placeholder="Ej: Consulta General")
+              .col-md-6
+                .mb-3
+                  label.form-label(for="precioServicioCrear") Precio *
+                  .input-group
+                    span.input-group-text $
+                    input.form-control#precioServicioCrear(type="number" step="0.01" min="0" required placeholder="0.00")
+            .mb-3
+              label.form-label(for="descripcionServicioCrear") Descripción *
+              textarea.form-control#descripcionServicioCrear(rows="3" required placeholder="Descripción detallada del servicio...")
+        .modal-footer
+          button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancelar
+          button.btn.btn-success(type="submit" form="formCrearServicio")
+            i.fas.fa-save.me-1
+            | Crear Servicio
+
+  // Modal Editar Servicio
+  #modalEditarServicio.modal.fade(tabindex="-1")
+    .modal-dialog.modal-lg
+      .modal-content
+        .modal-header.bg-warning.text-dark
+          h5.modal-title
+            i.fas.fa-edit.me-2
+            | Editar Servicio
+          button.btn-close(type="button" data-bs-dismiss="modal")
+        .modal-body
+          form#formEditarServicio
+            input#idServicioEditar(type="hidden")
+            .row
+              .col-md-6
+                .mb-3
+                  label.form-label(for="nombreServicioEditar") Nombre del Servicio *
+                  input.form-control#nombreServicioEditar(type="text" required)
+              .col-md-6
+                .mb-3
+                  label.form-label(for="precioServicioEditar") Precio *
+                  .input-group
+                    span.input-group-text $
+                    input.form-control#precioServicioEditar(type="number" step="0.01" min="0" required)
+            .mb-3
+              label.form-label(for="descripcionServicioEditar") Descripción *
+              textarea.form-control#descripcionServicioEditar(rows="3" required)
+        .modal-footer
+          button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancelar
+          button.btn.btn-warning(type="submit" form="formEditarServicio")
+            i.fas.fa-save.me-1
+            | Guardar Cambios
+
+  // Modal Eliminar Servicio
+  #modalEliminarServicio.modal.fade(tabindex="-1")
+    .modal-dialog
+      .modal-content
+        .modal-header.bg-danger.text-white
+          h5.modal-title
+            i.fas.fa-exclamation-triangle.me-2
+            | Eliminar Servicio
+          button.btn-close.btn-close-white(type="button" data-bs-dismiss="modal")
+        .modal-body
+          .text-center
+            i.fas.fa-trash-alt.text-danger.mb-3(style="font-size: 3rem;")
+            h6 ¿Estás seguro de que deseas eliminar este servicio?
+            p.text-muted#servicioAEliminar Este servicio será eliminado permanentemente.
+            .alert.alert-warning.mt-3
+              small
+                i.fas.fa-info-circle.me-1
+                | Esta acción no se puede deshacer
+        .modal-footer
+          button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancelar
+          button.btn.btn-danger#btnConfirmarEliminar(type="button")
+            i.fas.fa-trash.me-1
+            | Eliminar Servicio

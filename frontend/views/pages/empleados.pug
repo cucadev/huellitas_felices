@@ -1,0 +1,322 @@
+extends ../layouts/main
+
+block content
+  .container-fluid.py-4
+    .row
+      .col-12
+        .card.shadow-sm
+          .card-header.bg-primary.text-white.d-flex.justify-content-between.align-items-center
+            h4.mb-0
+              i.bi.bi-person-badge-fill.me-2
+              | Gestión de Empleados
+            button.btn.btn-success.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalCrearEmpleado")
+              i.bi.bi-person-plus-fill.me-1
+              | Nuevo Empleado
+          
+          .card-body
+            .table-responsive
+              table.table.table-hover.table-striped#tablaEmpleados
+                thead.table-dark
+                  tr
+                    th(scope="col") #
+                    th(scope="col") DNI
+                    th(scope="col") Nombre
+                    th(scope="col") Apellido
+                    th(scope="col") Teléfono
+                    th(scope="col") Rol
+                    th(scope="col") Servicios
+                    th(scope="col" style="width: 120px;") Acciones
+                tbody
+                  tr
+                    td 1
+                    td 12.345.678
+                    td María
+                    td González
+                    td +54 11 1234-5678
+                    td 
+                      span.badge.bg-primary Veterinaria
+                    td
+                      button.btn.btn-outline-info.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalVerServicios")
+                        i.bi.bi-eye-fill.me-1
+                        | Ver más
+                    td
+                      .btn-group(role="group")
+                        button.btn.btn-outline-warning.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalEditarEmpleado")
+                          i.bi.bi-pencil-square
+                        button.btn.btn-outline-danger.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalEliminarEmpleado")
+                          i.bi.bi-trash3-fill
+                  tr
+                    td 2
+                    td 23.456.789
+                    td Carlos
+                    td Rodríguez
+                    td +54 11 2345-6789
+                    td 
+                      span.badge.bg-secondary Auxiliar Veterinario
+                    td
+                      button.btn.btn-outline-info.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalVerServicios")
+                        i.bi.bi-eye-fill.me-1
+                        | Ver más
+                    td
+                      .btn-group(role="group")
+                        button.btn.btn-outline-warning.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalEditarEmpleado")
+                          i.bi.bi-pencil-square
+                        button.btn.btn-outline-danger.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalEliminarEmpleado")
+                          i.bi.bi-trash3-fill
+                  tr
+                    td 3
+                    td 34.567.890
+                    td Ana
+                    td López
+                    td +54 11 3456-7890
+                    td 
+                      span.badge.bg-success Recepcionista
+                    td
+                      button.btn.btn-outline-info.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalVerServicios")
+                        i.bi.bi-eye-fill.me-1
+                        | Ver más
+                    td
+                      .btn-group(role="group")
+                        button.btn.btn-outline-warning.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalEditarEmpleado")
+                          i.bi.bi-pencil-square
+                        button.btn.btn-outline-danger.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalEliminarEmpleado")
+                          i.bi.bi-trash3-fill
+
+  //- Modal Ver Servicios
+  #modalVerServicios.modal.fade(tabindex="-1")
+    .modal-dialog.modal-lg
+      .modal-content
+        .modal-header.bg-info.text-white
+          h5.modal-title
+            i.bi.bi-list-check.me-2
+            | Servicios que brinda
+          button.btn-close.btn-close-white(type="button" data-bs-dismiss="modal")
+        .modal-body
+          .text-center
+            h6#nombreEmpleadoServicios [Nombre del Empleado]
+            hr
+            #listaServiciosEmpleado
+              //- Ejemplo si TIENE servicios:
+              .row
+                .col-md-6.mb-2
+                  .d-flex.align-items-center
+                    i.bi.bi-check-circle-fill.text-success.me-2
+                    span Consulta General
+                .col-md-6.mb-2
+                  .d-flex.align-items-center
+                    i.bi.bi-check-circle-fill.text-success.me-2
+                    span Cirugía Menor
+                .col-md-6.mb-2
+                  .d-flex.align-items-center
+                    i.bi.bi-check-circle-fill.text-success.me-2
+                    span Vacunación
+              
+              //- Ejemplo si NO TIENE servicios (comentado):
+              //- .alert.alert-info.text-center
+              //-   i.bi.bi-info-circle-fill.me-2
+              //-   strong No brinda servicios
+              //-   br
+              //-   small Este empleado no tiene servicios asignados
+        .modal-footer
+          button.btn.btn-info(type="button" data-bs-dismiss="modal") Cerrar
+
+  //- Modal Crear Empleado
+  #modalCrearEmpleado.modal.fade(tabindex="-1")
+    .modal-dialog.modal-xl
+      .modal-content
+        .modal-header.bg-success.text-white
+          h5.modal-title
+            i.bi.bi-person-plus-fill.me-2
+            | Crear Nuevo Empleado
+          button.btn-close.btn-close-white(type="button" data-bs-dismiss="modal")
+        .modal-body
+          form#formCrearEmpleado
+            .row
+              .col-md-4
+                .mb-3
+                  label.form-label(for="dniEmpleadoCrear") DNI *
+                  input.form-control#dniEmpleadoCrear(type="text" required placeholder="12.345.678")
+                  .form-text Formato: XX.XXX.XXX
+              .col-md-4
+                .mb-3
+                  label.form-label(for="nombreEmpleadoCrear") Nombre *
+                  input.form-control#nombreEmpleadoCrear(type="text" required placeholder="María")
+              .col-md-4
+                .mb-3
+                  label.form-label(for="apellidoEmpleadoCrear") Apellido *
+                  input.form-control#apellidoEmpleadoCrear(type="text" required placeholder="González")
+            .row
+              .col-md-6
+                .mb-3
+                  label.form-label(for="telefonoEmpleadoCrear") Teléfono *
+                  input.form-control#telefonoEmpleadoCrear(type="tel" required placeholder="+54 11 1234-5678")
+              .col-md-6
+                .mb-3
+                  label.form-label(for="rolEmpleadoCrear") Rol *
+                  select.form-select#rolEmpleadoCrear(required)
+                    option(value="") Seleccionar rol...
+                    option(value="Veterinaria") Veterinaria
+                    option(value="Auxiliar Veterinario") Auxiliar Veterinario
+                    option(value="Recepcionista") Recepcionista
+                    option(value="Peluquero Canino") Peluquero Canino
+                    option(value="Administrador") Administrador
+            .mb-3
+              label.form-label Servicios que puede brindar
+              .form-text.mb-2 Seleccionar todos los servicios que puede realizar (opcional)
+              .row
+                .col-md-4
+                  .form-check
+                    input.form-check-input#servicioConsultaCrear(type="checkbox" value="Consulta General")
+                    label.form-check-label(for="servicioConsultaCrear") Consulta General
+                .col-md-4
+                  .form-check
+                    input.form-check-input#servicioVacunacionCrear(type="checkbox" value="Vacunación")
+                    label.form-check-label(for="servicioVacunacionCrear") Vacunación
+                .col-md-4
+                  .form-check
+                    input.form-check-input#servicioCirugiaCrear(type="checkbox" value="Cirugía Menor")
+                    label.form-check-label(for="servicioCirugiaCrear") Cirugía Menor
+              .row.mt-2
+                .col-md-4
+                  .form-check
+                    input.form-check-input#servicioDesparasitacionCrear(type="checkbox" value="Desparasitación")
+                    label.form-check-label(for="servicioDesparasitacionCrear") Desparasitación
+                .col-md-4
+                  .form-check
+                    input.form-check-input#servicioRadiografiaCrear(type="checkbox" value="Radiografía")
+                    label.form-check-label(for="servicioRadiografiaCrear") Radiografía
+                .col-md-4
+                  .form-check
+                    input.form-check-input#servicioAnalisisCrear(type="checkbox" value="Análisis Clínicos")
+                    label.form-check-label(for="servicioAnalisisCrear") Análisis Clínicos
+              .row.mt-2
+                .col-md-4
+                  .form-check
+                    input.form-check-input#servicioGroomingCrear(type="checkbox" value="Grooming")
+                    label.form-check-label(for="servicioGroomingCrear") Grooming
+                .col-md-4
+                  .form-check
+                    input.form-check-input#servicioEmergenciaCrear(type="checkbox" value="Atención de Emergencia")
+                    label.form-check-label(for="servicioEmergenciaCrear") Atención de Emergencia
+                .col-md-4
+                  .form-check
+                    input.form-check-input#servicioRecepcionCrear(type="checkbox" value="Atención al Cliente")
+                    label.form-check-label(for="servicioRecepcionCrear") Atención al Cliente
+        .modal-footer
+          button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancelar
+          button.btn.btn-success(type="submit")
+            i.bi.bi-check-circle-fill.me-1
+            | Crear Empleado
+
+  //- Modal Editar Empleado
+  #modalEditarEmpleado.modal.fade(tabindex="-1")
+    .modal-dialog.modal-xl
+      .modal-content
+        .modal-header.bg-warning.text-dark
+          h5.modal-title
+            i.bi.bi-pencil-square.me-2
+            | Editar Empleado
+          button.btn-close(type="button" data-bs-dismiss="modal")
+        .modal-body
+          form#formEditarEmpleado
+            input#idEmpleadoEditar(type="hidden")
+            .row
+              .col-md-4
+                .mb-3
+                  label.form-label(for="dniEmpleadoEditar") DNI *
+                  input.form-control#dniEmpleadoEditar(type="text" required value="12.345.678")
+                  .form-text Formato: XX.XXX.XXX
+              .col-md-4
+                .mb-3
+                  label.form-label(for="nombreEmpleadoEditar") Nombre *
+                  input.form-control#nombreEmpleadoEditar(type="text" required value="María")
+              .col-md-4
+                .mb-3
+                  label.form-label(for="apellidoEmpleadoEditar") Apellido *
+                  input.form-control#apellidoEmpleadoEditar(type="text" required value="González")
+            .row
+              .col-md-6
+                .mb-3
+                  label.form-label(for="telefonoEmpleadoEditar") Teléfono *
+                  input.form-control#telefonoEmpleadoEditar(type="tel" required value="+54 11 1234-5678")
+              .col-md-6
+                .mb-3
+                  label.form-label(for="rolEmpleadoEditar") Rol *
+                  select.form-select#rolEmpleadoEditar(required)
+                    option(value="") Seleccionar rol...
+                    option(value="Veterinaria" selected) Veterinaria
+                    option(value="Auxiliar Veterinario") Auxiliar Veterinario
+                    option(value="Recepcionista") Recepcionista
+                    option(value="Peluquero Canino") Peluquero Canino
+                    option(value="Administrador") Administrador
+            .mb-3
+              label.form-label Servicios que puede brindar
+              .form-text.mb-2 Seleccionar todos los servicios que puede realizar (opcional)
+              .row
+                .col-md-4
+                  .form-check
+                    input.form-check-input#servicioConsultaEditar(type="checkbox" value="Consulta General" checked)
+                    label.form-check-label(for="servicioConsultaEditar") Consulta General
+                .col-md-4
+                  .form-check
+                    input.form-check-input#servicioVacunacionEditar(type="checkbox" value="Vacunación")
+                    label.form-check-label(for="servicioVacunacionEditar") Vacunación
+                .col-md-4
+                  .form-check
+                    input.form-check-input#servicioCirugiaEditar(type="checkbox" value="Cirugía Menor" checked)
+                    label.form-check-label(for="servicioCirugiaEditar") Cirugía Menor
+              .row.mt-2
+                .col-md-4
+                  .form-check
+                    input.form-check-input#servicioDesparasitacionEditar(type="checkbox" value="Desparasitación")
+                    label.form-check-label(for="servicioDesparasitacionEditar") Desparasitación
+                .col-md-4
+                  .form-check
+                    input.form-check-input#servicioRadiografiaEditar(type="checkbox" value="Radiografía")
+                    label.form-check-label(for="servicioRadiografiaEditar") Radiografía
+                .col-md-4
+                  .form-check
+                    input.form-check-input#servicioAnalisisEditar(type="checkbox" value="Análisis Clínicos")
+                    label.form-check-label(for="servicioAnalisisEditar") Análisis Clínicos
+              .row.mt-2
+                .col-md-4
+                  .form-check
+                    input.form-check-input#servicioGroomingEditar(type="checkbox" value="Grooming")
+                    label.form-check-label(for="servicioGroomingEditar") Grooming
+                .col-md-4
+                  .form-check
+                    input.form-check-input#servicioEmergenciaEditar(type="checkbox" value="Atención de Emergencia")
+                    label.form-check-label(for="servicioEmergenciaEditar") Atención de Emergencia
+                .col-md-4
+                  .form-check
+                    input.form-check-input#servicioRecepcionEditar(type="checkbox" value="Atención al Cliente")
+                    label.form-check-label(for="servicioRecepcionEditar") Atención al Cliente
+        .modal-footer
+          button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancelar
+          button.btn.btn-warning(type="submit")
+            i.bi.bi-check-circle-fill.me-1
+            | Guardar Cambios
+
+  //- Modal Eliminar Empleado
+  #modalEliminarEmpleado.modal.fade(tabindex="-1")
+    .modal-dialog
+      .modal-content
+        .modal-header.bg-danger.text-white
+          h5.modal-title
+            i.bi.bi-exclamation-triangle-fill.me-2
+            | Eliminar Empleado
+          button.btn-close.btn-close-white(type="button" data-bs-dismiss="modal")
+        .modal-body
+          .text-center
+            i.bi.bi-person-x-fill.text-danger.mb-3(style="font-size: 3rem;")
+            h6 ¿Estás seguro de que deseas eliminar este empleado?
+            p.text-muted#empleadoAEliminar "[Nombre del empleado]" será eliminado permanentemente.
+            .alert.alert-warning.mt-3
+              small
+                i.bi.bi-info-circle-fill.me-1
+                | Esta acción no se puede deshacer
+        .modal-footer
+          button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancelar
+          button.btn.btn-danger#btnConfirmarEliminarEmpleado(type="button")
+            i.bi.bi-trash3-fill.me-1
+            | Eliminar Empleado
