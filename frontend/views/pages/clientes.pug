@@ -2,152 +2,221 @@ extends ../layouts/main
 
 block content
   // HEADER DE SECCIÓN
-  .row.mb-4
-    .col-12
-      .d-flex.justify-content-between.align-items-center
-        div
-          h1.fw-bold.text-dark.mb-1
-            i.bi.bi-people-fill.text-primary.me-2
-            | Gestión de Clientes
-        
-        // BOTÓN AGREGAR
-        button.btn.btn-primary.btn-lg(data-bs-toggle="modal", data-bs-target="#modalCliente")
-          i.bi.bi-person-plus-fill.me-2
-          | Agregar Cliente
+  .container-fluid.py-4
+    .row
+      .col-12
+        .card.shadow-sm
+          .card-header.bg-primary.text-white.d-flex.justify-content-between.align-items-center
+            h4.mb-0
+              i.bi.bi-people-fill.me-2
+              | Gestión de Clientes
+            button.btn.btn-success.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalCliente")
+              i.bi.bi-person-plus-fill.me-1
+              | Agregar Cliente
+          .card-body
+            .table-responsive
+              table.table.table-hover.table-striped.mb-0#tablaClientes
+                thead.table-dark
+                  tr
+                    th.text-center #
+                    th DNI
+                    th Nombre
+                    th Apellido
+                    th.text-center Mascotas
+                    th Dirección
+                    th Email
+                    th Teléfono
+                    th.text-center Acciones
+                tbody
+                  // DATOS DE EJEMPLO (después los reemplazarás con API)
+                  tr
+                    td.text-center 1
+                    td
+                      strong 12345678
+                    td Juan Carlos
+                    td Pérez García
+                    td.text-center
+                      button.btn.btn-outline-info.btn-sm(
+                        type="button",
+                        data-bs-toggle="modal",
+                        data-bs-target="#modalInfoMascotas",
+                        data-cliente-id="1",
+                        data-cliente-nombre="Juan Carlos Pérez García"
+                      )
+                        i.bi.bi-eye-fill.me-1
+                        | Ver
+                    td Av. Corrientes 1234
+                    td juan.perez@email.com
+                    td +54 11 1234-5678
+                    td.text-center
+                      .btn-group(role="group")
+                        button.btn.btn-warning.btn-sm.me-1(
+                          type="button",
+                          data-bs-toggle="modal",
+                          data-bs-target="#modalEditarCliente",
+                          onclick="cargarDatosCliente(1, 'Juan Carlos', 'Pérez García', '12345678', 'juan.perez@email.com', '+54 11 1234-5678', 'Buenos Aires', 'Av. Corrientes 1234')"
+                        )
+                          i.bi.bi-pencil
+                        button.btn.btn-danger.btn-sm(
+                          type="button",
+                          data-bs-toggle="modal",
+                          data-bs-target="#modalEliminarCliente",
+                          onclick="cargarIdCliente(1, 'Juan Carlos Pérez García')"
+                        )
+                          i.bi.bi-trash
+                  tr
+                    td.text-center 2
+                    td
+                      strong 87654321
+                    td María Elena
+                    td González López
+                    td.text-center
+                      button.btn.btn-outline-info.btn-sm(
+                        type="button",
+                        data-bs-toggle="modal",
+                        data-bs-target="#modalInfoMascotas",
+                        data-cliente-id="2",
+                        data-cliente-nombre="María Elena González López"
+                      )
+                        i.bi.bi-eye-fill.me-1
+                        | Ver
+                    td Calle Falsa 456
+                    td maria.gonzalez@email.com
+                    td +54 11 8765-4321
+                    td.text-center
+                      .btn-group(role="group")
+                        button.btn.btn-warning.btn-sm.me-1(
+                          type="button",
+                          data-bs-toggle="modal",
+                          data-bs-target="#modalEditarCliente",
+                          onclick="cargarDatosCliente(2, 'María Elena', 'González López', '87654321', 'maria.gonzalez@email.com', '+54 11 8765-4321', 'Buenos Aires', 'Calle Falsa 456')"
+                        )
+                          i.bi.bi-pencil
+                        button.btn.btn-danger.btn-sm(
+                          type="button",
+                          data-bs-toggle="modal",
+                          data-bs-target="#modalEliminarCliente",
+                          onclick="cargarIdCliente(2, 'María Elena González López')"
+                        )
+                          i.bi.bi-trash
 
-  // TABLA DE CLIENTES
-  .row
-    .col-12
-      .card.shadow-sm.border-0
-
-        .card-body.p-0
-          .table-responsive
-            table.table.table-hover.mb-0#tablaClientes
-              thead.table-dark
-                tr
-                  th.text-center #
-                  th DNI
-                  th Nombre
-                  th Apellido
-                  th.text-center Mascotas
-                  th Dirección
-                  th Email
-                  th Teléfono
-                  th.text-center Acciones
-              
-              tbody
-                // DATOS DE EJEMPLO (después los reemplazarás con API)
-                tr
-                  td.text-center 1
-                  td 
-                    strong 12345678
-                  td Juan Carlos
-                  td Pérez García
-                  td.text-center
-                    button.btn.btn-outline-info.btn-sm(
-                      data-bs-toggle="modal", 
-                      data-bs-target="#modalMascotas",
-                      data-cliente-id="1",
-                      data-cliente-nombre="Juan Carlos Pérez García"
-                    ) Ver
-                  td Av. Corrientes 1234
-                  td juan.perez@email.com
-                  td +54 11 1234-5678
-                  td.text-center
-                    button.btn.btn-outline-primary.btn-sm.me-1(title="Editar")
-                      i.bi.bi-pencil
-                    button.btn.btn-outline-danger.btn-sm(title="Eliminar")
-                      i.bi.bi-trash
-
-                tr
-                  td.text-center 2
-                  td 
-                    strong 87654321
-                  td María Elena
-                  td González López
-                  td.text-center
-                    button.btn.btn-outline-info.btn-sm(
-                      data-bs-toggle="modal", 
-                      data-bs-target="#modalMascotas",
-                      data-cliente-id="2",
-                      data-cliente-nombre="María Elena González López"
-                    ) Ver
-                  td Calle Falsa 456
-                  td maria.gonzalez@email.com
-                  td +54 11 8765-4321
-                  td.text-center
-                    button.btn.btn-outline-primary.btn-sm.me-1(title="Editar")
-                      i.bi.bi-pencil
-                    button.btn.btn-outline-danger.btn-sm(title="Eliminar")
-                      i.bi.bi-trash
-
-  // MODAL AGREGAR/EDITAR CLIENTE
-  .modal.fade#modalCliente(tabindex="-1")
+  // MODAL AGREGAR CLIENTE
+  #modalCliente.modal.fade(tabindex="-1")
     .modal-dialog.modal-lg
       .modal-content
-        .modal-header
+        .modal-header.bg-primary.text-white
           h5.modal-title
             i.bi.bi-person-plus.me-2
             | Nuevo Cliente
-          button.btn-close(data-bs-dismiss="modal")
-        
+          button.btn-close.btn-close-white(type="button" data-bs-dismiss="modal")
         .modal-body
           form#formCliente
             .row
               .col-md-6.mb-3
-                label.form-label Nombre *
-                input.form-control(type="text", required)
-              
+                label.form-label(for="nombreCliente") Nombre *
+                input.form-control(type="text", id="nombreCliente", required, placeholder="Ej: Juan Carlos")
               .col-md-6.mb-3
-                label.form-label Apellido *
-                input.form-control(type="text", required)
-              
+                label.form-label(for="apellidoCliente") Apellido *
+                input.form-control(type="text", id="apellidoCliente", required, placeholder="Ej: Pérez García")
               .col-md-6.mb-3
-                label.form-label DNI *
-                input.form-control(type="text", required)
-              
+                label.form-label(for="dniCliente") DNI *
+                input.form-control(type="text", id="dniCliente", required, placeholder="Ej: 12345678")
               .col-md-6.mb-3
-                label.form-label Email *
-                input.form-control(type="email", required)
-              
+                label.form-label(for="emailCliente") Email *
+                input.form-control(type="email", id="emailCliente", required, placeholder="Ej: juan.perez@email.com")
               .col-md-6.mb-3
-                label.form-label Teléfono *
-                input.form-control(type="tel", required)
-              
+                label.form-label(for="telefonoCliente") Teléfono *
+                input.form-control(type="tel", id="telefonoCliente", required, placeholder="Ej: +54 11 1234-5678")
               .col-md-6.mb-3
-                label.form-label Ciudad *
-                input.form-control(type="text", required)
-              
+                label.form-label(for="ciudadCliente") Ciudad *
+                input.form-control(type="text", id="ciudadCliente", required, placeholder="Ej: Buenos Aires")
               .col-12.mb-3
-                label.form-label Dirección *
-                input.form-control(type="text", required)
-        
+                label.form-label(for="direccionCliente") Dirección *
+                input.form-control(type="text", id="direccionCliente", required, placeholder="Ej: Av. Corrientes 1234")
         .modal-footer
-          button.btn.btn-secondary(data-bs-dismiss="modal") Cancelar
-          button.btn.btn-primary(type="submit") Guardar Cliente
+          button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancelar
+          button.btn.btn-primary(type="submit" form="formCliente")
+            i.bi.bi-save.me-1
+            | Guardar Cliente
 
-  // MODAL MASCOTAS DEL CLIENTE
-  .modal.fade#modalMascotas(tabindex="-1")
-    .modal-dialog.modal-xl
+  // MODAL EDITAR CLIENTE
+  #modalEditarCliente.modal.fade(tabindex="-1")
+    .modal-dialog.modal-lg
       .modal-content
-        .modal-header
+        .modal-header.bg-warning.text-dark
           h5.modal-title
-            i.bi.bi-heart-fill.text-danger.me-2
-            | Mascotas de: 
-            span#nombreClienteMascota Juan Carlos Pérez García
-          button.btn-close(data-bs-dismiss="modal")
-        
+            i.bi.bi-pencil.me-2
+            | Editar Cliente
+          button.btn-close(type="button" data-bs-dismiss="modal")
         .modal-body
-          // BOTÓN AGREGAR MASCOTA
-          .d-flex.justify-content-between.align-items-center.mb-3
-            h6.mb-0.text-muted Lista de mascotas registradas
-            button.btn.btn-success.btn-sm(data-bs-toggle="modal", data-bs-target="#modalNuevaMascota")
-              i.bi.bi-plus-circle.me-1
-              | Agregar Mascota
+          form#formEditarCliente
+            input#idClienteEditar(type="hidden")
+            .row
+              .col-md-6.mb-3
+                label.form-label(for="nombreClienteEditar") Nombre *
+                input.form-control(type="text", id="nombreClienteEditar", required)
+              .col-md-6.mb-3
+                label.form-label(for="apellidoClienteEditar") Apellido *
+                input.form-control(type="text", id="apellidoClienteEditar", required)
+              .col-md-6.mb-3
+                label.form-label(for="dniClienteEditar") DNI *
+                input.form-control(type="text", id="dniClienteEditar", required)
+              .col-md-6.mb-3
+                label.form-label(for="emailClienteEditar") Email *
+                input.form-control(type="email", id="emailClienteEditar", required)
+              .col-md-6.mb-3
+                label.form-label(for="telefonoClienteEditar") Teléfono *
+                input.form-control(type="tel", id="telefonoClienteEditar", required)
+              .col-md-6.mb-3
+                label.form-label(for="ciudadClienteEditar") Ciudad *
+                input.form-control(type="text", id="ciudadClienteEditar", required)
+              .col-12.mb-3
+                label.form-label(for="direccionClienteEditar") Dirección *
+                input.form-control(type="text", id="direccionClienteEditar", required)
+        .modal-footer
+          button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancelar
+          button.btn.btn-warning(type="submit" form="formEditarCliente")
+            i.bi.bi-save.me-1
+            | Guardar Cambios
 
+  // MODAL ELIMINAR CLIENTE
+  #modalEliminarCliente.modal.fade(tabindex="-1")
+    .modal-dialog
+      .modal-content
+        .modal-header.bg-danger.text-white
+          h5.modal-title
+            i.bi.bi-exclamation-triangle.me-2
+            | Eliminar Cliente
+          button.btn-close.btn-close-white(type="button" data-bs-dismiss="modal")
+        .modal-body
+          .text-center
+            i.bi.bi-trash-alt.text-danger.mb-3(style="font-size: 3rem;")
+            h6 ¿Estás seguro de que deseas eliminar este cliente?
+            p.text-muted#nombreClienteEliminar Este cliente será eliminado permanentemente.
+            .alert.alert-warning.mt-3
+              small
+                i.bi.bi-info-circle.me-1
+                | Esta acción no se puede deshacer
+        .modal-footer
+          button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancelar
+          button.btn.btn-danger#btnConfirmarEliminar(type="button")
+            i.bi.bi-trash.me-1
+            | Eliminar Cliente
+
+  // MODAL INFORMACIÓN DE MASCOTAS DEL CLIENTE
+  #modalInfoMascotas.modal.fade(tabindex="-1")
+    .modal-dialog.modal-lg
+      .modal-content
+        .modal-header.bg-info.text-white
+          h5.modal-title
+            i.bi.bi-heart-fill.me-2
+            | Mascotas de:
+            span#nombreClienteMascota Juan Carlos Pérez García
+          button.btn-close.btn-close-white(type="button" data-bs-dismiss="modal")
+        .modal-body
           // TABLA DE MASCOTAS
           .table-responsive
-            table.table.table-hover.table-sm#tablaMascotas
+            table.table.table-hover.table-striped.mb-0#tablaInfoMascotas
               thead.table-light
                 tr
                   th.text-center #
@@ -157,99 +226,46 @@ block content
                   th Edad
                   th Peso
                   th Color
-                  th.text-center Acciones
-              
-              tbody#bodyMascotas
+              tbody#bodyInfoMascotas
                 // DATOS DE EJEMPLO - Cliente 1 (Juan Carlos)
                 tr
                   td.text-center 1
-                  td 
+                  td
                     strong Max
-                  td 
+                  td
                     i.bi.bi-dog.text-warning.me-1
                     | Perro
                   td Golden Retriever
                   td 3 años
                   td 28 kg
                   td Dorado
-                  td.text-center
-                    button.btn.btn-outline-primary.btn-sm.me-1(title="Editar")
-                      i.bi.bi-pencil
-                    button.btn.btn-outline-danger.btn-sm(title="Eliminar")
-                      i.bi.bi-trash
-
                 tr
                   td.text-center 2
-                  td 
+                  td
                     strong Luna
-                  td 
+                  td
                     i.bi.bi-cat.text-info.me-1
                     | Gato
                   td Siamés
                   td 2 años
                   td 4 kg
                   td Blanco/Gris
-                  td.text-center
-                    button.btn.btn-outline-primary.btn-sm.me-1(title="Editar")
-                      i.bi.bi-pencil
-                    button.btn.btn-outline-danger.btn-sm(title="Eliminar")
-                      i.bi.bi-trash
-
         .modal-footer
-          button.btn.btn-secondary(data-bs-dismiss="modal") Cerrar
-
-  // MODAL NUEVA MASCOTA
-  .modal.fade#modalNuevaMascota(tabindex="-1")
-    .modal-dialog.modal-lg
-      .modal-content
-        .modal-header
-          h5.modal-title
-            i.bi.bi-plus-circle.text-success.me-2
-            | Nueva Mascota para: 
-            span#clienteNuevaMascota Juan Carlos Pérez García
-          button.btn-close(data-bs-dismiss="modal")
-        
-        .modal-body
-          form#formNuevaMascota
-            .row
-              .col-md-6.mb-3
-                label.form-label Nombre de la Mascota *
-                input.form-control(type="text", placeholder="Ej: Max, Luna, Rocky...", required)
-              
-              .col-md-6.mb-3
-                label.form-label Especie *
-                select.form-select(required)
-                  option(value="") Seleccionar...
-                  option(value="perro") Perro
-                  option(value="gato") Gato
-                  option(value="ave") Ave
-                  option(value="conejo") Conejo
-                  option(value="hamster") Hámster
-                  option(value="otro") Otro
-              
-              .col-md-6.mb-3
-                label.form-label Raza *
-                input.form-control(type="text", placeholder="Ej: Golden Retriever, Siamés...", required)
-              
-              .col-md-6.mb-3
-                label.form-label Edad *
-                input.form-control(type="text", placeholder="Ej: 2 años, 6 meses...", required)
-              
-              .col-md-6.mb-3
-                label.form-label Peso *
-                input.form-control(type="text", placeholder="Ej: 25 kg, 3.5 kg...", required)
-              
-              .col-md-6.mb-3
-                label.form-label Color/Pelaje *
-                input.form-control(type="text", placeholder="Ej: Dorado, Negro, Blanco/Gris...", required)
-              
-              .col-12.mb-3
-                label.form-label Observaciones
-                textarea.form-control(rows="3", placeholder="Información adicional sobre la mascota...")
-
-        .modal-footer
-          button.btn.btn-secondary(data-bs-dismiss="modal") Cancelar
-          button.btn.btn-success(type="submit") Guardar Mascota
+          button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cerrar
 
 block scripts
-  script(src="/js/clientes.js")
+  script.
+    function cargarDatosCliente(id, nombre, apellido, dni, email, telefono, ciudad, direccion) {
+      document.getElementById('idClienteEditar').value = id;
+      document.getElementById('nombreClienteEditar').value = nombre;
+      document.getElementById('apellidoClienteEditar').value = apellido;
+      document.getElementById('dniClienteEditar').value = dni;
+      document.getElementById('emailClienteEditar').value = email;
+      document.getElementById('telefonoClienteEditar').value = telefono;
+      document.getElementById('ciudadClienteEditar').value = ciudad;
+      document.getElementById('direccionClienteEditar').value = direccion;
+    }
+
+    function cargarIdCliente(id, nombre) {
+      document.getElementById('nombreClienteEliminar').textContent = 'El cliente "' + nombre + '" será eliminado.';
+    }

@@ -1,21 +1,23 @@
-nav.navbar.navbar-expand-lg.navbar-light.bg-white.shadow-sm.sticky-top
+nav.navbar.navbar-expand-lg.navbar-light.bg-white.shadow-sm.sticky-top(data-bs-theme="light")
   .container-fluid.px-4
     // LOGO
     a.navbar-brand.d-flex.align-items-center(href="/clientes")
       i.bi.bi-heart-pulse-fill.text-primary.me-2.fs-3
       span.fw-bold.text-dark Huellitas Felices
-
     // BOTÓN MÓVIL
     button.navbar-toggler(type="button", data-bs-toggle="collapse", data-bs-target="#navbarNav")
       span.navbar-toggler-icon
-
     // MENÚ
     .collapse.navbar-collapse#navbarNav
       // ESPACIO VACÍO PARA EMPUJAR EL MENÚ A LA DERECHA
       .navbar-nav.me-auto
-
       // MENÚ EN EL EXTREMO DERECHO
-      ul.navbar-nav
+      ul.navbar-nav.align-items-center
+        // BOTÓN DE ALTERNANCIA DE TEMA
+        //- li.nav-item.me-3
+        //-   button#theme-toggle.btn.btn-sm.btn-outline-secondary(type="button")
+        //-     i.bi#theme-icon.bi-moon-stars-fill
+        // MENÚ DESPLEGABLE
         li.nav-item.dropdown
           a.nav-link.dropdown-toggle(href="#", data-bs-toggle="dropdown")
             i.bi.bi-person-circle.me-1
@@ -23,7 +25,6 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-white.shadow-sm.sticky-top
           ul.dropdown-menu.dropdown-menu-end
             li
               a.dropdown-item(href="/clientes")
-                //- i.bi.bi-gear.me-2
                 i.bi.bi-people-fill.me-1
                 | Clientes
             li
@@ -35,6 +36,6 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-white.shadow-sm.sticky-top
                 i.bi.bi-person-badge-fill.me-2
                 | Empleados
             li
-              a.dropdown-item(href="/turnos")
+              a.dropdown-item(href="/agenda")
                 i.bi.bi-calendar-check-fill.me-2
                 | Agenda/Turnos

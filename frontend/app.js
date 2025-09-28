@@ -53,6 +53,13 @@ app.get('/empleados', (req, res) => {
     });
 });
 
+// Vista de agenda
+app.get('/agenda', (req, res) => {
+    res.render('pages/agenda', {
+        title: 'Agenda Veterinaria - Huellitas Felices'
+    });
+});
+
 // ========================================
 // SERVIDOR
 // ========================================
