@@ -74,6 +74,27 @@ Los modulos de esta rama cuenta con documentación detallada para cada módulo. 
 **Próximamente** se proporcionarán instrucciones detalladas para la instalación y configuración del proyecto unificado.
 
 ---
+
+---
+## 🖼️ Imágenes de los Módulos de esta Rama
+
+A continuación, se presentan algunas capturas:
+
+### 🚀 Vista de la Interfaz de Usuario
+
+![Captura de Pantalla de Clientes](frontend/public/img/1.png)
+![Captura de Pantalla de Clientes Modal](frontend/public/img/2.png)
+![Captura de Pantalla de Empleados](frontend/public/img/3.png)
+![Captura de Pantalla de Empleados Modal](frontend/public/img/4.png)
+![Captura de Pantalla de Servicios](frontend/public/img/5.png)
+![Captura de Pantalla de Servicios Modal](frontend/public/img/6.png)
+![Captura de Pantalla de Agenda/Turnos](frontend/public/img/7.png)
+![Captura de Pantalla de Agenda/Turnos Modal](frontend/public/img/8.png)
+
+---
+
+---
+
 ## Agradecimientos
 
 Queremos expresar nuestro sincero **agradecimiento** a quienes hicieron posible este proyecto con su guía y apoyo:
@@ -81,5 +102,6 @@ Queremos expresar nuestro sincero **agradecimiento** a quienes hicieron posible 
 * A **nuestros profesores**, por su invaluable conocimiento, paciencia y dedicación, que han sido fundamentales para nuestro desarrollo como personas y profesioanles.
 * Al **ISFT N°225** (Instituto Superior de Formación Técnica N° 225), por brindarnos el espacio y las herramientas para crecer profesionalmente.
 
-[**ISFT N°225**](https://isft225.edu.ar/)
+[**Pagina Web de ISFT N°225**](https://isft225.edu.ar/)
+
 ---
