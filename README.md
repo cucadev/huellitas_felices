@@ -20,11 +20,11 @@ Este proyecto está protegido bajo los siguientes términos:
 ---
 
 ## **👥 Colaboración**
-Este proyecto es el resultado de una **colaboración académica** entre **Brian Alcaraz** y **Mayra**. Ambos desarrollamos los mismos módulos (**Excepto el modulo Caja y Ventas que este es solo de Mayra**), pero con **implementaciones distintas**
+Este proyecto es el resultado de una **colaboración académica** entre **Brian Alcaraz** y **Mayra**.
 
 > **Aclaración:**
 > - La **idea general del proyecto** es compartida.
-> - Cada colaborador desarrolló su propia versión de los módulos con enfoques diferentes.
+> - Cada colaborador desarrolló su propia versión de los módulos que les correspondia realizar.
 > - Esta rama contiene las **contribuciones de Brian Alcaraz**, que posteriormente se unirán con las de Mayra en una versión final consolidada.
 
 ---
@@ -38,7 +38,7 @@ Este proyecto es el resultado de una **colaboración académica** entre **Brian 
 - **Gestión de Clientes:** CRUD completo para registrar y administrar la información de los clientes y sus mascotas.
 - **Gestión de Empleados:** CRUD - Administración de empleados con roles y servicios asociados.
 - **Gestión de Servicios:** CRUD - Catálogo de servicios veterinarios con precios y descripciones.
-- **Agenda de Citas:** CRUD - Interfaz interactiva con **FullCalendar** para gestionar citas y turnos.
+- **Agenda de Citas/Turnos:** CRUD - Interfaz interactiva con **FullCalendar** para gestionar citas y turnos.
 - **Diseño Responsivo:** Interfaz adaptable a dispositivos móviles y de escritorio.
 - **Mejoras Futuras:** Integración de **DataTables** para paginación, búsqueda y filtros avanzados. El diseño UX es importante ya que le brinda visualmente le ayuda al usuario a tener una mejor experiencia.
 - **Enfoque profesional:** Estructura de carpetas que facilita el mantenimiento y escalabilidad del código.
