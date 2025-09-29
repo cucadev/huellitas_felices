@@ -64,7 +64,7 @@ Este proyecto es el resultado de una **colaboración académica** entre **Brian 
 ## **📖 Documentación**
 Los modulos de esta rama cuenta con documentación detallada para cada módulo. Puedes acceder a ella desde los siguientes enlaces:
 
-- **[Documentación General del Sistema]((https://docs.google.com/document/d/1ViyzMaNjs7ADEbPM8UIul4XVd2cpSVogAORSoDs-xpM/edit?usp=sharing))**
+- **[Documentación General del Sistema](https://docs.google.com/document/d/1ViyzMaNjs7ADEbPM8UIul4XVd2cpSVogAORSoDs-xpM/edit?usp=sharing)**
 
 > **Nota:** La documentación incluye descripciones detalladas, flujos de trabajo, estructura de datos y ejemplos de uso para cada módulo.
 
