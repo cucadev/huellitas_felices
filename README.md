@@ -1,5 +1,5 @@
 # **Sistema de Gestión Veterinaria - Huellitas Felices**
-**Desarrollado por:** [Brian Alcaraz](https://www.linkedin.com/in/alcarazbrian/) y [Mayra] 🚀
+**Desarrollado por:** [Brian Alcaraz](https://www.linkedin.com/in/alcarazbrian/) y [Mayra Ferrazin Nervegna] 🚀
 
 ---
 
