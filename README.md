@@ -20,12 +20,12 @@ Este proyecto está protegido bajo los siguientes términos:
 ---
 
 ## **👥 Colaboración**
-Este proyecto es el resultado de una **colaboración académica** entre **Brian Alcaraz** y **Mayra**.
+Este proyecto es el resultado de una **colaboración académica** entre **Brian Alcaraz** y **Mayra Ferrazin Nervegna**.
 
 > **Aclaración:**
 > - La **idea general del proyecto** es compartida.
 > - Cada colaborador desarrolló su propia versión de los módulos que les correspondia realizar.
-> - Esta rama contiene las **contribuciones de Brian Alcaraz**, que posteriormente se unirán con las de Mayra en una versión final consolidada.
+> - Esta rama contiene las **contribuciones de Brian Alcaraz**, que posteriormente se unirán con las de Mayra Ferrazin Nervegna en una versión final consolidada.
 
 ---
 
