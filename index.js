@@ -42,7 +42,7 @@ app.use(express.urlencoded({ extended: true })); // Para recibir formularios
 
 
 // Rutas
-app.use('/users', userRoutes);
+app.use('/api/users', userRoutes);
 app.use('/clientes', clientesRoutes);
 app.use('/productos', productRoutes);
 app.use('/compras', comprasRoutes);
