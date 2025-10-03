@@ -62,6 +62,9 @@ function abrirModalNuevaCita(fecha = null) {
     document.getElementById('btnGuardarCita').innerHTML = '<i class="fas fa-save me-1"></i> Guardar Cita';
     document.getElementById('btnEliminarCita').style.display = 'none';
     
+    // Cargar profesionales (veterinarios)
+    cargarProfesionales();
+
     // Si se hizo click en una fecha, pre-llenar el campo
     if (fecha) {
         const fechaSolo = fecha.split('T')[0];
@@ -91,6 +94,9 @@ function abrirModalEditarCita(evento) {
     document.getElementById('btnGuardarCita').innerHTML = '<i class="fas fa-save me-1"></i> Actualizar Cita';
     document.getElementById('btnEliminarCita').style.display = 'inline-block';
     
+    // Cargar profesionales (veterinarios)
+    cargarProfesionales();
+
     const props = evento.extendedProps;
     
     // Llenar el formulario con los datos del evento
@@ -115,6 +121,48 @@ function abrirModalEditarCita(evento) {
     
     modalCita.show();
 }
+
+// ========================================
+// CARGAR EMPLEADOS POR ROL
+// ========================================
+// Función para cargar empleados por roles (veterinarios y peluqueros)
+async function cargarProfesionales() {
+    try {
+        // Obtener veterinarios
+        const responseVeterinarios = await fetch(`http://localhost:3000/api/empleados/rol/veterinario`);
+        if (!responseVeterinarios.ok) {
+            throw new Error('Error al cargar veterinarios');
+        }
+        const veterinarios = await responseVeterinarios.json();
+
+        // Obtener peluqueros
+        const responsePeluqueros = await fetch(`http://localhost:3000/api/empleados/rol/peluquero`);
+        if (!responsePeluqueros.ok) {
+            throw new Error('Error al cargar peluqueros');
+        }
+        const peluqueros = await responsePeluqueros.json();
+
+        // Combinar ambos arrays
+        const profesionales = [...veterinarios, ...peluqueros];
+
+        const selectProfesional = document.getElementById('veterinario');
+
+        // Limpiar opciones anteriores
+        selectProfesional.innerHTML = '<option value="">Seleccionar profesional...</option>';
+
+        // Agregar profesionales al select
+        profesionales.forEach(profesional => {
+            const option = document.createElement('option');
+            option.value = profesional._id; // Usar el ID del profesional como valor
+            option.textContent = `${profesional.name} ${profesional.lastname} (${profesional.role})`; // Mostrar nombre y rol
+            selectProfesional.appendChild(option);
+        });
+    } catch (error) {
+        console.error('Error al cargar profesionales:', error);
+        mostrarAlerta('Error al cargar profesionales', 'danger');
+    }
+}
+
 
 // ========================================
 // BUSCAR CLIENTE POR DNI

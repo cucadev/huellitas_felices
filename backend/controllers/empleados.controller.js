@@ -10,6 +10,17 @@ const getEmpleados = async (req, res) => {
     }
 };
 
+// OBTIENE EMPLEADOS POR ROL (ej. veterinario o peluquero)
+const getEmpleadosByRol = async (req, res) => {
+    try {
+        const { rol } = req.params;
+        const empleados = await Empleado.find({ role: rol }); // Busca empleados por rol
+        res.status(200).json(empleados);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 // OBTIENE UN EMPLEADO POR DNI
 const getEmpleadoByDni = async (req, res) => {
     try {
@@ -86,6 +97,7 @@ export {
     getEmpleados,
     getEmpleadoByDni,
     getEmpleadoById,
+    getEmpleadosByRol,
     createEmpleado,
     updateEmpleado,
     deleteEmpleado
