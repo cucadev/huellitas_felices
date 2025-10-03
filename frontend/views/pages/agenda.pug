@@ -14,6 +14,24 @@ block extraCSS
       background-color: #218838 !important;
       border-color: #1e7e34 !important;
     }
+    /* Eventos en horario (verde) */
+    .fc-event.evento-en-horario {
+      background-color: #28a745 !important;
+      border-color: #28a745 !important;
+      color: white !important;
+    }
+    /* Eventos próximos (amarillo) */
+    .fc-event.evento-proximo {
+      background-color: #ffc107 !important;
+      border-color: #ffc107 !important;
+      color: black !important;
+    }
+    /* Eventos que ya pasaron (rojo) */
+    .fc-event.evento-pasado {
+      background-color: #dc3545 !important;
+      border-color: #dc3545 !important;
+      color: white !important;
+    }
 
 block content
   .container-fluid.py-4
@@ -27,7 +45,7 @@ block content
           .card-body
             #calendar
 
-    // Modal para Nueva Cita
+    // Modal para Nueva/Editar Cita
     .modal.fade(
       id="modalCita",
       tabindex="-1",
@@ -39,16 +57,17 @@ block content
           .modal-header
             h5.modal-title(id="modalCitaLabel")
               i.fas.fa-calendar-plus.me-2
-              | Agendar Nueva Cita
+              span#modalTitle Agendar Nueva Cita
             button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
           .modal-body
             form#formCita
+              input(type="hidden", id="citaId")
               .row
                 // Primera fila: Título, Fecha, Hora, Veterinario
                 .col-md-3
                   .mb-3
                     label.form-label(for="titulo") Título de la Cita
-                    input.form-control(type="text", id="titulo", required)
+                    input.form-control(type="text", id="titulo", required, placeholder="Ej: Consulta general")
                 .col-md-3
                   .mb-3
                     label.form-label(for="fecha") Fecha
@@ -76,7 +95,7 @@ block content
                   .mb-3
                     label.form-label(for="dni") DNI del Cliente
                     .input-group
-                      input.form-control(type="text", id="dni", required)
+                      input.form-control(type="text", id="dni", required, placeholder="Ingrese DNI")
                       button.btn.btn-outline-secondary(type="button", id="btnBuscarCliente")
                         i.bi.bi-search
                 .col-md-3
@@ -96,6 +115,10 @@ block content
                   .mb-3
                     label.form-label(for="email") Email
                     input.form-control(type="email", id="email", readonly)
+                .col-md-6
+                  .mb-3
+                    label.form-label(for="direccion") Dirección
+                    input.form-control(type="text", id="direccion", readonly)
               hr.my-3
               // Tercera fila: Datos de la Mascota
               .col-12
@@ -106,7 +129,7 @@ block content
                 .col-md-4
                   .mb-3
                     label.form-label(for="nombreMascota") Nombre de la Mascota
-                    input.form-control(type="text", id="nombreMascota", required)
+                    input.form-control(type="text", id="nombreMascota", required, placeholder="Ej: Rocky")
                 .col-md-4
                   .mb-3
                     label.form-label(for="tipoMascota") Tipo de Mascota
@@ -114,87 +137,21 @@ block content
                       option(value="") Seleccionar...
                       option(value="Perro") Perro
                       option(value="Gato") Gato
-                .col-md-4
+                .col-md-12
                   .mb-3
                     label.form-label(for="observaciones") Motivo de la Consulta / Observaciones
-                    textarea.form-control(id="observaciones", rows="2", required)
-          .modal-footer
-            button.btn.btn-secondary(type="button", data-bs-dismiss="modal") Cancelar
-            button.btn.btn-primary(type="submit")
-              i.fas.fa-save.me-1
-              | Guardar Cita
+                    textarea.form-control(id="observaciones", rows="3", required, placeholder="Describa el motivo de la consulta...")
+              .modal-footer
+                button.btn.btn-danger#btnEliminarCita(type="button", style="display:none;")
+                  i.fas.fa-trash.me-1
+                  | Eliminar Cita
+                button.btn.btn-secondary(type="button", data-bs-dismiss="modal") Cancelar
+                button.btn.btn-primary(type="submit", id="btnGuardarCita")
+                  i.fas.fa-save.me-1
+                  | Guardar Cita
 
 block extraJS
   script(src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js")
   script(src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/locales/es.global.min.js")
-  script.
-    document.addEventListener('DOMContentLoaded', function() {
-      const calendarEl = document.getElementById('calendar');
-      const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        locale: 'es',
-        headerToolbar: {
-          left: 'prev,next nuevaCita',  // Botón Nueva Cita a la izquierda junto a las flechas
-          center: 'title',  // Título del mes y año en el centro
-          right: 'dayGridMonth,timeGridWeek,timeGridDay'
-        },
-        buttonText: {
-          today:    'Hoy',
-          month:    'Mes',
-          week:     'Semana',
-          day:      'Día',
-          list:     'Lista'
-        },
-        customButtons: {
-          nuevaCita: {
-            text: '+ Agendar turno nuevo',
-            click: function() {
-              const modal = new bootstrap.Modal(document.getElementById('modalCita'));
-              modal.show();
-            }
-          }
-        },
-        events: [],
-        dateClick: function(info) {
-          const modal = new bootstrap.Modal(document.getElementById('modalCita'));
-          document.getElementById('fecha').value = info.dateStr;
-          modal.show();
-        },
-        eventClick: function(info) {
-          alert('Evento: ' + info.event.title);
-        },
-        selectable: true,
-        editable: true,
-      });
-      calendar.render();
-
-      document.getElementById('formCita').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const title = document.getElementById('titulo').value;
-        const date = document.getElementById('fecha').value;
-        const time = document.getElementById('hora').value;
-        const start = date + 'T' + time;
-
-        calendar.addEvent({
-          title: title,
-          start: start,
-          allDay: false,
-        });
-
-        const modal = bootstrap.Modal.getInstance(document.getElementById('modalCita'));
-        modal.hide();
-        this.reset();
-      });
-
-      document.getElementById('btnBuscarCliente').addEventListener('click', function() {
-        const dni = document.getElementById('dni').value;
-        if (dni === '12345678') {
-          document.getElementById('nombre').value = 'Juan';
-          document.getElementById('apellido').value = 'Pérez';
-          document.getElementById('telefono').value = '1234567890';
-          document.getElementById('email').value = 'juan.perez@example.com';
-        } else {
-          alert('Cliente no encontrado');
-        }
-      });
-    });
+  script(src="/js/fullcalendar.js")
+  script(src="/js/agenda.js")

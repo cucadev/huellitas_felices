@@ -1,25 +1,87 @@
 import { Agenda } from '../models/agenda.model.js';
 import { Cliente } from '../models/cliente.model.js';
 
-// OBTIENE CITAS DE UN DÍA ESPECÍFICO (PARA FULLCALENDAR)
+// OBTIENE CITAS EN UN RANGO DE FECHAS (PARA FULLCALENDAR)
 const getAgendasByDate = async (req, res) => {
     try {
-        const { date } = req.query;
+        const { start, end } = req.query;
         
-        const agendas = await Agenda.find({
-            date: new Date(date)
-        }).sort({ time: 1 });
+        // Si no hay rango, devolver todas las citas
+        let query = {};
+        if (start && end) {
+            query.date = {
+                $gte: new Date(start),
+                $lte: new Date(end)
+            };
+        }
         
-        res.status(200).json(agendas);
+        const agendas = await Agenda.find(query).sort({ date: 1, time: 1 });
+        
+        // FORMATEAR PARA FULLCALENDAR
+        const events = agendas.map(agenda => {
+            // Convertir fecha y hora a formato ISO para FullCalendar
+            const dateStr = agenda.date.toISOString().split('T')[0];
+            const startDateTime = `${dateStr}T${agenda.time}:00`;
+            
+            return {
+                id: agenda._id.toString(),
+                title: agenda.title,
+                start: startDateTime,
+                backgroundColor: agenda.backgroundColor,
+                borderColor: agenda.borderColor,
+                extendedProps: {
+                    dni_client: agenda.dni_client,
+                    name_client: agenda.name_client,
+                    lastname_client: agenda.lastname_client,
+                    email_client: agenda.email_client,
+                    phone_client: agenda.phone_client,
+                    address_client: agenda.address_client,
+                    city_client: agenda.city_client,
+                    pet_name: agenda.pet_name,
+                    pet_type: agenda.pet_type,
+                    professional: agenda.professional,
+                    observations: agenda.observations,
+                    status: agenda.status,
+                    time: agenda.time,
+                    date: dateStr
+                }
+            };
+        });
+        
+        res.status(200).json(events);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
 
-// CREA UNA CITA NUEVA (DESDE MODAL DE FULLCALENDAR)
+// CREA UNA CITA NUEVA
 const createAgenda = async (req, res) => {
     try {
-        const { dni_client, ...otherData } = req.body;
+        const { dni_client, date, time, professional, ...otherData } = req.body;
+
+        // VALIDACION DE DISPONIBILIDAD DEL VETERINARIO PARA NO TENER PROBLEMAS
+        const citaExistente = await Agenda.findOne({
+            date: new Date(date),
+            time: time,
+            professional: professional,
+            // Un veterinario no puede tener dos citas con menos de 30 minutos de diferencia
+            // $or: [
+            //     { time: time }, // Misma hora
+            //     {
+            //         // Citas que empiezan 30 minutos antes o después
+            //         time: {
+            //             $gte: subtractMinutes(time, 30),
+            //             $lte: addMinutes(time, 30)
+            //         }
+            //     }
+            // ]
+        });
+
+        if (citaExistente) {
+            return res.status(400).json({
+                message: `El veterinario ${professional} ya tiene una cita agendada a las ${time} del ${date}.`
+            });
+        }
 
         // BUSCAR EL CLIENTE POR DNI PARA OBTENER SU ID
         const cliente = await Cliente.findOne({ dni: dni_client });
@@ -31,9 +93,11 @@ const createAgenda = async (req, res) => {
         // CREAR LA CITA CON LA REFERENCIA AL CLIENTE
         const agendaData = {
             ...otherData,
-            client: cliente._id, // REFERENCIA AL ID DEL CLIENTE
+            date,
+            time,
+            professional,
+            client: cliente._id,
             dni_client: dni_client,
-            // AUTOCOMPLETAR DATOS DEL CLIENTE
             name_client: cliente.name,
             lastname_client: cliente.lastname,
             email_client: cliente.email,
@@ -43,13 +107,42 @@ const createAgenda = async (req, res) => {
         };
 
         const agenda = await Agenda.create(agendaData);
-        res.status(200).json(agenda);
+        
+        // DEVOLVER EN FORMATO FULLCALENDAR
+        const dateStr = agenda.date.toISOString().split('T')[0];
+        const startDateTime = `${dateStr}T${agenda.time}:00`;
+        
+        const eventFormatted = {
+            id: agenda._id.toString(),
+            title: agenda.title,
+            start: startDateTime,
+            backgroundColor: agenda.backgroundColor,
+            borderColor: agenda.borderColor,
+            extendedProps: {
+                dni_client: agenda.dni_client,
+                name_client: agenda.name_client,
+                lastname_client: agenda.lastname_client,
+                email_client: agenda.email_client,
+                phone_client: agenda.phone_client,
+                address_client: agenda.address_client,
+                city_client: agenda.city_client,
+                pet_name: agenda.pet_name,
+                pet_type: agenda.pet_type,
+                professional: agenda.professional,
+                observations: agenda.observations,
+                status: agenda.status,
+                time: agenda.time,
+                date: dateStr
+            }
+        };
+        
+        res.status(201).json(eventFormatted);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
 
-// ACTUALIZA UNA CITA EXISTENTE (EDITAR/MOVER EN FULLCALENDAR)
+// ACTUALIZA UNA CITA EXISTENTE
 const updateAgenda = async (req, res) => {
     try {
         const { id } = req.params;
@@ -65,7 +158,6 @@ const updateAgenda = async (req, res) => {
                 return res.status(404).json({ message: "NO se encontró ningún cliente con el DNI proporcionado." });
             }
 
-            // ACTUALIZAR REFERENCIA Y DATOS DEL CLIENTE
             updateData = {
                 ...updateData,
                 client: cliente._id,
@@ -91,7 +183,7 @@ const updateAgenda = async (req, res) => {
     }
 };
 
-// ELIMINA UNA CITA (DESDE FULLCALENDAR)
+// ELIMINA UNA CITA
 const deleteAgenda = async (req, res) => {
     try {
         const { id } = req.params;
@@ -107,10 +199,9 @@ const deleteAgenda = async (req, res) => {
     }
 };
 
-// EXPORTO SOLO LAS FUNCIONES NECESARIAS PARA FULLCALENDAR
 export {
-    getAgendasByDate,       // CARGAR CITAS DEL DÍA EN EL CALENDARIO
-    createAgenda,           // CREAR CITA DESDE MODAL
-    updateAgenda,           // EDITAR/MOVER CITAS
-    deleteAgenda            // ELIMINAR CITAS
+    getAgendasByDate,
+    createAgenda,
+    updateAgenda,
+    deleteAgenda
 };

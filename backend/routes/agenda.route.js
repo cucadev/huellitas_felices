@@ -4,7 +4,7 @@ import {
     createAgenda,
     updateAgenda,
     deleteAgenda
-} from '../controllers/agenda.controller.js';
+} from '../controllers/agendas.controller.js';
 
 // CREA UN OBJETO ROUTER PARA MODULARIZAR Y AGRUPAR RUTAS
 const router = express.Router();
