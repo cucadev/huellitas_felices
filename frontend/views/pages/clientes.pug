@@ -15,10 +15,10 @@ block content
               | Agregar Cliente
           .card-body
             .table-responsive
-              table.table.table-hover.table-striped.mb-0#tablaClientes
+              table#tablaClientes.table.table-hover.table-striped.mb-0(data-datatable="true")
                 thead.table-dark
                   tr
-                    th.text-center #
+                    //- th.text-center #
                     th DNI
                     th Nombre
                     th Apellido
@@ -27,78 +27,9 @@ block content
                     th Email
                     th Teléfono
                     th.text-center Acciones
-                tbody
-                  // DATOS DE EJEMPLO (después los reemplazarás con API)
-                  tr
-                    td.text-center 1
-                    td
-                      strong 12345678
-                    td Juan Carlos
-                    td Pérez García
-                    td.text-center
-                      button.btn.btn-outline-info.btn-sm(
-                        type="button",
-                        data-bs-toggle="modal",
-                        data-bs-target="#modalInfoMascotas",
-                        data-cliente-id="1",
-                        data-cliente-nombre="Juan Carlos Pérez García"
-                      )
-                        i.bi.bi-eye-fill.me-1
-                        | Ver
-                    td Av. Corrientes 1234
-                    td juan.perez@email.com
-                    td +54 11 1234-5678
-                    td.text-center
-                      .btn-group(role="group")
-                        button.btn.btn-warning.btn-sm.me-1(
-                          type="button",
-                          data-bs-toggle="modal",
-                          data-bs-target="#modalEditarCliente",
-                          onclick="cargarDatosCliente(1, 'Juan Carlos', 'Pérez García', '12345678', 'juan.perez@email.com', '+54 11 1234-5678', 'Buenos Aires', 'Av. Corrientes 1234')"
-                        )
-                          i.bi.bi-pencil
-                        button.btn.btn-danger.btn-sm(
-                          type="button",
-                          data-bs-toggle="modal",
-                          data-bs-target="#modalEliminarCliente",
-                          onclick="cargarIdCliente(1, 'Juan Carlos Pérez García')"
-                        )
-                          i.bi.bi-trash
-                  tr
-                    td.text-center 2
-                    td
-                      strong 87654321
-                    td María Elena
-                    td González López
-                    td.text-center
-                      button.btn.btn-outline-info.btn-sm(
-                        type="button",
-                        data-bs-toggle="modal",
-                        data-bs-target="#modalInfoMascotas",
-                        data-cliente-id="2",
-                        data-cliente-nombre="María Elena González López"
-                      )
-                        i.bi.bi-eye-fill.me-1
-                        | Ver
-                    td Calle Falsa 456
-                    td maria.gonzalez@email.com
-                    td +54 11 8765-4321
-                    td.text-center
-                      .btn-group(role="group")
-                        button.btn.btn-warning.btn-sm.me-1(
-                          type="button",
-                          data-bs-toggle="modal",
-                          data-bs-target="#modalEditarCliente",
-                          onclick="cargarDatosCliente(2, 'María Elena', 'González López', '87654321', 'maria.gonzalez@email.com', '+54 11 8765-4321', 'Buenos Aires', 'Calle Falsa 456')"
-                        )
-                          i.bi.bi-pencil
-                        button.btn.btn-danger.btn-sm(
-                          type="button",
-                          data-bs-toggle="modal",
-                          data-bs-target="#modalEliminarCliente",
-                          onclick="cargarIdCliente(2, 'María Elena González López')"
-                        )
-                          i.bi.bi-trash
+                tbody#tablaClientesBody
+                  // ACA SE INSERTAN LAS FILAS DINAMICAMENTE DESDE clientes.js
+
 
   // MODAL AGREGAR CLIENTE
   #modalCliente.modal.fade(tabindex="-1")
@@ -211,7 +142,7 @@ block content
           h5.modal-title
             i.bi.bi-heart-fill.me-2
             | Mascotas de:
-            span#nombreClienteMascota Juan Carlos Pérez García
+            span#nombreClienteMascota 
           button.btn-close.btn-close-white(type="button" data-bs-dismiss="modal")
         .modal-body
           // TABLA DE MASCOTAS
@@ -254,18 +185,5 @@ block content
           button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cerrar
 
 block scripts
-  script.
-    function cargarDatosCliente(id, nombre, apellido, dni, email, telefono, ciudad, direccion) {
-      document.getElementById('idClienteEditar').value = id;
-      document.getElementById('nombreClienteEditar').value = nombre;
-      document.getElementById('apellidoClienteEditar').value = apellido;
-      document.getElementById('dniClienteEditar').value = dni;
-      document.getElementById('emailClienteEditar').value = email;
-      document.getElementById('telefonoClienteEditar').value = telefono;
-      document.getElementById('ciudadClienteEditar').value = ciudad;
-      document.getElementById('direccionClienteEditar').value = direccion;
-    }
-
-    function cargarIdCliente(id, nombre) {
-      document.getElementById('nombreClienteEliminar').textContent = 'El cliente "' + nombre + '" será eliminado.';
-    }
+  script(src="/js/datatables.js")
+  script(src="/js/clientes.js")

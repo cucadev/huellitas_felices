@@ -18,69 +18,17 @@ block content
               table.table.table-hover.table-striped#tablaEmpleados
                 thead.table-dark
                   tr
-                    th(scope="col") #
+                    //- th(scope="col") #
                     th(scope="col") DNI
                     th(scope="col") Nombre
                     th(scope="col") Apellido
                     th(scope="col") Teléfono
                     th(scope="col") Rol
                     th(scope="col") Servicios
-                    th(scope="col" style="width: 120px;") Acciones
-                tbody
-                  tr
-                    td 1
-                    td 12.345.678
-                    td María
-                    td González
-                    td +54 11 1234-5678
-                    td 
-                      span.badge.bg-primary Veterinaria
-                    td
-                      button.btn.btn-outline-info.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalVerServicios")
-                        i.bi.bi-eye-fill.me-1
-                        | Ver más
-                    td
-                      .btn-group(role="group")
-                        button.btn.btn-outline-warning.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalEditarEmpleado")
-                          i.bi.bi-pencil-square
-                        button.btn.btn-outline-danger.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalEliminarEmpleado")
-                          i.bi.bi-trash3-fill
-                  tr
-                    td 2
-                    td 23.456.789
-                    td Carlos
-                    td Rodríguez
-                    td +54 11 2345-6789
-                    td 
-                      span.badge.bg-secondary Auxiliar Veterinario
-                    td
-                      button.btn.btn-outline-info.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalVerServicios")
-                        i.bi.bi-eye-fill.me-1
-                        | Ver más
-                    td
-                      .btn-group(role="group")
-                        button.btn.btn-outline-warning.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalEditarEmpleado")
-                          i.bi.bi-pencil-square
-                        button.btn.btn-outline-danger.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalEliminarEmpleado")
-                          i.bi.bi-trash3-fill
-                  tr
-                    td 3
-                    td 34.567.890
-                    td Ana
-                    td López
-                    td +54 11 3456-7890
-                    td 
-                      span.badge.bg-success Recepcionista
-                    td
-                      button.btn.btn-outline-info.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalVerServicios")
-                        i.bi.bi-eye-fill.me-1
-                        | Ver más
-                    td
-                      .btn-group(role="group")
-                        button.btn.btn-outline-warning.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalEditarEmpleado")
-                          i.bi.bi-pencil-square
-                        button.btn.btn-outline-danger.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalEliminarEmpleado")
-                          i.bi.bi-trash3-fill
+                    th.text-center(scope="col") Acciones
+                tbody#tablaEmpleadosBody
+                  // ACA SE GENERAR LAS TABLAS DINAMICAMENTE DESDE empleados.js
+
 
   //- Modal Ver Servicios
   #modalVerServicios.modal.fade(tabindex="-1")
@@ -96,20 +44,20 @@ block content
             h6#nombreEmpleadoServicios [Nombre del Empleado]
             hr
             #listaServiciosEmpleado
-              //- Ejemplo si TIENE servicios:
-              .row
-                .col-md-6.mb-2
-                  .d-flex.align-items-center
-                    i.bi.bi-check-circle-fill.text-success.me-2
-                    span Consulta General
-                .col-md-6.mb-2
-                  .d-flex.align-items-center
-                    i.bi.bi-check-circle-fill.text-success.me-2
-                    span Cirugía Menor
-                .col-md-6.mb-2
-                  .d-flex.align-items-center
-                    i.bi.bi-check-circle-fill.text-success.me-2
-                    span Vacunación
+              //- //- Ejemplo si TIENE servicios:
+              //- .row
+              //-   .col-md-6.mb-2
+              //-     .d-flex.align-items-center
+              //-       i.bi.bi-check-circle-fill.text-success.me-2
+              //-       span Consulta General
+              //-   .col-md-6.mb-2
+              //-     .d-flex.align-items-center
+              //-       i.bi.bi-check-circle-fill.text-success.me-2
+              //-       span Cirugía Menor
+              //-   .col-md-6.mb-2
+              //-     .d-flex.align-items-center
+              //-       i.bi.bi-check-circle-fill.text-success.me-2
+              //-       span Vacunación
               
               //- Ejemplo si NO TIENE servicios (comentado):
               //- .alert.alert-info.text-center
@@ -163,50 +111,13 @@ block content
             .mb-3
               label.form-label Servicios que puede brindar
               .form-text.mb-2 Seleccionar todos los servicios que puede realizar (opcional)
-              .row
-                .col-md-4
-                  .form-check
-                    input.form-check-input#servicioConsultaCrear(type="checkbox" value="Consulta General")
-                    label.form-check-label(for="servicioConsultaCrear") Consulta General
-                .col-md-4
-                  .form-check
-                    input.form-check-input#servicioVacunacionCrear(type="checkbox" value="Vacunación")
-                    label.form-check-label(for="servicioVacunacionCrear") Vacunación
-                .col-md-4
-                  .form-check
-                    input.form-check-input#servicioCirugiaCrear(type="checkbox" value="Cirugía Menor")
-                    label.form-check-label(for="servicioCirugiaCrear") Cirugía Menor
-              .row.mt-2
-                .col-md-4
-                  .form-check
-                    input.form-check-input#servicioDesparasitacionCrear(type="checkbox" value="Desparasitación")
-                    label.form-check-label(for="servicioDesparasitacionCrear") Desparasitación
-                .col-md-4
-                  .form-check
-                    input.form-check-input#servicioRadiografiaCrear(type="checkbox" value="Radiografía")
-                    label.form-check-label(for="servicioRadiografiaCrear") Radiografía
-                .col-md-4
-                  .form-check
-                    input.form-check-input#servicioAnalisisCrear(type="checkbox" value="Análisis Clínicos")
-                    label.form-check-label(for="servicioAnalisisCrear") Análisis Clínicos
-              .row.mt-2
-                .col-md-4
-                  .form-check
-                    input.form-check-input#servicioGroomingCrear(type="checkbox" value="Grooming")
-                    label.form-check-label(for="servicioGroomingCrear") Grooming
-                .col-md-4
-                  .form-check
-                    input.form-check-input#servicioEmergenciaCrear(type="checkbox" value="Atención de Emergencia")
-                    label.form-check-label(for="servicioEmergenciaCrear") Atención de Emergencia
-                .col-md-4
-                  .form-check
-                    input.form-check-input#servicioRecepcionCrear(type="checkbox" value="Atención al Cliente")
-                    label.form-check-label(for="servicioRecepcionCrear") Atención al Cliente
-        .modal-footer
-          button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancelar
-          button.btn.btn-success(type="submit")
-            i.bi.bi-check-circle-fill.me-1
-            | Crear Empleado
+              #contenedorServiciosCrear
+                //- Aquí se cargarán los checkboxes dinámicamente
+            .modal-footer
+              button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancelar
+              button.btn.btn-success(type="submit")
+                i.bi.bi-check-circle-fill.me-1
+                | Crear Empleado
 
   //- Modal Editar Empleado
   #modalEditarEmpleado.modal.fade(tabindex="-1")
@@ -252,50 +163,14 @@ block content
             .mb-3
               label.form-label Servicios que puede brindar
               .form-text.mb-2 Seleccionar todos los servicios que puede realizar (opcional)
-              .row
-                .col-md-4
-                  .form-check
-                    input.form-check-input#servicioConsultaEditar(type="checkbox" value="Consulta General" checked)
-                    label.form-check-label(for="servicioConsultaEditar") Consulta General
-                .col-md-4
-                  .form-check
-                    input.form-check-input#servicioVacunacionEditar(type="checkbox" value="Vacunación")
-                    label.form-check-label(for="servicioVacunacionEditar") Vacunación
-                .col-md-4
-                  .form-check
-                    input.form-check-input#servicioCirugiaEditar(type="checkbox" value="Cirugía Menor" checked)
-                    label.form-check-label(for="servicioCirugiaEditar") Cirugía Menor
-              .row.mt-2
-                .col-md-4
-                  .form-check
-                    input.form-check-input#servicioDesparasitacionEditar(type="checkbox" value="Desparasitación")
-                    label.form-check-label(for="servicioDesparasitacionEditar") Desparasitación
-                .col-md-4
-                  .form-check
-                    input.form-check-input#servicioRadiografiaEditar(type="checkbox" value="Radiografía")
-                    label.form-check-label(for="servicioRadiografiaEditar") Radiografía
-                .col-md-4
-                  .form-check
-                    input.form-check-input#servicioAnalisisEditar(type="checkbox" value="Análisis Clínicos")
-                    label.form-check-label(for="servicioAnalisisEditar") Análisis Clínicos
-              .row.mt-2
-                .col-md-4
-                  .form-check
-                    input.form-check-input#servicioGroomingEditar(type="checkbox" value="Grooming")
-                    label.form-check-label(for="servicioGroomingEditar") Grooming
-                .col-md-4
-                  .form-check
-                    input.form-check-input#servicioEmergenciaEditar(type="checkbox" value="Atención de Emergencia")
-                    label.form-check-label(for="servicioEmergenciaEditar") Atención de Emergencia
-                .col-md-4
-                  .form-check
-                    input.form-check-input#servicioRecepcionEditar(type="checkbox" value="Atención al Cliente")
-                    label.form-check-label(for="servicioRecepcionEditar") Atención al Cliente
-        .modal-footer
-          button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancelar
-          button.btn.btn-warning(type="submit")
-            i.bi.bi-check-circle-fill.me-1
-            | Guardar Cambios
+              #contenedorServiciosEditar
+              //- Aquí se cargarán los checkboxes dinámicamente
+                
+            .modal-footer
+              button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancelar
+              button.btn.btn-warning(type="submit")
+                i.bi.bi-check-circle-fill.me-1
+                | Guardar Cambios
 
   //- Modal Eliminar Empleado
   #modalEliminarEmpleado.modal.fade(tabindex="-1")
@@ -320,3 +195,7 @@ block content
           button.btn.btn-danger#btnConfirmarEliminarEmpleado(type="button")
             i.bi.bi-trash3-fill.me-1
             | Eliminar Empleado
+
+block scripts
+  script(src="/js/datatables.js")
+  script(src="/js/empleados.js")

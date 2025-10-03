@@ -21,38 +21,9 @@ block content
                     th(scope="col") Nombre del Servicio
                     th(scope="col") Descripción
                     th(scope="col") Precio
-                    th(scope="col" style="width: 120px;") Acciones
-                tbody
-                  tr
-                    td Consulta General
-                    td Revisión médica completa para mascotas
-                    td $2500
-                    td
-                      .btn-group(role="group")
-                        button.btn.btn-warning.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalEditarServicio" onclick="editarServicio(1, 'Consulta General', 'Revisión médica completa para mascotas', 25.00)")
-                          i.fas.fa-edit Editar
-                        button.btn.btn-danger.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalEliminarServicio" onclick="eliminarServicio(1, 'Consulta General')")
-                          i.fas.fa-trash Eliminar
-                  tr
-                    td Vacunación
-                    td Aplicación de vacunas preventivas
-                    td $1500
-                    td
-                      .btn-group(role="group")
-                        button.btn.btn-warning.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalEditarServicio" onclick="editarServicio(2, 'Vacunación', 'Aplicación de vacunas preventivas', 15.00)")
-                          i.fas.fa-edit Editar
-                        button.btn.btn-danger.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalEliminarServicio" onclick="eliminarServicio(2, 'Vacunación')")
-                          i.fas.fa-trash Eliminar
-                  tr
-                    td Cirugía Menor
-                    td Procedimientos quirúrgicos ambulatorios
-                    td $7500
-                    td
-                      .btn-group(role="group")
-                        button.btn.btn-warning.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalEditarServicio" onclick="editarServicio(3, 'Cirugía Menor', 'Procedimientos quirúrgicos ambulatorios', 75.00)")
-                          i.fas.fa-edit Editar
-                        button.btn.btn-danger.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalEliminarServicio" onclick="eliminarServicio(3, 'Cirugía Menor')")
-                          i.fas.fa-trash Eliminar
+                    th.text-center(scope="col") Acciones
+                tbody#tablaServiciosBody
+                  // ACA SE GENERAR LAS TABLAS DINAMICAMENTE DESDE servicios.js
 
   // Modal Crear Servicio
   #modalCrearServicio.modal.fade(tabindex="-1")
@@ -140,3 +111,7 @@ block content
           button.btn.btn-danger#btnConfirmarEliminar(type="button")
             i.fas.fa-trash.me-1
             | Eliminar Servicio
+
+block scripts
+  script(src="/js/servicios.js")
+  script(src="/js/datatables.js")

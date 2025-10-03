@@ -1,9 +1,9 @@
 import { Empleado } from '../models/empleado.model.js';
 
-// OBTIENE TODOS LOS EMPLEADOS
+// OBTIENE TODOS LOS EMPLEADOS (con populate de servicios)
 const getEmpleados = async (req, res) => {
     try {
-        const empleados = await Empleado.find({});
+        const empleados = await Empleado.find({}).populate('servicios');
         res.status(200).json(empleados);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -25,11 +25,11 @@ const getEmpleadoByDni = async (req, res) => {
     }
 };
 
-// OBTIENE UN EMPLEADO POR ID
+// OBTIENE UN EMPLEADO POR ID (con populate)
 const getEmpleadoById = async (req, res) => {
     try {
         const { id } = req.params;
-        const empleado = await Empleado.findById(id);
+        const empleado = await Empleado.findById(id).populate('servicios');
 
         if (!empleado) {
             return res.status(404).json({ message: "NO se encontró ningún empleado con el ID proporcionado." });
