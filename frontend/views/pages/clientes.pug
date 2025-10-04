@@ -1,5 +1,9 @@
 extends ../layouts/main
 
+block extraCSS
+  // Driver.js CSS
+  link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.css")
+
 block content
   // HEADER DE SECCIÓN
   .container-fluid.py-4
@@ -7,18 +11,24 @@ block content
       .col-12
         .card.shadow-sm
           .card-header.bg-primary.text-white.d-flex.justify-content-between.align-items-center
-            h4.mb-0
-              i.bi.bi-people-fill.me-2
-              | Gestión de Clientes
+            .d-flex.align-items-center
+              h4.mb-0.me-2
+                i.bi.bi-people-fill.me-2
+                | Gestión de Clientes
+              button.btn.btn-outline-light(
+                type="button", 
+                id="btnAyudaClientes", 
+                title="Iniciar tour guiado"
+              )
+                i.bi.bi-question-square-fill(style="font-size: 1.5rem;")
             button.btn.btn-success.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalCliente")
               i.bi.bi-person-plus-fill.me-1
               | Agregar Cliente
           .card-body
             .table-responsive
-              table#tablaClientes.table.table-hover.table-striped.mb-0(data-datatable="true")
+              table.table.table-hover.table-striped#tablaClientes
                 thead.table-dark
                   tr
-                    //- th.text-center #
                     th DNI
                     th Nombre
                     th Apellido
@@ -187,3 +197,6 @@ block content
 block scripts
   script(src="/js/datatables.js")
   script(src="/js/clientes.js")
+  // Driver.js
+  script(src="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.js.iife.js")
+  script(src="/js/clientesDriver.js")

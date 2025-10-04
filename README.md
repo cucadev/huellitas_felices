@@ -40,7 +40,8 @@ Este proyecto es el resultado de una **colaboración académica** entre **Brian 
 - **Gestión de Servicios:** CRUD - Catálogo de servicios veterinarios con precios y descripciones.
 - **Agenda de Citas/Turnos:** CRUD - Interfaz interactiva con **FullCalendar** para gestionar citas y turnos.
 - **Diseño Responsivo:** Interfaz adaptable a dispositivos móviles y de escritorio.
-- **Mejoras Futuras:** Integración de **DataTables** para paginación, búsqueda y filtros avanzados. El diseño UX es importante ya que le brinda visualmente le ayuda al usuario a tener una mejor experiencia.
+- **DataTables 2:** Integración de **DataTables** para paginación, búsqueda y filtros avanzados.
+- **Driver.js:** Integración de **Driver.js** para que el usuario sepa el funcionamiento de cada vista
 - **Enfoque profesional:** Estructura de carpetas que facilita el mantenimiento y escalabilidad del código.
 - **Estructura modular:** Separación clara entre `frontend` y `backend`, siguiendo buenas prácticas de organización de proyectos.
 - **Sintaxis moderna:** Uso de `import/export` (ES6 Modules)
@@ -55,7 +56,7 @@ Este proyecto es el resultado de una **colaboración académica** entre **Brian 
 | **Categoría**             | **Tecnologías**                                                     |
 |---------------------------|---------------------------------------------------------------------|
 | **Backend**               | Node.js, Express, MongoDB Atlas, Mongoose                           |
-| **Frontend**              | Pug, Bootstrap 5, FullCalendar, JavaScript (ES6+)                   |
+| **Frontend**              | Pug, Bootstrap 5, FullCalendar.js, Driver.js JavaScript (ES6+)      |
 | **Control de Versiones**  | Git, GitHub                                                         |
 | **Herramientas**          | Visual Studio Code, Thunder Client (para pruebas de API)            |
 
@@ -84,12 +85,6 @@ A continuación, se presentan algunas capturas:
 
 ![Captura de Pantalla de Clientes](frontend/public/img/1.png)
 ![Captura de Pantalla de Clientes Modal](frontend/public/img/2.png)
-![Captura de Pantalla de Empleados](frontend/public/img/3.png)
-![Captura de Pantalla de Empleados Modal](frontend/public/img/4.png)
-![Captura de Pantalla de Servicios](frontend/public/img/5.png)
-![Captura de Pantalla de Servicios Modal](frontend/public/img/6.png)
-![Captura de Pantalla de Agenda/Turnos](frontend/public/img/7.png)
-![Captura de Pantalla de Agenda/Turnos Modal](frontend/public/img/8.png)
 
 ---
 
