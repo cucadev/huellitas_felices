@@ -1,4 +1,4 @@
-// DATATABLES.JS - CONFIGURACIÓN SIMPLE PARA MÚLTIPLES TABLAS
+
 console.log("TEST ARCHIVO DATATABLES.JS CARGADO CORRECTAMENTE");
 
 let tablaActual = null; // Variable global para la instancia actual
