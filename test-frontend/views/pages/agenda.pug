@@ -1,0 +1,169 @@
+extends ../layouts/main.pug
+
+block extraCSS
+  // FullCalendar CSS
+  link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.css")
+  // Driver.js CSS
+  link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.3.1/dist/driver.css")
+
+  style.
+    .fc-nuevaCita-button {
+      background-color: #28a745 !important;
+      border-color: #28a745 !important;
+      color: white !important;
+      margin-left: 10px;
+    }
+    .fc-nuevaCita-button:hover {
+      background-color: #218838 !important;
+      border-color: #1e7e34 !important;
+    }
+    /* Eventos en horario (verde) */
+    .fc-event.evento-en-horario {
+      background-color: #28a745 !important;
+      border-color: #28a745 !important;
+      color: white !important;
+    }
+    /* Eventos próximos (amarillo) */
+    .fc-event.evento-proximo {
+      background-color: #ffc107 !important;
+      border-color: #ffc107 !important;
+      color: black !important;
+    }
+    /* Eventos que ya pasaron (rojo) */
+    .fc-event.evento-pasado {
+      background-color: #dc3545 !important;
+      border-color: #dc3545 !important;
+      color: white !important;
+    }
+    /* Popover más ancho para Driver.js */
+    .popover-ancho {
+      max-width: 550px !important;
+    }
+
+block content
+  .container-fluid.py-4
+    .row
+      .col-12
+        .card.shadow-sm
+          .card-header.bg-primary.text-white.d-flex.justify-content-between.align-items-center
+            h4.mb-0
+              i.bi.bi-calendar-check-fill.me-2
+              | Agenda Veterinaria de Turnos
+            button.btn.btn-outline-light(
+              type="button", 
+              id="btnAyudaAgenda", 
+              title="Iniciar tour guiado"
+            )
+              i.bi.bi-question-square-fill(style="font-size: 1.5rem;")
+          .card-body
+            #calendar
+
+    // Modal para Nueva/Editar Cita
+    .modal.fade(
+      id="modalCita",
+      tabindex="-1",
+      aria-labelledby="modalCitaLabel",
+      aria-hidden="true"
+    )
+      .modal-dialog.modal-xl
+        .modal-content
+          .modal-header
+            h5.modal-title(id="modalCitaLabel")
+              i.fas.fa-calendar-plus.me-2
+              span#modalTitle Agendar Nueva Cita
+            button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
+          .modal-body
+            form#formCita
+              input(type="hidden", id="citaId")
+              .row
+                // Primera fila: Título, Fecha, Hora, Veterinario
+                .col-md-3
+                  .mb-3
+                    label.form-label(for="titulo") Título de la Cita
+                    input.form-control(type="text", id="titulo", required, placeholder="Ej: Consulta general")
+                .col-md-3
+                  .mb-3
+                    label.form-label(for="fecha") Fecha
+                    input.form-control(type="date", id="fecha", required)
+                .col-md-3
+                  .mb-3
+                    label.form-label(for="hora") Hora
+                    input.form-control(type="time", id="hora", min="08:00", max="19:59" required)
+                .col-md-3
+                  .mb-3
+                    label.form-label(for="veterinario") Profesional
+                    select.form-select(id="veterinario", required)
+                      //ACA SE GEENRAR DINAMICAMENTE LOS PROFESIONALES EN BASE A LA TABLA EMPLEADOS
+              hr.my-3
+              // Segunda fila: Datos del Cliente
+              .col-12
+                h6.text-muted.mb-3
+                  i.fas.fa-user.me-2
+                  | Datos del Cliente
+              .row
+                .col-md-3#seccionCliente
+                  .mb-3
+                    label.form-label(for="dni") DNI del Cliente
+                    .input-group
+                      input.form-control(type="text", id="dni", required, placeholder="Ingrese DNI")
+                      button.btn.btn-outline-secondary(type="button", id="btnBuscarCliente")
+                        i.bi.bi-search
+                .col-md-3
+                  .mb-3
+                    label.form-label(for="nombre") Nombre
+                    input.form-control(type="text", id="nombre", readonly)
+                .col-md-3
+                  .mb-3
+                    label.form-label(for="apellido") Apellido
+                    input.form-control(type="text", id="apellido", readonly)
+                .col-md-3
+                  .mb-3
+                    label.form-label(for="telefono") Teléfono
+                    input.form-control(type="tel", id="telefono", readonly)
+              .row
+                .col-md-6
+                  .mb-3
+                    label.form-label(for="email") Email
+                    input.form-control(type="email", id="email", readonly)
+                .col-md-6
+                  .mb-3
+                    label.form-label(for="direccion") Dirección
+                    input.form-control(type="text", id="direccion", readonly)
+              hr.my-3
+              // Tercera fila: Datos de la Mascota
+              .col-12
+                h6.text-muted.mb-3
+                  i.fas.fa-paw.me-2
+                  | Datos de la Mascota
+              .row#seccionMascota
+                .col-md-4
+                  .mb-3
+                    label.form-label(for="nombreMascota") Nombre de la Mascota
+                    input.form-control(type="text", id="nombreMascota", required, placeholder="Ej: Rocky")
+                .col-md-4
+                  .mb-3
+                    label.form-label(for="tipoMascota") Tipo de Mascota
+                    select.form-select(id="tipoMascota", required)
+                      option(value="") Seleccionar...
+                      option(value="Perro") Perro
+                      option(value="Gato") Gato
+                .col-md-12
+                  .mb-3
+                    label.form-label(for="observaciones") Motivo de la Consulta / Observaciones
+                    textarea.form-control(id="observaciones", rows="3", required, placeholder="Describa el motivo de la consulta...")
+              .modal-footer
+                button.btn.btn-danger#btnEliminarCita(type="button", style="display:none;")
+                  i.fas.fa-trash.me-1
+                  | Eliminar Cita
+                button.btn.btn-secondary(type="button", data-bs-dismiss="modal") Cancelar
+                button.btn.btn-primary(type="submit", id="btnGuardarCita")
+                  i.fas.fa-save.me-1
+                  | Guardar Cita
+
+block extraJS
+  script(src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js")
+  script(src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/locales/es.global.min.js")
+  script(src="https://cdn.jsdelivr.net/npm/driver.js@1.3.1/dist/driver.js.iife.js")
+  script(src="/js/fullcalendar.js")
+  script(src="/js/agenda.js")
+  script(src="/js/agendaDriver.js")

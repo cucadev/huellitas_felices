@@ -1,0 +1,202 @@
+extends ../layouts/main
+
+block extraCSS
+  // Driver.js CSS
+  link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.css")
+
+block content
+  // HEADER DE SECCIÓN
+  .container-fluid.py-4
+    .row
+      .col-12
+        .card.shadow-sm
+          .card-header.bg-primary.text-white.d-flex.justify-content-between.align-items-center
+            .d-flex.align-items-center
+              h4.mb-0.me-2
+                i.bi.bi-people-fill.me-2
+                | Gestión de Clientes
+              button.btn.btn-outline-light(
+                type="button", 
+                id="btnAyudaClientes", 
+                title="Iniciar tour guiado"
+              )
+                i.bi.bi-question-square-fill(style="font-size: 1.5rem;")
+            button.btn.btn-success.btn-sm(type="button" data-bs-toggle="modal" data-bs-target="#modalCliente")
+              i.bi.bi-person-plus-fill.me-1
+              | Agregar Cliente
+          .card-body
+            .table-responsive
+              table.table.table-hover.table-striped#tablaClientes
+                thead.table-dark
+                  tr
+                    th DNI
+                    th Nombre
+                    th Apellido
+                    th.text-center Mascotas
+                    th Dirección
+                    th Email
+                    th Teléfono
+                    th.text-center Acciones
+                tbody#tablaClientesBody
+                  // ACA SE INSERTAN LAS FILAS DINAMICAMENTE DESDE clientes.js
+
+
+  // MODAL AGREGAR CLIENTE
+  #modalCliente.modal.fade(tabindex="-1")
+    .modal-dialog.modal-lg
+      .modal-content
+        .modal-header.bg-primary.text-white
+          h5.modal-title
+            i.bi.bi-person-plus.me-2
+            | Nuevo Cliente
+          button.btn-close.btn-close-white(type="button" data-bs-dismiss="modal")
+        .modal-body
+          form#formCliente
+            .row
+              .col-md-6.mb-3
+                label.form-label(for="nombreCliente") Nombre *
+                input.form-control(type="text", id="nombreCliente", required, placeholder="Ej: Juan Carlos")
+              .col-md-6.mb-3
+                label.form-label(for="apellidoCliente") Apellido *
+                input.form-control(type="text", id="apellidoCliente", required, placeholder="Ej: Pérez García")
+              .col-md-6.mb-3
+                label.form-label(for="dniCliente") DNI *
+                input.form-control(type="text", id="dniCliente", required, placeholder="Ej: 12345678")
+              .col-md-6.mb-3
+                label.form-label(for="emailCliente") Email *
+                input.form-control(type="email", id="emailCliente", required, placeholder="Ej: juan.perez@email.com")
+              .col-md-6.mb-3
+                label.form-label(for="telefonoCliente") Teléfono *
+                input.form-control(type="tel", id="telefonoCliente", required, placeholder="Ej: +54 11 1234-5678")
+              .col-md-6.mb-3
+                label.form-label(for="ciudadCliente") Ciudad *
+                input.form-control(type="text", id="ciudadCliente", required, placeholder="Ej: Buenos Aires")
+              .col-12.mb-3
+                label.form-label(for="direccionCliente") Dirección *
+                input.form-control(type="text", id="direccionCliente", required, placeholder="Ej: Av. Corrientes 1234")
+        .modal-footer
+          button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancelar
+          button.btn.btn-primary(type="submit" form="formCliente")
+            i.bi.bi-save.me-1
+            | Guardar Cliente
+
+  // MODAL EDITAR CLIENTE
+  #modalEditarCliente.modal.fade(tabindex="-1")
+    .modal-dialog.modal-lg
+      .modal-content
+        .modal-header.bg-warning.text-dark
+          h5.modal-title
+            i.bi.bi-pencil.me-2
+            | Editar Cliente
+          button.btn-close(type="button" data-bs-dismiss="modal")
+        .modal-body
+          form#formEditarCliente
+            input#idClienteEditar(type="hidden")
+            .row
+              .col-md-6.mb-3
+                label.form-label(for="nombreClienteEditar") Nombre *
+                input.form-control(type="text", id="nombreClienteEditar", required)
+              .col-md-6.mb-3
+                label.form-label(for="apellidoClienteEditar") Apellido *
+                input.form-control(type="text", id="apellidoClienteEditar", required)
+              .col-md-6.mb-3
+                label.form-label(for="dniClienteEditar") DNI *
+                input.form-control(type="text", id="dniClienteEditar", required)
+              .col-md-6.mb-3
+                label.form-label(for="emailClienteEditar") Email *
+                input.form-control(type="email", id="emailClienteEditar", required)
+              .col-md-6.mb-3
+                label.form-label(for="telefonoClienteEditar") Teléfono *
+                input.form-control(type="tel", id="telefonoClienteEditar", required)
+              .col-md-6.mb-3
+                label.form-label(for="ciudadClienteEditar") Ciudad *
+                input.form-control(type="text", id="ciudadClienteEditar", required)
+              .col-12.mb-3
+                label.form-label(for="direccionClienteEditar") Dirección *
+                input.form-control(type="text", id="direccionClienteEditar", required)
+        .modal-footer
+          button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancelar
+          button.btn.btn-warning(type="submit" form="formEditarCliente")
+            i.bi.bi-save.me-1
+            | Guardar Cambios
+
+  // MODAL ELIMINAR CLIENTE
+  #modalEliminarCliente.modal.fade(tabindex="-1")
+    .modal-dialog
+      .modal-content
+        .modal-header.bg-danger.text-white
+          h5.modal-title
+            i.bi.bi-exclamation-triangle.me-2
+            | Eliminar Cliente
+          button.btn-close.btn-close-white(type="button" data-bs-dismiss="modal")
+        .modal-body
+          .text-center
+            i.bi.bi-trash-alt.text-danger.mb-3(style="font-size: 3rem;")
+            h6 ¿Estás seguro de que deseas eliminar este cliente?
+            p.text-muted#nombreClienteEliminar Este cliente será eliminado permanentemente.
+            .alert.alert-warning.mt-3
+              small
+                i.bi.bi-info-circle.me-1
+                | Esta acción no se puede deshacer
+        .modal-footer
+          button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancelar
+          button.btn.btn-danger#btnConfirmarEliminar(type="button")
+            i.bi.bi-trash.me-1
+            | Eliminar Cliente
+
+  // MODAL INFORMACIÓN DE MASCOTAS DEL CLIENTE
+  #modalInfoMascotas.modal.fade(tabindex="-1")
+    .modal-dialog.modal-lg
+      .modal-content
+        .modal-header.bg-info.text-white
+          h5.modal-title
+            i.bi.bi-heart-fill.me-2
+            | Mascotas de:
+            span#nombreClienteMascota 
+          button.btn-close.btn-close-white(type="button" data-bs-dismiss="modal")
+        .modal-body
+          // TABLA DE MASCOTAS
+          .table-responsive
+            table.table.table-hover.table-striped.mb-0#tablaInfoMascotas
+              thead.table-light
+                tr
+                  th.text-center #
+                  th Nombre
+                  th Especie
+                  th Raza
+                  th Edad
+                  th Peso
+                  th Color
+              tbody#bodyInfoMascotas
+                // DATOS DE EJEMPLO - Cliente 1 (Juan Carlos)
+                tr
+                  td.text-center 1
+                  td
+                    strong Max
+                  td
+                    i.bi.bi-dog.text-warning.me-1
+                    | Perro
+                  td Golden Retriever
+                  td 3 años
+                  td 28 kg
+                  td Dorado
+                tr
+                  td.text-center 2
+                  td
+                    strong Luna
+                  td
+                    i.bi.bi-cat.text-info.me-1
+                    | Gato
+                  td Siamés
+                  td 2 años
+                  td 4 kg
+                  td Blanco/Gris
+        .modal-footer
+          button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cerrar
+
+block scripts
+  script(src="/js/datatables.js")
+  script(src="/js/clientes.js")
+  // Driver.js
+  script(src="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.js.iife.js")
+  script(src="/js/clientesDriver.js")
