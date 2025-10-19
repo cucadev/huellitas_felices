@@ -1,0 +1,36 @@
+extends ../layout.pug
+
+block content
+  h1 #{titulo}
+
+  form(action="/clientes/nuevo" method="POST")
+    // AGREGUE DNI
+    .mb-3
+      label.form-label(for="dni") DNI
+      input.form-control(type="text" name="dni" required)
+    .mb-3
+      label.form-label(for="nombre") Nombre
+      input.form-control(type="text" name="nombre" required)
+    .mb-3
+      label.form-label(for="apellido") Apellido
+      input.form-control(type="text" name="apellido" required)
+    .mb-3
+      label.form-label(for="email") Email
+      input.form-control(type="email" name="email" required)
+    .mb-3
+      label.form-label(for="telefono") Teléfono
+      input.form-control(type="text" name="telefono" required)
+    .mb-3
+      label.form-label(for="direccion") Dirección
+      input.form-control(type="text" name="direccion")
+    button.btn.btn-success.m-1(type="submit") Crear Cliente
+    a.btn.btn-secondary.m-1(href="/clientes") Cancelar
+
+  style.
+    .btn-success { background-color: #762051; border-color: #762051; color: #fff; }
+    .btn-success:hover { opacity: 0.85; }
+    .btn-secondary { margin-left: 10px; }
+
+
+
+

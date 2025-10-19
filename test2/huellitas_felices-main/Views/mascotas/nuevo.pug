@@ -1,0 +1,28 @@
+extends ../layout.pug
+
+block content
+  h1 #{titulo}
+
+  form(action="/mascotas/nuevo" method="POST")
+    .mb-3
+      label.form-label(for="nombre") Nombre
+      input.form-control(type="text" name="nombre" required)
+    .mb-3
+      label.form-label(for="especie") Especie
+      input.form-control(type="text" name="especie" required)
+    .mb-3
+      label.form-label(for="raza") Raza
+      input.form-control(type="text" name="raza" required)
+    .mb-3
+      label.form-label(for="edad") Edad
+      input.form-control(type="number" name="edad" required)
+    .mb-3
+      label.form-label(for="cliente") Dueño
+      select.form-select(name="cliente" required)
+        option(value="") -- Seleccione un cliente --
+        each cliente in clientes
+          option(value=cliente._id) #{cliente.nombre} #{cliente.apellido}
+    button.btn.btn-nuevo(type="submit") Crear Mascota
+    a.btn.btn-secondary(href="/mascotas") Cancelar
+
+
