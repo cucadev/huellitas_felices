@@ -1,30 +1,27 @@
 extends ../layout.pug
 
 block content
-  .d-flex.justify-content-between.align-items-center.mb-4
-    h2 Listado de Clientes
-    a.btn.btn-nuevo(href="/clientes/nuevo")
-      i.bi.bi-plus-lg
-      | Nuevo Cliente
+  h1 #{titulo}
 
-  if mensajeExito
-    .alert.alert-success(role="alert")= mensajeExito
-  if mensajeError
-    .alert.alert-danger(role="alert")= mensajeError
+  // Botón para crear nuevo cliente
+  a.btn.btn-nuevo.mb-3(href="/clientes/nuevo")
+    i.bi.bi-plus-circle
+    |  Nuevo Cliente
 
-  if clientes.length
-    table.table.table-striped.table-bordered
-      thead
-        tr
-          th DNI
-          th Nombre
-          th Apellido
-          th Email
-          th Teléfono
-          th Dirección
-          th Mascotas
-          th Acciones
-      tbody
+  table.table.table-striped.table-bordered
+    thead
+      tr
+        th DNI
+        th Nombre
+        th Apellido
+        th Email
+        th Teléfono
+        th Dirección
+        th Observaciones
+        th Mascotas
+        th Acciones
+    tbody
+      if clientes && clientes.length
         each cliente in clientes
           tr
             td= cliente.dniCliente
@@ -33,36 +30,47 @@ block content
             td= cliente.email
             td= cliente.telefono
             td= cliente.direccion
+            td= cliente.observaciones
             td
               if cliente.mascotas && cliente.mascotas.length
                 each mascota in cliente.mascotas
-                  span.badge.bg-info.text-dark.m-1= mascota.nombre
+                  span.badge.bg-secondary= mascota.nombre
               else
                 span.text-muted Sin mascotas
             td
               a.btn.btn-acciones.editar(href=`/clientes/editar/${cliente._id}`)
                 i.bi.bi-pencil-fill
-              button.btn.btn-acciones.eliminar(
-                type="button"
-                data-bs-toggle="modal"
-                data-bs-target=`#confirmDeleteModal-${cliente._id}`
-              )
+              a.btn.btn-acciones.eliminar.btn-eliminar(href=`/clientes/eliminar/${cliente._id}`)
                 i.bi.bi-trash-fill
+      else
+        tr
+          td(colspan="9" class="text-center") No hay clientes registrados.
 
-              // Modal de confirmación
-              .modal.fade(id=`confirmDeleteModal-${cliente._id}` tabindex="-1" aria-hidden="true")
-                .modal-dialog
-                  .modal-content
-                    .modal-header
-                      h5.modal-title Confirmar eliminación
-                      button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Close")
-                    .modal-body
-                      p ¿Estás seguro de que deseas eliminar al cliente #{cliente.nombre} #{cliente.apellido}?
-                    .modal-footer
-                      button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancelar
-                      a.btn.btn-danger(href=`/clientes/eliminar/${cliente._id}`) Eliminar
+  // SweetAlert2
+  script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11")
+  script.
+    const btnsEliminar = document.querySelectorAll('.btn-eliminar');
+    btnsEliminar.forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        const href = btn.getAttribute('href');
+        Swal.fire({
+          title: '¿Estás seguro que queres eliminar este Cliente?',
+          text: "Esta operación es irreversible",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: 'rgba(52, 4, 66, 1)',
+          cancelButtonColor: '#5c1266ff',
+          confirmButtonText: 'Eliminar',
+          cancelButtonText: 'Cancelar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = href;
+          }
+        });
+      });
+    });
 
-  else
-    p.text-center.mt-4 No hay clientes registrados.
+
 
 

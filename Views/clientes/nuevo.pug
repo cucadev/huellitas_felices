@@ -3,11 +3,6 @@ extends ../layout.pug
 block content
   h1 #{titulo}
 
-  if mensajeExito
-    .alert.alert-success(role="alert")= mensajeExito
-  if mensajeError
-    .alert.alert-danger(role="alert")= mensajeError
-
   form#formCliente.needs-validation(action="/clientes/nuevo" method="POST" novalidate)
     .mb-3
       label.form-label(for="dniCliente") DNI del Cliente
@@ -35,18 +30,41 @@ block content
     .mb-3
       label.form-label(for="observaciones") Observaciones
       textarea.form-control(name="observaciones" rows="3" placeholder="Agregar notas o información adicional...")
+
     .mb-3
       label.form-label(for="mascotas") Mascotas
       select.form-select(name="mascotas" multiple)
-        each mascota in todasMascotas
-          option(value=mascota._id)= mascota.nombre + ' - ' + mascota.especie
-      small.form-text.text-muted Puedes seleccionar más de una mascota manteniendo presionada Ctrl (Cmd en Mac)
+        if mascotas && mascotas.length
+          each mascota in mascotas
+            option(value=mascota._id)= mascota.nombre
+        else
+          option(disabled) No hay mascotas disponibles
 
     button.btn.btn-success.m-1(type="submit") Crear Cliente
     a.btn.btn-secondary.m-1(href="/clientes") Cancelar
 
   style.
+    .btn-success { background-color: #762051; border-color: #762051; color: #fff; }
+    .btn-success:hover { opacity: 0.85; }
+    .btn-secondary { margin-left: 10px; }
     textarea { resize: none; }
+
+  // Validación Bootstrap
+  script.
+    (() => {
+      'use strict'
+      const forms = document.querySelectorAll('.needs-validation')
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+          form.classList.add('was-validated')
+        }, false)
+      })
+    })()
+
 
 
 
