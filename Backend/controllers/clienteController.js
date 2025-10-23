@@ -3,7 +3,8 @@ const Cliente = require('../models/Cliente');
 // Mostrar listado de clientes en PUG
 exports.vistaClientes = async (req, res) => {
   try {
-    const clientes = await Cliente.find();
+    // Trae los clientes con sus mascotas (solo nombre, especie o los campos que tengas)
+    const clientes = await Cliente.find().populate('mascotas', 'nombre especie');
     res.render('clientes/clientes', { titulo: 'Listado de Clientes', clientes });
   } catch (error) {
     res.status(500).send('Error al cargar la vista: ' + error.message);
@@ -18,8 +19,19 @@ exports.formularioCrearCliente = (req, res) => {
 // Guardar nuevo cliente
 exports.crearCliente = async (req, res) => {
   try {
-    const { nombre, apellido, email, telefono, direccion } = req.body;
-    const nuevoCliente = new Cliente({ nombre, apellido, email, telefono, direccion });
+    const { dniCliente, nombre, apellido, email, telefono, direccion, observaciones } = req.body;
+
+    const nuevoCliente = new Cliente({
+      dniCliente,
+      nombre,
+      apellido,
+      email,
+      telefono,
+      direccion,
+      observaciones
+      // No se agregan mascotas aquí, solo se visualizan
+    });
+
     await nuevoCliente.save();
     res.redirect('/clientes');
   } catch (error) {
@@ -30,7 +42,7 @@ exports.crearCliente = async (req, res) => {
 // Formulario para editar cliente
 exports.formularioEditarCliente = async (req, res) => {
   try {
-    const cliente = await Cliente.findById(req.params.id);
+    const cliente = await Cliente.findById(req.params.id).populate('mascotas', 'nombre especie');
     if (!cliente) return res.status(404).send('Cliente no encontrado');
     res.render('clientes/editar', { titulo: 'Editar Cliente', cliente });
   } catch (error) {
@@ -41,8 +53,14 @@ exports.formularioEditarCliente = async (req, res) => {
 // Guardar edición de cliente
 exports.actualizarCliente = async (req, res) => {
   try {
-    const datos = { ...req.body };
-    const clienteActualizado = await Cliente.findByIdAndUpdate(req.params.id, datos, { new: true, runValidators: true });
+    const { dniCliente, nombre, apellido, email, telefono, direccion, observaciones } = req.body;
+
+    const clienteActualizado = await Cliente.findByIdAndUpdate(
+      req.params.id,
+      { dniCliente, nombre, apellido, email, telefono, direccion, observaciones },
+      { new: true, runValidators: true }
+    );
+
     if (!clienteActualizado) return res.status(404).send('Cliente no encontrado');
     res.redirect('/clientes');
   } catch (error) {
@@ -60,3 +78,4 @@ exports.eliminarCliente = async (req, res) => {
     res.status(500).send('Error al eliminar cliente: ' + error.message);
   }
 };
+

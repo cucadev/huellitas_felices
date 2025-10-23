@@ -3,29 +3,55 @@ extends ../layout.pug
 block content
   h1 #{titulo}
 
-  form(action=`/clientes/editar/${cliente._id}` method="POST")
+  if mensajeExito
+    .alert.alert-success(role="alert")= mensajeExito
+  if mensajeError
+    .alert.alert-danger(role="alert")= mensajeError
+
+  form#formEditarCliente.needs-validation(action=`/clientes/editar/${cliente._id}` method="POST" novalidate)
+    .mb-3
+      label.form-label(for="dniCliente") DNI del Cliente
+      input.form-control(type="text" name="dniCliente" required value=cliente.dniCliente placeholder="Ej: 40234567")
+      .invalid-feedback Por favor ingresa un DNI válido.
     .mb-3
       label.form-label(for="nombre") Nombre
-      input.form-control(type="text" name="nombre" required value=cliente.nombre)
+      input.form-control(type="text" name="nombre" required value=cliente.nombre placeholder="Ej: Juan")
+      .invalid-feedback El nombre es obligatorio.
     .mb-3
       label.form-label(for="apellido") Apellido
-      input.form-control(type="text" name="apellido" required value=cliente.apellido)
+      input.form-control(type="text" name="apellido" required value=cliente.apellido placeholder="Ej: Pérez")
+      .invalid-feedback El apellido es obligatorio.
     .mb-3
       label.form-label(for="email") Email
-      input.form-control(type="email" name="email" required value=cliente.email)
+      input.form-control(type="email" name="email" required value=cliente.email placeholder="Ej: juanperez@email.com")
+      .invalid-feedback Ingresa un email válido.
     .mb-3
       label.form-label(for="telefono") Teléfono
-      input.form-control(type="text" name="telefono" required value=cliente.telefono)
+      input.form-control(type="text" name="telefono" required value=cliente.telefono placeholder="Ej: 3512345678")
+      .invalid-feedback El teléfono es obligatorio.
     .mb-3
       label.form-label(for="direccion") Dirección
-      input.form-control(type="text" name="direccion" value=cliente.direccion)
+      input.form-control(type="text" name="direccion" value=cliente.direccion placeholder="Ej: Av. Siempre Viva 742")
+    .mb-3
+      label.form-label(for="observaciones") Observaciones
+      textarea.form-control(name="observaciones" rows="3")= cliente.observaciones
+    .mb-3
+      label.form-label(for="mascotas") Mascotas
+      select.form-select(name="mascotas" multiple)
+        each mascota in todasMascotas
+          if cliente.mascotas && cliente.mascotas.some(m => m._id.toString() === mascota._id.toString())
+            option(value=mascota._id selected)= mascota.nombre + ' - ' + mascota.especie
+          else
+            option(value=mascota._id)= mascota.nombre + ' - ' + mascota.especie
+      small.form-text.text-muted Puedes seleccionar más de una mascota manteniendo presionada Ctrl
+
     button.btn.btn-primary.m-1(type="submit") Guardar Cambios
     a.btn.btn-secondary.m-1(href="/clientes") Cancelar
 
   style.
-    .btn-primary { background-color: #E49AC3; border-color: #E49AC3; color: #fff; }
-    .btn-primary:hover { opacity: 0.85; }
-    .btn-secondary { margin-left: 10px; }
+    textarea { resize: none; }
+
+
 
 
 
