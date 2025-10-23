@@ -30,19 +30,15 @@ block content
     .mb-3
       label.form-label(for="observaciones") Observaciones
       textarea.form-control(name="observaciones" rows="3")= cliente.observaciones
-
     .mb-3
       label.form-label(for="mascotas") Mascotas
       select.form-select(name="mascotas" multiple)
-        if mascotas && mascotas.length
-          each mascota in mascotas
-            - const isSelected = cliente.mascotas && cliente.mascotas.some(m => m._id.toString() === mascota._id.toString())
-            option(value=mascota._id selected=isSelected)= mascota.nombre
-        else
-          option(disabled) No hay mascotas disponibles
+        each mascota in mascotas
+          option(value=mascota._id selected=(cliente.mascotas.includes(mascota._id)))= mascota.nombre
 
     button.btn.btn-primary.m-1(type="submit") Guardar Cambios
     a.btn.btn-secondary.m-1(href="/clientes") Cancelar
+    a.btn.btn-secondary.m-1(href="/dashboard") Inicio
 
   style.
     .btn-primary { background-color: #E49AC3; border-color: #E49AC3; color: #fff; }
@@ -50,10 +46,12 @@ block content
     .btn-secondary { margin-left: 10px; }
     textarea { resize: none; }
 
-  // Validación Bootstrap
+  // SweetAlert2
+  script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11")
   script.
     (() => {
       'use strict'
+
       const forms = document.querySelectorAll('.needs-validation')
       Array.from(forms).forEach(form => {
         form.addEventListener('submit', event => {
@@ -64,6 +62,26 @@ block content
           form.classList.add('was-validated')
         }, false)
       })
+
+      const mensajeExito = "#{mensajeExito || ''}"
+      const mensajeError = "#{mensajeError || ''}"
+
+      if (mensajeExito) {
+        Swal.fire({
+          icon: 'success',
+          title: '¡Éxito!',
+          text: mensajeExito,
+          confirmButtonColor: '#762051'
+        })
+      }
+      if (mensajeError) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: mensajeError,
+          confirmButtonColor: '#d33'
+        })
+      }
     })()
 
 
