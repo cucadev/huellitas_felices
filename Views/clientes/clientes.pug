@@ -3,10 +3,14 @@ extends ../layout.pug
 block content
   h1 #{titulo}
 
-  // Botón para crear nuevo cliente
-  a.btn.btn-nuevo.mb-3(href="/clientes/nuevo")
-    i.bi.bi-plus-circle
-    |  Nuevo Cliente
+  // Botones Nuevo Cliente e inicio
+  .d-flex.mb-3
+    a.btn.btn-nuevo.me-2(href="/clientes/nuevo")
+      i.bi.bi-plus-circle
+      |  Nuevo Cliente
+    a.btn.btn-secondary(href="/dashboard")
+      i.bi.bi-house
+      |  Inicio
 
   table.table.table-striped.table-bordered
     thead
@@ -55,12 +59,12 @@ block content
         e.preventDefault();
         const href = btn.getAttribute('href');
         Swal.fire({
-          title: '¿Estás seguro que queres eliminar este Cliente?',
-          text: "Esta operación es irreversible",
+          title: '¿Estás seguro que quieres eliminar este Cliente?',
+          text: "¡Esta operación es irreversible",
           icon: 'warning',
           showCancelButton: true,
-          confirmButtonColor: 'rgba(52, 4, 66, 1)',
-          cancelButtonColor: '#5c1266ff',
+          confirmButtonColor: 'rgba(47, 4, 58, 1)',
+          cancelButtonColor: '#5e165aff',
           confirmButtonText: 'Eliminar',
           cancelButtonText: 'Cancelar'
         }).then((result) => {
@@ -70,6 +74,7 @@ block content
         });
       });
     });
+
 
 
 
