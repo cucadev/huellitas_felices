@@ -81,11 +81,49 @@ html(lang="es")
       }
 
   body
+    //- Cambiar esta parte en layout.pug - SOLO el div.user
     header.dashboard-header
       img.logo(src="/images/logo.png" alt="Logo")
       div.user
-        i.bi.bi-person-circle
-        |  Ferrazin Nervegna Mayra
+        .dropdown
+          a.dropdown-toggle.text-white.text-decoration-none(
+            href="#", 
+            role="button", 
+            data-bs-toggle="dropdown", 
+            aria-expanded="false",
+            style="cursor: pointer;"
+          )
+            i.bi.bi-person-circle.me-2
+            | Ferrazin Nervegna Mayra
+          ul.dropdown-menu.dropdown-menu-end
+            li
+              a.dropdown-item(href="/servicios")
+                i.bi.bi-heart-pulse-fill.me-2
+                | Servicios
+            li
+              a.dropdown-item(href="/empleados")
+                i.bi.bi-person-badge.me-2
+                | Empleados
+            li
+              a.dropdown-item(href="/agenda")
+                i.bi.bi-calendar-event.me-2
+                | Agenda
+            li
+              a.dropdown-item(href="/clientes")
+                i.bi.bi-people.me-2
+                | Clientes
+            li
+              a.dropdown-item(href="/mascotas")
+                i.bi.bi-heart-fill.me-2
+                | Mascotas
+            li
+              a.dropdown-item(href="/caja")
+                i.bi.bi-cash-coin.me-2
+                | Caja
+            li
+              a.dropdown-item(href="/Productos")
+                i.bi.bi-box-seam.me-2
+                | Productos
 
     main.container
       block content

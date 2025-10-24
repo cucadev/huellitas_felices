@@ -10,13 +10,13 @@ const PORT = process.env.PORT || 3000;
 
 // Importación de rutas
 const clientesRoutes = require('./Backend/routes/ClienteRoutes');
-// const productRoutes = require('./Backend/routes/productRoutes');
-// const comprasRoutes = require('./Backend/routes/comprasRoutes');
-// const ventasRoutes = require('./Backend/routes/ventasRoutes');
-// const cajaRoutes = require('./Backend/routes/cajaRoutes');
-// const userRoutes = require('./Backend/routes/userRoutes');
-// const webRoutes = require('./Backend/routes/webRoutes');
-// const mascotaRoutes = require('./Backend/routes/mascotaRoutes');
+const productRoutes = require('./Backend/routes/productRoutes');
+const comprasRoutes = require('./Backend/routes/comprasRoutes');
+const ventasRoutes = require('./Backend/routes/ventasRoutes');
+const cajaRoutes = require('./Backend/routes/cajaRoutes');
+const userRoutes = require('./Backend/routes/userRoutes');
+const webRoutes = require('./Backend/routes/webRoutes');
+const mascotaRoutes = require('./Backend/routes/mascotaRoutes');
 
 //IMPORTACIONES DE RUTAS SERVICIO, EMPLEADOS Y AGENDA - Brian
 const serviciosRoutes = require('./Backend/routes/servicioRoutes');
@@ -46,25 +46,20 @@ app.use(express.urlencoded({ extended: true })); // Para recibir formularios
 
 
 // Rutas
-// app.use('/api/users', userRoutes);
+app.use('/api/users', userRoutes);
 app.use('/clientes', clientesRoutes);
-// app.use('/productos', productRoutes);
-// app.use('/compras', comprasRoutes);
-// app.use('/ventas', ventasRoutes);
-// app.use('/caja', cajaRoutes);
-// app.use('/', webRoutes);
-// app.use('/mascotas', mascotaRoutes);
+app.use('/productos', productRoutes);
+app.use('/compras', comprasRoutes);
+app.use('/ventas', ventasRoutes);
+app.use('/caja', cajaRoutes);
+app.use('/', webRoutes);
+app.use('/mascotas', mascotaRoutes);
 
 // RUTAS DE SERVICIOS, EMPLEADOS Y AGENDA AGREGAR - Brian
 app.use('/servicios', serviciosRoutes);
 app.use('/empleados', empleadosRoutes);
 app.use('/agenda', agendaRoutes);
 
-// Agrega esto TEMPORAL para debug
-app.use('/empleados', (req, res, next) => {
-  console.log('✅ Ruta /empleados está siendo alcanzada');
-  next();
-}, empleadosRoutes);
 
 // Iniciar servidor
 app.listen(PORT, () => {
