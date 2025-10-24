@@ -38,6 +38,19 @@ exports.crearEmpleado = async (req, res) => {
     await nuevoEmpleado.save();
     res.redirect('/empleados');
   } catch (error) {
+    // ERROR DE DNI DUPLICADO
+    if (error.code === 11000) {
+      return res.status(400).send(`
+        <html>
+          <body style="font-family: Arial, sans-serif; padding: 20px;">
+            <h2 style="color: #d32f2f;">❌ Error: DNI duplicado</h2>
+            <p>No se puede registrar un empleado con un DNI que ya existe.</p>
+            <p><strong>DNI duplicado:</strong> ${error.keyValue.dni}</p>
+            <a href="/empleados" style="color: #762051;">← Volver a empleados</a>
+          </body>
+        </html>
+      `);
+    }
     res.status(400).send('Error al crear empleado: ' + error.message);
   }
 };
@@ -62,6 +75,19 @@ exports.actualizarEmpleado = async (req, res) => {
     }
     res.redirect('/empleados');
   } catch (error) {
+    // ERROR DE DNI DUPLICADO EN ACTUALIZACIÓN
+    if (error.code === 11000) {
+      return res.status(400).send(`
+        <html>
+          <body style="font-family: Arial, sans-serif; padding: 20px;">
+            <h2 style="color: #d32f2f;">❌ Error: DNI duplicado</h2>
+            <p>No se puede actualizar el empleado con un DNI que ya existe.</p>
+            <p><strong>DNI duplicado:</strong> ${error.keyValue.dni}</p>
+            <a href="/empleados" style="color: #762051;">← Volver a empleados</a>
+          </body>
+        </html>
+      `);
+    }
     res.status(400).send('Error al actualizar empleado: ' + error.message);
   }
 };
