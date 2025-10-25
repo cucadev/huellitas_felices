@@ -6,7 +6,7 @@ block content
     .row
       .col-12
         .card.shadow-sm
-          .card-header.bg-primary.text-white.d-flex.justify-content-between.align-items-center
+          .card-header(style="background-color: #762051;").text-white.d-flex.justify-content-between.align-items-center
             .d-flex.align-items-center
               h4.mb-0.me-2
                 i.bi.bi-person-badge-fill.me-2
@@ -44,7 +44,7 @@ block content
                         td= empleado.role
                         td
                           if empleado.servicios && empleado.servicios.length
-                            span.badge.bg-success= empleado.servicios.length + ' servicios'
+                            span.badge.bg-info= empleado.servicios.length + ' servicios'
                           else
                             span.badge.bg-secondary Sin servicios
                         td.text-center
