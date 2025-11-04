@@ -69,11 +69,17 @@ html(lang="es")
         |  Ferrazin Nervegna Mayra
 
     main.container
-      .d-flex.justify-content-between.align-items-center.mb-4
-        h2 Listado de Mascotas
-        a.btn.btn-nuevo(href="/mascotas/nuevo")
-          i.bi.bi-plus-lg
-          | Nueva Mascota
+
+      h2.mb-4 Listado de Mascotas
+
+      // Botones Nueva Mascota e Inicio
+      .d-flex.mb-3
+        a.btn.btn-nuevo.me-2(href="/mascotas/nuevo")
+          i.bi.bi-plus-circle
+          |  Nueva Mascota
+        a.btn.btn-secondary(href="/dashboard")
+          i.bi.bi-house
+          |  Inicio
 
       if mascotas.length
         table.table.table-striped.table-bordered
