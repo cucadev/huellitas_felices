@@ -21,8 +21,6 @@ html(lang="es")
         font-family: 'Poppins', sans-serif;
         background-color: #F0EDE7;
         color: #333;
-        margin: 0;
-        padding: 0;
         display: flex;
         flex-direction: column;
         min-height: 100vh;
@@ -38,6 +36,7 @@ html(lang="es")
         justify-content: space-between;
         padding: 0 20px;
       }
+
       .dashboard-header .logo { height: 40px; }
       .dashboard-header .user { color: #fff; font-weight: 200; }
 
@@ -80,31 +79,67 @@ html(lang="es")
         table.table.table-striped.table-bordered
           thead
             tr
+              th ID
               th Nombre
               th Especie
               th Raza
+              th Sexo
               th Edad
+              th Peso
+              th Primera Consulta
               th Dueño
+              th Chip
               th Observaciones
               th Acciones
           tbody
             each mascota in mascotas
               tr
+                td= mascota.mascotaId
                 td= mascota.nombre
                 td= mascota.especie
-                td= mascota.raza
-                td= mascota.edad
-                td= mascota.cliente ? mascota.cliente.nombre + ' ' + mascota.cliente.apellido : 'Sin dueño'
-                td= mascota.observaciones
+                td= mascota.raza || "-"
+                td= mascota.sexo
+                td= mascota.edad + ' años'
+                td= mascota.peso ? mascota.peso + ' kg' : '-'
+                td= mascota.fechaPrimeraConsulta.toISOString().slice(8,10) + "-" + mascota.fechaPrimeraConsulta.toISOString().slice(5,7) + "-" + mascota.fechaPrimeraConsulta.toISOString().slice(0,4)
+                td= mascota.cliente ? mascota.cliente.nombre + " " + mascota.cliente.apellido : "Sin dueño"
+                td= mascota.chip || "-"
+                td= mascota.observaciones || "-"
                 td
                   a.btn.btn-acciones.editar(href=`/mascotas/editar/${mascota._id}`)
                     i.bi.bi-pencil-fill
-                  a.btn.btn-acciones.eliminar(href=`/mascotas/eliminar/${mascota._id}`)
+                  button.btn.btn-acciones.eliminar.btn-eliminar(data-id=mascota._id)
                     i.bi.bi-trash-fill
       else
         p.text-center.mt-4 No hay mascotas registradas.
+
+    script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11")
+
+    script.
+      document.querySelectorAll(".btn-eliminar").forEach(btn => {
+        btn.addEventListener("click", function () {
+          const id = this.getAttribute("data-id");
+
+          Swal.fire({
+            title: "¿Eliminar Mascota?",
+            text: "Esta acción no se puede deshacer",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#9A4475",
+            cancelButtonColor: "#E49AC3",
+            confirmButtonText: "Sí, eliminar",
+            cancelButtonText: "Cancelar"
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = `/mascotas/eliminar/${id}`;
+            }
+          });
+        });
+      });
+
 
     footer
       | Todos los derechos reservados © 2025 Huellitas Felices
 
     script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js")
+
