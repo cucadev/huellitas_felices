@@ -1,19 +1,12 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const mascotaCtrl = require('../controllers/mascotaController');
+const mascotaController = require("../controllers/mascotaController");
 
-// Dashboard de mascotas
-router.get('/', mascotaCtrl.vistaMascotas);
-
-// Crear nueva mascota
-router.get('/nuevo', mascotaCtrl.formularioCrearMascota);
-router.post('/nuevo', mascotaCtrl.crearMascota);
-
-// Editar mascota
-router.get('/editar/:id', mascotaCtrl.formularioEditarMascota);
-router.post('/editar/:id', mascotaCtrl.actualizarMascota);
-
-// Eliminar mascota
-router.get('/eliminar/:id', mascotaCtrl.eliminarMascota);
+router.get("/", mascotaController.listarMascotas);
+router.get("/nueva", mascotaController.formNuevaMascota);
+router.post("/nueva", mascotaController.crearMascota);
+router.get("/editar/:id", mascotaController.formEditarMascota);
+router.post("/editar/:id", mascotaController.editarMascota);
+router.get("/eliminar/:id", mascotaController.eliminarMascota);
 
 module.exports = router;

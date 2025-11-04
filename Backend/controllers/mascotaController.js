@@ -1,8 +1,8 @@
 const Mascota = require('../models/Mascota');
 const Cliente = require('../models/Cliente');
 
-// Listado de mascotas (dashboard)
-exports.vistaMascotas = async (req, res) => {
+// Listado de mascotas
+exports.listarMascotas = async (req, res) => {
   try {
     const mascotas = await Mascota.find().populate('cliente');
     res.render('mascotas/mascotas', { titulo: 'Listado de Mascotas', mascotas });
@@ -12,9 +12,9 @@ exports.vistaMascotas = async (req, res) => {
 };
 
 // Formulario para crear mascota
-exports.formularioCrearMascota = async (req, res) => {
+exports.formNuevaMascota = async (req, res) => {
   try {
-    const clientes = await Cliente.find(); 
+    const clientes = await Cliente.find();
     res.render('mascotas/nuevo', { titulo: 'Nueva Mascota', clientes });
   } catch (error) {
     res.status(500).send('Error al cargar clientes: ' + error.message);
@@ -24,8 +24,32 @@ exports.formularioCrearMascota = async (req, res) => {
 // Crear mascota
 exports.crearMascota = async (req, res) => {
   try {
-    const { nombre, especie, raza, edad, cliente, observaciones } = req.body;
-    const nuevaMascota = new Mascota({ nombre, especie, raza, edad, cliente, observaciones });
+    const {
+      nombre,
+      especie,
+      raza,
+      sexo,
+      edad,
+      peso,
+      fechaPrimeraConsulta,
+      cliente,
+      chip,
+      observaciones
+    } = req.body;
+
+    const nuevaMascota = new Mascota({
+      nombre,
+      especie,
+      raza,
+      sexo,
+      edad,
+      peso,
+      fechaPrimeraConsulta,
+      cliente,
+      chip,
+      observaciones
+    });
+
     await nuevaMascota.save();
     res.redirect('/mascotas');
   } catch (error) {
@@ -34,7 +58,7 @@ exports.crearMascota = async (req, res) => {
 };
 
 // Formulario para editar mascota
-exports.formularioEditarMascota = async (req, res) => {
+exports.formEditarMascota = async (req, res) => {
   try {
     const mascota = await Mascota.findById(req.params.id);
     const clientes = await Cliente.find();
@@ -46,9 +70,21 @@ exports.formularioEditarMascota = async (req, res) => {
 };
 
 // Actualizar mascota
-exports.actualizarMascota = async (req, res) => {
+exports.editarMascota = async (req, res) => {
   try {
-    const datos = { ...req.body };
+    const datos = {
+      nombre: req.body.nombre,
+      especie: req.body.especie,
+      raza: req.body.raza,
+      sexo: req.body.sexo,
+      edad: req.body.edad,
+      peso: req.body.peso,
+      fechaPrimeraConsulta: req.body.fechaPrimeraConsulta,
+      cliente: req.body.cliente,
+      chip: req.body.chip,
+      observaciones: req.body.observaciones
+    };
+
     await Mascota.findByIdAndUpdate(req.params.id, datos, { new: true, runValidators: true });
     res.redirect('/mascotas');
   } catch (error) {
