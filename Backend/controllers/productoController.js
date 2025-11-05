@@ -1,107 +1,61 @@
 const Producto = require('../models/Producto');
 
-// Crear nuevo producto
-exports.crearProducto = async (req, res) => {
-  try {
-    const { nombre, precio, stock, categoria, descripcion } = req.body;
-
-    // Validación mínima 
-    if (!nombre || precio == null || stock == null || !categoria) {
-      return res.status(400).json({ mensaje: 'Campos obligatorios faltantes' });
-    }
-
-    const nuevoProducto = new Producto({
-      nombre,
-      precio,
-      stock,
-      categoria,
-      descripcion
-    });
-
-    await nuevoProducto.save();
-
-    res.status(201).json({ mensaje: 'Producto creado correctamente', producto: nuevoProducto });
-  } catch (error) {
-    res.status(500).json({ mensaje: 'Error en el servidor', error: error.message });
-  }
-};
-// Listar todos los productos
-exports.obtenerProductos = async (_req, res) => {
+// Mostrar listado
+exports.getProductos = async (req, res) => {
   try {
     const productos = await Producto.find();
-    res.json(productos);
+    res.render('productos/dashboard', { productos });
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error en el servidor', error: error.message });
+    console.log(error);
+    res.status(500).send('Error al obtener productos');
   }
 };
-// Obtener un producto por su ID
-exports.obtenerProductoPorId = async (req, res) => {
+
+// Form nuevo producto
+exports.formNuevoProducto = (req, res) => {
+  res.render('productos/nuevo');
+};
+
+// Crear producto
+exports.createProducto = async (req, res) => {
+  try {
+    await Producto.create(req.body);
+    res.redirect('/productos');
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Error al crear producto');
+  }
+};
+
+// Form editar producto
+exports.formEditarProducto = async (req, res) => {
   try {
     const producto = await Producto.findById(req.params.id);
-    if (!producto) {
-      return res.status(404).json({ mensaje: 'Producto no encontrado' });
-    }
-    res.json(producto);
+    res.render('productos/editar', { producto });
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al obtener el producto', error: error.message });
-  }
-};
-// Actualizar un producto
-exports.actualizarProducto = async (req, res) => {
-  try {
-    const datos = { ...req.body };
-
-    const productoActualizado = await Producto.findByIdAndUpdate(
-      req.params.id,
-      datos,
-      { new: true, runValidators: true }
-    );
-
-    if (!productoActualizado) {
-      return res.status(404).json({ mensaje: 'Producto no encontrado' });
-    }
-
-    res.json({ mensaje: 'Producto actualizado correctamente', producto: productoActualizado });
-  } catch (error) {
-    res.status(400).json({ mensaje: 'Error al actualizar el producto', error: error.message });
-  }
-};
-// Eliminar un producto
-exports.eliminarProducto = async (req, res) => {
-  try {
-    const productoEliminado = await Producto.findByIdAndDelete(req.params.id);
-
-    if (!productoEliminado) {
-      return res.status(404).json({ mensaje: 'Producto no encontrado' });
-    }
-
-    res.json({ mensaje: 'Producto eliminado correctamente' });
-  } catch (error) {
-    res.status(500).json({ mensaje: 'Error al eliminar el producto', error: error.message });
+    console.log(error);
+    res.status(404).send('Producto no encontrado');
   }
 };
 
-exports.vistaProductos = async (req, res) => {
+// Actualizar producto
+exports.updateProducto = async (req, res) => {
   try {
-    const productos = await Producto.find();
-    res.render('productos/dashboard', { titulo: 'Listado de Productos', productos });
+    await Producto.findByIdAndUpdate(req.params.id, req.body);
+    res.redirect('/productos');
   } catch (error) {
-    res.status(500).send('Error al cargar la vista: ' + error.message);
+    console.log(error);
+    res.status(500).send('Error al actualizar producto');
   }
 };
 
-// Formulario para crear un producto
-exports.formularioCrearProducto = (req, res) => {
-  res.render('productos/nuevo', { titulo: 'Nuevo Producto' });
-};
-
-// Formulario para editar un producto
-exports.formularioEditarProducto = async (req, res) => {
+// Eliminar producto
+exports.deleteProducto = async (req, res) => {
   try {
-    const producto = await Producto.findById(req.params.id);
-    if (!producto) return res.status(404).send('Producto no encontrado');
-    res.render('productos/editar', { titulo: 'Editar Producto', producto });
+    await Producto.findByIdAndDelete(req.params.id);
+    res.redirect('/productos');
   } catch (error) {
-    res.status(500).send('Error al cargar el producto: ' + error.message);
+    console.log(error);
+    res.status(500).send('Error al eliminar producto');
   }
 };

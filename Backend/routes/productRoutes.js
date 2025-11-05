@@ -1,28 +1,26 @@
 const express = require('express');
 const router = express.Router();
-const productoCtrl = require('../controllers/productoController');
-const { auth } = require('../middlewares/auth');
+const productoController = require('../controllers/productoController');
 
-//VISTAS PUG
+// Dashboard
+router.get('/dashboard', (req, res) => res.redirect('/productos'));
 
-router.get('/dashboard', /* auth(['admin']), */ productoCtrl.vistaProductos);
-router.get('/nuevo', /* auth(['admin']), */ productoCtrl.formularioCrearProducto);
-router.post('/nuevo', /* auth(['admin']), */ productoCtrl.crearProducto);
-router.get('/editar/:id', /* auth(['admin']), */ productoCtrl.formularioEditarProducto);
-router.post('/editar/:id', /* auth(['admin']), */ productoCtrl.actualizarProducto);
-router.get('/eliminar/:id', /* auth(['admin']), */ productoCtrl.eliminarProducto);
+// Listado
+router.get('/', productoController.getProductos);
 
+// Nuevo
+router.get('/nuevo', productoController.formNuevoProducto);
+router.post('/nuevo', productoController.createProducto);
 
-router.get('/', (req, res) => {
-  res.redirect('/productos/dashboard');
-});
+// Editar
+router.get('/editar/:id', productoController.formEditarProducto);
+router.post('/editar/:id', productoController.updateProducto);
 
-//API REST
-
-router.get('/api', productoCtrl.obtenerProductos);
-router.get('/api/:id', productoCtrl.obtenerProductoPorId);
-router.post('/api', productoCtrl.crearProducto);
-router.put('/api/:id', productoCtrl.actualizarProducto);
-router.delete('/api/:id', productoCtrl.eliminarProducto);
+// Eliminar
+router.get('/eliminar/:id', productoController.deleteProducto);
 
 module.exports = router;
+
+
+
+
