@@ -38,14 +38,12 @@ Este proyecto es el resultado de una **colaboración académica** entre **Brian 
 - **Gestión de Clientes:** CRUD completo para registrar y administrar la información de los clientes y sus mascotas.
 - **Gestión de Empleados:** CRUD - Administración de empleados con roles y servicios asociados.
 - **Gestión de Servicios:** CRUD - Catálogo de servicios veterinarios con precios y descripciones.
+- **Gestion de Caja:**
+- **Gestion de Productos:**
 - **Agenda de Citas/Turnos:** CRUD - Interfaz interactiva con **FullCalendar** para gestionar citas y turnos.
 - **Diseño Responsivo:** Interfaz adaptable a dispositivos móviles y de escritorio.
-- **DataTables 2:** Integración de **DataTables** para paginación, búsqueda y filtros avanzados.
-- **Driver.js:** Integración de **Driver.js** para que el usuario sepa el funcionamiento de cada vista
 - **Enfoque profesional:** Estructura de carpetas que facilita el mantenimiento y escalabilidad del código.
 - **Estructura modular:** Separación clara entre `frontend` y `backend`, siguiendo buenas prácticas de organización de proyectos.
-- **Sintaxis moderna:** Uso de `import/export` (ES6 Modules)
-- **Axios:** Se planea utilizar en lugar de `fetch` para un manejo más eficiente de peticiones HTTP, gracias a su sintaxis simplificada, manejo automático de errores y soporte para interceptores y configuraciones globales.
 
 ---
 
@@ -56,7 +54,7 @@ Este proyecto es el resultado de una **colaboración académica** entre **Brian 
 | **Categoría**             | **Tecnologías**                                                     |
 |---------------------------|---------------------------------------------------------------------|
 | **Backend**               | Node.js, Express, MongoDB Atlas, Mongoose                           |
-| **Frontend**              | Pug, Bootstrap 5, FullCalendar.js, Driver.js JavaScript (ES6+)      |
+| **Frontend**              | Pug, Bootstrap 5, FullCalendar.js                                   |
 | **Control de Versiones**  | Git, GitHub                                                         |
 | **Herramientas**          | Visual Studio Code, Thunder Client (para pruebas de API)            |
 
@@ -66,27 +64,76 @@ Este proyecto es el resultado de una **colaboración académica** entre **Brian 
 Los modulos de esta rama cuenta con documentación detallada para cada módulo. Puedes acceder a ella desde los siguientes enlaces:
 
 - **[Documentación General del Sistema](https://docs.google.com/document/d/1ViyzMaNjs7ADEbPM8UIul4XVd2cpSVogAORSoDs-xpM/edit?usp=sharing)**
+- **[Manual de Usuario](https://docs.google.com/document/d/1uLxb9cMjHZj0i9oxUWwg9scyYHqvJawIA_13rM7UhNI/edit?usp=sharing)**
 
 > **Nota:** La documentación incluye descripciones detalladas, flujos de trabajo, estructura de datos y ejemplos de uso para cada módulo.
+
 
 ---
 
 ## **🚀 Instalación y Configuración**
-**Próximamente** se proporcionarán instrucciones detalladas para la instalación y configuración del proyecto unificado.
+
+### **1️⃣ Requisitos Previos**
+Asegúrate de tener instalado:
+- **Node.js** (v18 o superior)  
+- **npm** (instalado junto con Node.js)  
+- **Git**  
+- Una cuenta en **MongoDB Atlas** o una instancia local de MongoDB
 
 ---
 
----
-## 🖼️ Imágenes de los Módulos de esta Rama
+### **2️⃣ Clonar el Repositorio**
+```bash
+git clone https://github.com/cucadev/huellitas_felices.git
+cd huellitas_felices
+```
 
-A continuación, se presentan algunas capturas:
+Si querés trabajar con la rama de Brian:
 
-### 🚀 Vista de la Interfaz de Usuario
+```bash
+git checkout Brian
+```
 
-![Captura de Pantalla de Clientes](frontend/public/img/1.png)
-![Captura de Pantalla de Clientes Modal](frontend/public/img/2.png)
+### **3️⃣ Instalar Dependencias**
 
----
+Dentro del directorio del proyecto, ejecuta:
+
+```bash
+npm install
+```
+
+Esto instalará todas las dependencias listadas en package.json.
+
+### **4️⃣ Configurar las Variables de Entorno**
+
+Crea un archivo llamado .env en la raíz del proyecto con el siguiente contenido:
+
+```bash
+PORT=3000
+MONGODB_URI="tu_conexion_a_mongodb_atlas"
+SESSION_SECRET="clave_segura_para_sesiones"
+```
+
+⚠️ Asegúrate de reemplazar tu_conexion_a_mongodb_atlas por tu cadena de conexión real de MongoDB Atlas.
+Ejemplo:
+```bash
+mongodb+srv://usuario:contraseña@cluster0.mongodb.net/huellitasfelices
+```
+
+### **5️⃣ Ejecutar el Servidor**
+
+Para iniciar el proyecto en modo desarrollo:
+```bash
+npm run dev
+```
+
+O en modo producción:
+```bash
+npm start
+```
+
+El servidor se ejecutará por defecto en:
+👉 http://localhost:3000
 
 ---
 
