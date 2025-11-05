@@ -1,39 +1,48 @@
 extends ../layout
 
 block content
-  .container
-    h1 Nuevo Producto
+  h2 Nuevo Producto
 
-    form(action="/productos/nuevo" method="POST")
+  form(action="/productos/nuevo" method="POST")
+    .mb-2
       label Nombre
       input.form-control(type="text" name="nombre" required)
 
+    .mb-2
       label Descripción
       textarea.form-control(name="descripcion")
 
+    .mb-2
       label Proveedor
       input.form-control(type="text" name="proveedor")
 
-      label Costo Unitario
-      input.form-control(type="number" step="0.01" name="costoUnitario" required)
+    .mb-2
+      label Costo unitario
+      input.form-control(type="number" step="0.01" name="costo_unitario")
 
-      label Unidad de Venta
-      input.form-control(type="text" name="unidadVenta" required)
+    .mb-2
+      label Unidad de venta
+      input.form-control(type="text" name="unidad_venta")
 
+    .mb-2
       label Categoría
       input.form-control(type="text" name="categoria")
 
-      label Precio Venta
-      input.form-control(type="number" step="0.01" name="precioVenta" required)
+    .mb-2
+      label Precio de venta
+      input.form-control(type="number" step="0.01" name="precio_venta")
 
-      label Stock Actual
-      input.form-control(type="number" name="stockActual" required)
+    .mb-2
+      label Stock actual
+      input.form-control(type="number" name="stock_actual")
 
-      label Stock Mínimo
-      input.form-control(type="number" name="stockMinimo" required)
+    .mb-2
+      label Stock mínimo
+      input.form-control(type="number" name="stock_minimo")
 
-      button.btn.btn-primary.mt-3(type="submit") Guardar
-      a.btn.btn-secondary.mt-3.ms-2(href="/productos") Cancelar
+    button.btn.btn-success(type="submit") Guardar
+    a.btn.btn-secondary.ms-2(href="/productos/dashboard") Cancelar
+
 
 
 

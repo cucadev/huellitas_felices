@@ -1,75 +1,47 @@
 extends ../layout
 
 block content
-  .container
-    .d-flex.justify-content-start.align-items-center.mb-3
-      a.btn.btn-nuevo.me-2(href="/productos/nuevo")
-        i.bi.bi-plus-circle
-        |  Nuevo Producto
-      a.btn.btn-secondary(href="/dashboard")
-        i.bi.bi-house
-        |  Inicio
+  .d-flex.justify-content-between.align-items-center.mb-4
+    a.btn.btn-secondary(href='/') Inicio
+    a.btn.btn-primary(href='/productos/nuevo') Nuevo Producto
 
-    h1.mt-3 Productos
+  h2.mb-3 Gestión de Productos
 
-    if productos.length === 0
-      p No hay productos registrados.
-    else
-      table.table.table-striped.table-bordered.mt-3
-        thead
+  if productos.length
+    table.table.table-bordered.table-striped
+      thead
+        tr
+          th ID
+          th Nombre
+          th Proveedor
+          th Costo
+          th Unidad
+          th Categoría
+          th Precio Venta
+          th Stock
+          th Stock Min
+          th Acciones
+      tbody
+        each p in productos
           tr
-            th ID
-            th Nombre
-            th Proveedor
-            th Costo Unitario
-            th Unidad Venta
-            th Categoría
-            th Precio Venta
-            th Stock Actual
-            th Stock Mínimo
-            th Acciones
-        tbody
-          each producto in productos
-            tr
-              td= producto._id
-              td= producto.nombre
-              td= producto.proveedor
-              td $#{(producto.costoUnitario || 0).toFixed(2)}
-              td= producto.unidadVenta
-              td= producto.categoria
-              td $#{(producto.precioVenta || 0).toFixed(2)}
-              td= producto.stockActual
-              td= producto.stockMinimo
-              td
-                a.btn.btn-warning.btn-sm.me-1(
-                  href=`/productos/editar/${producto._id}`
-                  title="Editar"
-                )
-                  i.bi.bi-pencil-square
+            td= p._id
+            td= p.nombre
+            td= p.proveedor
+            td $#{p.costo_unitario ? p.costo_unitario.toFixed(2) : '0.00'}
+            td= p.unidad_venta
+            td= p.categoria
+            td $#{p.precio_venta ? p.precio_venta.toFixed(2) : '0.00'}
+            td= p.stock_actual
+            td= p.stock_minimo
+            td
+              a.btn.btn-sm.btn-warning(href=`/productos/editar/${p._id}`)
+                i.fas.fa-edit
+              button.btn.btn-sm.btn-danger.ms-2(onclick=`if(confirm('¿Seguro que querés eliminar este producto?')) window.location='/productos/eliminar/${p._id}'`)
+                i.fas.fa-trash
+  else
+    p No hay productos cargados.
 
-                button.btn.btn-danger.btn-sm(
-                  onclick=`confirmDelete('${producto._id}')`
-                  title="Eliminar"
-                )
-                  i.bi.bi-trash
 
-  script.
-    function confirmDelete(id) {
-      Swal.fire({
-        title: "¿Eliminar producto?",
-        text: "Esta acción no se puede deshacer",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#d33",
-        cancelButtonColor: "#3085d6",
-        confirmButtonText: "Sí, eliminar",
-        cancelButtonText: "Cancelar"
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.href = "/productos/eliminar/" + id;
-        }
-      });
-    }
 
 
 

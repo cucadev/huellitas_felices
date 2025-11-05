@@ -1,39 +1,49 @@
 extends ../layout
 
 block content
-  .container
-    h1 Editar Producto
+  h2 Editar Producto
 
-    form(action=`/productos/editar/${producto._id}` method="POST")
+  form(action=`/productos/editar/${producto._id}` method="POST")
+    .mb-2
       label Nombre
       input.form-control(type="text" name="nombre" value=producto.nombre required)
 
+    .mb-2
       label Descripción
       textarea.form-control(name="descripcion")= producto.descripcion
 
+    .mb-2
       label Proveedor
       input.form-control(type="text" name="proveedor" value=producto.proveedor)
 
-      label Costo Unitario
-      input.form-control(type="number" step="0.01" name="costoUnitario" value=producto.costoUnitario required)
+    .mb-2
+      label Costo unitario
+      input.form-control(type="number" step="0.01" name="costo_unitario" value=producto.costo_unitario)
 
-      label Unidad de Venta
-      input.form-control(type="text" name="unidadVenta" value=producto.unidadVenta required)
+    .mb-2
+      label Unidad de venta
+      input.form-control(type="text" name="unidad_venta" value=producto.unidad_venta)
 
+    .mb-2
       label Categoría
       input.form-control(type="text" name="categoria" value=producto.categoria)
 
-      label Precio Venta
-      input.form-control(type="number" step="0.01" name="precioVenta" value=producto.precioVenta required)
+    .mb-2
+      label Precio de venta
+      input.form-control(type="number" step="0.01" name="precio_venta" value=producto.precio_venta)
 
-      label Stock Actual
-      input.form-control(type="number" name="stockActual" value=producto.stockActual required)
+    .mb-2
+      label Stock actual
+      input.form-control(type="number" name="stock_actual" value=producto.stock_actual)
 
-      label Stock Mínimo
-      input.form-control(type="number" name="stockMinimo" value=producto.stockMinimo required)
+    .mb-2
+      label Stock mínimo
+      input.form-control(type="number" name="stock_minimo" value=producto.stock_minimo)
 
-      button.btn.btn-primary.mt-3(type="submit") Actualizar
-      a.btn.btn-secondary.mt-3.ms-2(href="/productos") Cancelar
+    button.btn.btn-success(type="submit") Guardar Cambios
+    a.btn.btn-secondary.ms-2(href="/productos/dashboard") Cancelar
+
+
 
 
 
