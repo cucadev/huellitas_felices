@@ -3,8 +3,8 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
-const session = require('express-session');   // 🔹 agregar
-const flash = require('connect-flash');       // 🔹 agregar
+const session = require('express-session');
+const flash = require('connect-flash');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,37 +19,35 @@ const userRoutes = require('./Backend/routes/userRoutes');
 const webRoutes = require('./Backend/routes/webRoutes');
 const mascotaRoutes = require('./Backend/routes/mascotaRoutes');
 
-
-// Conexión con Mongo
+// Conexión a MongoDB
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
 .then(() => console.log('✅ Conectado a MongoDB Atlas'))
-.catch(err => console.error('❌ Error:', err));
+.catch(err => console.error('❌ Error de conexión:', err));
 
 mongoose.connection.on('connected', () => {
   console.log('🟢 Base de datos usada:', mongoose.connection.name);
 });
 
-// Configuración Express
-app.use(express.static('Public'));
-app.set('view engine', 'pug'); 
-app.set('views', path.join(__dirname, 'views'));
+// Configuración de Express
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views')); // ✅ las vistas están en /views
 
+app.use(express.static(path.join(__dirname, 'Public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 🔹 Configuración de sesiones y flash
+// Configuración de sesiones y flash
 app.use(session({
-  secret: 'huellitasfelices',  // cualquier clave secreta
+  secret: 'huellitasfelices',
   resave: false,
   saveUninitialized: true
 }));
-
 app.use(flash());
 
-// 🔹 Middleware para pasar mensajes flash a todas las vistas
+// Middleware para pasar mensajes flash a las vistas
 app.use((req, res, next) => {
   res.locals.mensajeExito = req.flash('mensajeExito');
   res.locals.mensajeError = req.flash('mensajeError');
@@ -63,12 +61,13 @@ app.use('/productos', productRoutes);
 app.use('/compras', comprasRoutes);
 app.use('/ventas', ventasRoutes);
 app.use('/caja', cajaRoutes);
-app.use('/', webRoutes);
 app.use('/mascotas', mascotaRoutes);
+app.use('/', webRoutes);
 
 // Iniciar servidor
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
 });
+
 
 

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const productoSchema = new mongoose.Schema({
+  productoId: { type: String, unique: true }, // P0001, P0002...
   nombre: { type: String, required: true },
   descripcion: { type: String },
   proveedor: { type: String },
@@ -12,7 +13,24 @@ const productoSchema = new mongoose.Schema({
   stock_minimo: { type: Number, default: 0 }
 }, { timestamps: true });
 
-module.exports = mongoose.model("Producto", productoSchema);
+// 🔹 Generar ID automático tipo P0001
+productoSchema.pre("save", async function (next) {
+  if (this.isNew) {
+    const lastProduct = await mongoose.model("Producto").findOne().sort({ createdAt: -1 });
+    let nextNumber = 1;
+
+    if (lastProduct && lastProduct.productoId) {
+      const num = parseInt(lastProduct.productoId.replace("P", ""), 10);
+      if (!isNaN(num)) nextNumber = num + 1;
+    }
+
+    this.productoId = `P${String(nextNumber).padStart(4, "0")}`;
+  }
+  next();
+});
+
+module.exports = mongoose.models.Producto || mongoose.model("Producto", productoSchema);
+
 
 
 

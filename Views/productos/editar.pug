@@ -1,7 +1,7 @@
 extends ../layout
 
 block content
-  h2 Editar Producto
+  h2.mb-4 Editar Producto
 
   form(action=`/productos/editar/${producto._id}` method="POST")
     .mb-2
@@ -36,12 +36,15 @@ block content
       label Stock actual
       input.form-control(type="number" name="stock_actual" value=producto.stock_actual)
 
-    .mb-2
+    .mb-3
       label Stock mínimo
       input.form-control(type="number" name="stock_minimo" value=producto.stock_minimo)
 
-    button.btn.btn-success(type="submit") Guardar Cambios
-    a.btn.btn-secondary.ms-2(href="/productos/dashboard") Cancelar
+    button.btn.btn-nuevo(type="submit")
+      | Guardar Cambios
+    a.btn.btn-secondary.ms-2(href="/productos")
+      | Cancelar
+
 
 
 

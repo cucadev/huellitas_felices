@@ -1,50 +1,45 @@
 const Producto = require("../models/Producto");
 
+// Mostrar lista de productos
 exports.getProductos = async (req, res) => {
   try {
-    const productos = await Producto.find();
+    const productos = await Producto.find().sort({ createdAt: -1 });
     res.render("productos/dashboard", { productos });
   } catch (error) {
-    res.send(error.message);
+    res.render("productos/dashboard", { productos: [] });
   }
 };
 
+// Mostrar formulario nuevo producto
 exports.formNuevoProducto = (req, res) => {
   res.render("productos/nuevo");
 };
 
+// Crear nuevo producto
 exports.createProducto = async (req, res) => {
   try {
-    await Producto.create(req.body);
-    res.redirect("/productos/dashboard");
-  } catch (err) {
-    res.send(err.message);
+    const count = await Producto.countDocuments();
+    const nuevoId = "P" + (count + 1).toString().padStart(4, "0");
+
+    const nuevoProducto = new Producto({
+      codigo: nuevoId,
+      ...req.body
+    });
+
+    await nuevoProducto.save();
+    res.redirect("/productos");
+  } catch (error) {
+    res.send("Error al agregar el producto: " + error.message);
   }
 };
 
-exports.formEditarProducto = async (req, res) => {
-  try {
-    const producto = await Producto.findById(req.params.id);
-    res.render("productos/editar", { producto });
-  } catch (err) {
-    res.send(err.message);
-  }
-};
-
-exports.updateProducto = async (req, res) => {
-  try {
-    await Producto.findByIdAndUpdate(req.params.id, req.body);
-    res.redirect("/productos/dashboard");
-  } catch (err) {
-    res.send(err.message);
-  }
-};
-
+// Eliminar producto
 exports.deleteProducto = async (req, res) => {
   try {
     await Producto.findByIdAndDelete(req.params.id);
-    res.redirect("/productos/dashboard");
-  } catch (err) {
-    res.send(err.message);
+    res.json({ success: true, message: "Producto eliminado correctamente" });
+  } catch (error) {
+    res.json({ success: false, message: "Error al eliminar el producto" });
   }
 };
+

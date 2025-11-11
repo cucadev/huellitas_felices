@@ -1,45 +1,87 @@
-extends ../layout
+extends ../layout.pug
 
 block content
-  .d-flex.justify-content-between.align-items-center.mb-4
-    a.btn.btn-secondary(href='/') Inicio
-    a.btn.btn-primary(href='/productos/nuevo') Nuevo Producto
+  .container.mt-4
+    h2.text-center.mb-4 Lista de Productos
 
-  h2.mb-3 Gestión de Productos
+    .d-flex.mb-3
+      a.btn.btn-success.me-2(href="/productos/nuevo") 
+        i.fas.fa-plus-circle.me-1 
+        | Nuevo Producto
+      a.btn.btn-secondary(href="/dashboard") 
+        i.fas.fa-home.me-1 
+        | Inicio
 
-  if productos.length
-    table.table.table-bordered.table-striped
-      thead
-        tr
-          th ID
-          th Nombre
-          th Proveedor
-          th Costo
-          th Unidad
-          th Categoría
-          th Precio Venta
-          th Stock
-          th Stock Min
-          th Acciones
-      tbody
-        each p in productos
+    if productos.length
+      table.table.table-striped.mt-3
+        thead
           tr
-            td= p._id
-            td= p.nombre
-            td= p.proveedor
-            td $#{p.costo_unitario ? p.costo_unitario.toFixed(2) : '0.00'}
-            td= p.unidad_venta
-            td= p.categoria
-            td $#{p.precio_venta ? p.precio_venta.toFixed(2) : '0.00'}
-            td= p.stock_actual
-            td= p.stock_minimo
-            td
-              a.btn.btn-sm.btn-warning(href=`/productos/editar/${p._id}`)
-                i.fas.fa-edit
-              button.btn.btn-sm.btn-danger.ms-2(onclick=`if(confirm('¿Seguro que querés eliminar este producto?')) window.location='/productos/eliminar/${p._id}'`)
-                i.fas.fa-trash
-  else
-    p No hay productos cargados.
+            th Código
+            th Nombre
+            th Proveedor
+            th Costo Unitario
+            th Unidad de Venta
+            th Categoría
+            th Precio Venta
+            th Stock Actual
+            th Stock Mínimo
+            th Acciones
+        tbody
+          each p in productos
+            tr
+              td= p.codigo || "—"
+              td= p.nombre
+              td= p.proveedor
+              td $#{(p.costo_unitario ? p.costo_unitario.toFixed(2) : "0.00")}
+              td= p.unidad_venta
+              td= p.categoria
+              td $#{(p.precio_venta ? p.precio_venta.toFixed(2) : "0.00")}
+              td= p.stock_actual
+              td= p.stock_minimo
+              td
+                button.btn.btn-warning.btn-sm.me-1(onclick=`editarProducto('${p._id}')`)
+                  i.fas.fa-edit
+                button.btn.btn-danger.btn-sm(onclick=`eliminarProducto('${p._id}')`)
+                  i.fas.fa-trash
+    else
+      p.text-center.mt-4 No hay productos registrados.
+
+  // Scripts
+  script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11")
+
+  script.
+    function eliminarProducto(id) {
+      Swal.fire({
+        title: "¿Estás seguro?",
+        text: "Esta acción no se puede deshacer.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          fetch(`/productos/eliminar/${id}`, { method: "DELETE" })
+            .then(res => res.json())
+            .then(data => {
+              Swal.fire({
+                icon: data.success ? "success" : "error",
+                title: data.message,
+                showConfirmButton: false,
+                timer: 2000
+              }).then(() => location.reload());
+            });
+        }
+      });
+    }
+
+    function editarProducto(id) {
+      window.location.href = `/productos/editar/${id}`;
+    }
+
+
+
 
 
 
