@@ -5,7 +5,7 @@ block content
     h2 Listado de Compras
     a.btn.btn-nuevo(href="/compras/nuevo")
       i.bi.bi-plus-lg
-      | Nuevo Compra
+      | Nueva Compra
 
   if compras.length
     table.table.table-striped.table-bordered
@@ -20,7 +20,8 @@ block content
       tbody
         each compra in compras
           tr
-            td= compra.producto.nombre
+            //- Protegemos compra.producto en caso de que sea null
+            td= compra.producto ? compra.producto.nombre : 'Sin producto'
             td= compra.cantidad
             td $#{compra.precioUnitario.toFixed(2)}
             td= compra.proveedor
@@ -32,4 +33,5 @@ block content
                 i.bi.bi-trash-fill
   else
     p.text-center.mt-4 No hay compras registradas.
+
 
