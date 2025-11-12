@@ -23,10 +23,10 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Registrar ingreso o egreso (API)
+// Registrar ingreso o egreso
 router.post('/', cajaController.registrarMovimiento);
 
-// Ver saldo actual (API)
+// Ver saldo actual
 router.get('/saldo', cajaController.obtenerSaldo);
 
 router.post('/', cajaController.registrarMovimientoWeb);

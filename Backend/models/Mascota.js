@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-// Función para generar ID incremental tipo 0001, 0002...
+// Función para generar ID incremental
 const getNextId = async function () {
   const lastPet = await mongoose.model('Mascota').findOne().sort({ mascotaId: -1 });
   if (!lastPet) return "0001";
@@ -24,7 +24,7 @@ const MascotaSchema = new mongoose.Schema({
 
   cliente: { type: mongoose.Schema.Types.ObjectId, ref: 'Cliente', required: true },
 
-  numeroChip: { type: String, default: "" }, // CAMBIO: antes era chip
+  numeroChip: { type: String, default: "" },
   observaciones: { type: String, default: "" }
 });
 

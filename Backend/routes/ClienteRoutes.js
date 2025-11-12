@@ -3,7 +3,7 @@ const router = express.Router();
 const Cliente = require('../models/Cliente');
 const Mascota = require('../models/Mascota');
 
-// 📄 Listado de clientes
+// Listado de clientes
 router.get('/', async (req, res) => {
   try {
     const clientes = await Cliente.find().populate('mascotas', 'nombre especie');
@@ -16,13 +16,13 @@ router.get('/', async (req, res) => {
   }
 });
 
-// 🆕 Formulario para crear nuevo cliente
+// Formulario para crear nuevo cliente
 router.get('/nuevo', async (req, res) => {
   const mascotas = await Mascota.find();
   res.render('clientes/nuevo', { titulo: 'Nuevo Cliente', mascotas });
 });
 
-// 💾 Crear nuevo cliente
+// Crear nuevo cliente
 router.post('/nuevo', async (req, res) => {
   try {
     const { dniCliente, nombre, apellido, email, telefono, direccion, observaciones, mascotas } = req.body;
@@ -64,7 +64,7 @@ router.post('/nuevo', async (req, res) => {
   }
 });
 
-// ✏️ Formulario para editar cliente
+// Formulario para editar cliente
 router.get('/editar/:id', async (req, res) => {
   try {
     const cliente = await Cliente.findById(req.params.id).populate('mascotas', 'nombre especie');
@@ -76,7 +76,7 @@ router.get('/editar/:id', async (req, res) => {
   }
 });
 
-// 💾 Editar cliente
+// Editar cliente
 router.post('/editar/:id', async (req, res) => {
   try {
     const { dniCliente, nombre, apellido, email, telefono, direccion, observaciones, mascotas } = req.body;
@@ -116,7 +116,7 @@ router.post('/editar/:id', async (req, res) => {
   }
 });
 
-// 🔁 Eliminar cliente
+// Eliminar cliente
 router.get('/eliminar/:id', async (req, res) => {
   try {
     await Cliente.findByIdAndDelete(req.params.id);

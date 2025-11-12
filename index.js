@@ -24,16 +24,16 @@ mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
-.then(() => console.log('✅ Conectado a MongoDB Atlas'))
-.catch(err => console.error('❌ Error de conexión:', err));
+.then(() => console.log('Conectado a MongoDB Atlas'))
+.catch(err => console.error('Error de conexión:', err));
 
 mongoose.connection.on('connected', () => {
-  console.log('🟢 Base de datos usada:', mongoose.connection.name);
+  console.log('Base de datos usada:', mongoose.connection.name);
 });
 
 // Configuración de Express
 app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, 'views')); // ✅ las vistas están en /views
+app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.static(path.join(__dirname, 'Public')));
 app.use(express.json());
@@ -66,7 +66,7 @@ app.use('/', webRoutes);
 
 // Iniciar servidor
 app.listen(PORT, () => {
-  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
 
 
